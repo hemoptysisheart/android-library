@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "android-library"
 include(":app")
+include(":ui")
