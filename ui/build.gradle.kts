@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    api(project(":ui-state"))
     api(platform(libs.androidx.compose.bom))
     api(libs.androidx.core.ktx)
     api(libs.androidx.material3)
