@@ -2,6 +2,7 @@ package com.github.hemoptysisheart.ui.state
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 
@@ -26,16 +27,16 @@ interface TextFieldState {
 
     val keyboardActions: KeyboardActions
 
-    val minLines: Int
+    val lines: TextLines
 
-    val maxLines: Int
+    fun onFocusedChange(focusState: FocusState)
 
     /**
      * 텍스트 필드의 값이 변경되었을 때 호출되는 콜백.
      *
      * @param value 변경된 값.
      */
-    fun onChange(value: TextFieldValue)
+    fun onValueChange(value: TextFieldValue)
 
     /**
      * 텍스트 필드의 상태를 복사한 새로운 상태를 반환.
@@ -51,7 +52,6 @@ interface TextFieldState {
         visualTransformation: VisualTransformation = this.visualTransformation,
         keyboardOptions: KeyboardOptions = this.keyboardOptions,
         keyboardActions: KeyboardActions = this.keyboardActions,
-        minLines: Int = this.minLines,
-        maxLines: Int = this.maxLines
+        lines: TextLines = this.lines
     ): SimpleTextFieldState
 }

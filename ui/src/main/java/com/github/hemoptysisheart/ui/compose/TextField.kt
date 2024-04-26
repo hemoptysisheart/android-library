@@ -7,13 +7,17 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.github.hemoptysisheart.ui.state.MultiLines
 import com.github.hemoptysisheart.ui.state.SimpleTextFieldState
+import com.github.hemoptysisheart.ui.state.SingleLine
 import com.github.hemoptysisheart.ui.state.TextFieldState
+import com.github.hemoptysisheart.ui.state.TextLines
 
 /**
  * 텍스트 필드.
@@ -48,10 +52,11 @@ fun TextField(
     shape: Shape = TextFieldDefaults.shape,
     colors: TextFieldColors = TextFieldDefaults.colors()
 ) {
+    val lines = state.lines
     androidx.compose.material3.TextField(
         value = state.value,
-        onValueChange = state::onChange,
-        modifier = modifier,
+        onValueChange = state::onValueChange,
+        modifier = modifier.onFocusChanged { state.onFocusedChange(it) },
         enabled = state.enabled,
         readOnly = state.readOnly,
         textStyle = textStyle,
@@ -66,8 +71,17 @@ fun TextField(
         visualTransformation = state.visualTransformation,
         keyboardOptions = state.keyboardOptions,
         keyboardActions = state.keyboardActions,
-        minLines = state.minLines,
-        maxLines = state.maxLines,
+        singleLine = state.lines is SingleLine,
+        minLines = when (lines) {
+            is TextLines.Default -> lines.minLines
+            is SingleLine -> 1
+            is MultiLines -> lines.minLines
+        },
+        maxLines = when (lines) {
+            is TextLines.Default -> lines.maxLines
+            is SingleLine -> 1
+            is MultiLines -> lines.maxLines
+        },
         interactionSource = interactionSource,
         shape = shape,
         colors = colors
@@ -76,11 +90,12 @@ fun TextField(
 
 private class TextFieldStateProvider : PreviewParameterProvider<TextFieldState> {
     override val values = listOf(
-        SimpleTextFieldState(text = "", onChange = { }),
-        SimpleTextFieldState(text = "with value", onChange = { }),
-        SimpleTextFieldState(text = "disabled", enabled = false, onChange = { }),
-        SimpleTextFieldState(text = "read only", readOnly = true, onChange = { }),
-        SimpleTextFieldState(text = "with error", isError = true, onChange = { })
+        SimpleTextFieldState(text = "", onValueChange = { }),
+        SimpleTextFieldState(text = "with value", onValueChange = { }),
+        SimpleTextFieldState(text = "disabled", enabled = false, onValueChange = { }),
+        SimpleTextFieldState(text = "read only", readOnly = true, onValueChange = { }),
+        SimpleTextFieldState(text = "with error", isError = true, onValueChange = { }),
+        SimpleTextFieldState(text = "multiple\nline\nfield", lines = MultiLines(4), onValueChange = { })
     ).asSequence()
 }
 

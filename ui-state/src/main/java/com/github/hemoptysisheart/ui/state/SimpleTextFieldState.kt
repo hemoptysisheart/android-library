@@ -2,6 +2,8 @@ package com.github.hemoptysisheart.ui.state
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 
@@ -10,9 +12,8 @@ import androidx.compose.ui.text.input.VisualTransformation
  *
  * 상태를 추적하기 쉽게 하기 위해 주입한 콜백은 [copy]로 교체할 수 없다. 경우에 따라 서로 다른 콜백 로직이 필요하다면, 주입한 콜백 자체가 선택적으로
  * 로직을 실행할 수 있도록 해야 한다.
- *
- * @param _onChange 외부에서 주입한 텍스트 필드의 값 변경 콜백.
  */
+@Stable
 open class SimpleTextFieldState(
     override val value: TextFieldValue,
     override val enabled: Boolean = true,
@@ -21,9 +22,9 @@ open class SimpleTextFieldState(
     override val visualTransformation: VisualTransformation = VisualTransformation.None,
     override val keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     override val keyboardActions: KeyboardActions = KeyboardActions.Default,
-    override val minLines: Int = 1,
-    override val maxLines: Int = Int.MAX_VALUE,
-    private val _onChange: (TextFieldValue) -> Unit
+    override val lines: TextLines = TextLines.Default,
+    private val _onFocusChange: (FocusState) -> Unit = { },
+    private val _onValueChange: (TextFieldValue) -> Unit
 ) : TextFieldState {
     constructor(
         text: String,
@@ -33,9 +34,9 @@ open class SimpleTextFieldState(
         visualTransformation: VisualTransformation = VisualTransformation.None,
         keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
         keyboardActions: KeyboardActions = KeyboardActions.Default,
-        minLines: Int = 1,
-        maxLines: Int = Int.MAX_VALUE,
-        onChange: (TextFieldValue) -> Unit
+        lines: TextLines = TextLines.Default,
+        onFocusChange: (FocusState) -> Unit = { },
+        onValueChange: (TextFieldValue) -> Unit
     ) : this(
         TextFieldValue(text),
         enabled,
@@ -44,13 +45,17 @@ open class SimpleTextFieldState(
         visualTransformation,
         keyboardOptions,
         keyboardActions,
-        minLines,
-        maxLines,
-        onChange
+        lines,
+        onFocusChange,
+        onValueChange
     )
 
-    final override fun onChange(value: TextFieldValue) {
-        _onChange(value)
+    override fun onFocusedChange(focusState: FocusState) {
+        _onFocusChange(focusState)
+    }
+
+    final override fun onValueChange(value: TextFieldValue) {
+        _onValueChange(value)
     }
 
     override fun copy(
@@ -61,8 +66,7 @@ open class SimpleTextFieldState(
         visualTransformation: VisualTransformation,
         keyboardOptions: KeyboardOptions,
         keyboardActions: KeyboardActions,
-        minLines: Int,
-        maxLines: Int
+        lines: TextLines
     ) = SimpleTextFieldState(
         value = value,
         enabled = enabled,
@@ -71,9 +75,9 @@ open class SimpleTextFieldState(
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
-        minLines = minLines,
-        maxLines = maxLines,
-        _onChange = _onChange
+        lines = lines,
+        _onFocusChange = _onFocusChange,
+        _onValueChange = _onValueChange
     )
 
     override fun equals(other: Any?) = other === this || (
@@ -85,9 +89,9 @@ open class SimpleTextFieldState(
                     other.visualTransformation == visualTransformation &&
                     other.keyboardOptions == keyboardOptions &&
                     other.keyboardActions == keyboardActions &&
-                    other.minLines == minLines &&
-                    other.maxLines == maxLines &&
-                    other._onChange == _onChange
+                    other.lines == lines &&
+                    other._onFocusChange == _onFocusChange &&
+                    other._onValueChange == _onValueChange
             )
 
 
@@ -99,9 +103,9 @@ open class SimpleTextFieldState(
         result = 31 * result + visualTransformation.hashCode()
         result = 31 * result + keyboardOptions.hashCode()
         result = 31 * result + keyboardActions.hashCode()
-        result = 31 * result + minLines
-        result = 31 * result + maxLines
-        result = 31 * result + _onChange.hashCode()
+        result = 31 * result + lines.hashCode()
+        result = 31 * result + _onFocusChange.hashCode()
+        result = 31 * result + _onValueChange.hashCode()
         return result
     }
 
@@ -113,8 +117,8 @@ open class SimpleTextFieldState(
         "visualTransformation=$visualTransformation",
         "keyboardOptions=$keyboardOptions",
         "keyboardActions=$keyboardActions",
-        "minLines=$minLines",
-        "maxLines=$maxLines",
-        "_onChange=$_onChange"
+        "lines=$lines",
+        "_onFocusChange=$_onFocusChange",
+        "_onChange=$_onValueChange"
     ).joinToString(", ")
 }

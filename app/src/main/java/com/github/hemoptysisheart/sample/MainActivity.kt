@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Content() {
-    TextField(state = SimpleTextFieldState(text = "", onChange = {}))
+    TextField(state = SimpleTextFieldState(text = "", onValueChange = { }))
 }
 
 @Composable
