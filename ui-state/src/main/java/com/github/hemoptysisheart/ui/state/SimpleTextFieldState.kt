@@ -6,6 +6,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import java.util.UUID
 
 /**
  * 콜백을 주입할 수 있는 텍스트 필드의 상태.
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 @Stable
 open class SimpleTextFieldState(
     override val value: TextFieldValue,
+    override val key: UUID = UUID.randomUUID(),
     override val enabled: Boolean = true,
     override val readOnly: Boolean = false,
     override val isError: Boolean = false,
@@ -28,6 +30,7 @@ open class SimpleTextFieldState(
 ) : TextFieldState {
     constructor(
         text: String,
+        key: UUID = UUID.randomUUID(),
         enabled: Boolean = true,
         readOnly: Boolean = false,
         isError: Boolean = false,
@@ -39,6 +42,7 @@ open class SimpleTextFieldState(
         onValueChange: (TextFieldValue) -> Unit
     ) : this(
         TextFieldValue(text),
+        key,
         enabled,
         readOnly,
         isError,
@@ -69,6 +73,7 @@ open class SimpleTextFieldState(
         lines: TextLines
     ) = SimpleTextFieldState(
         value = value,
+        key = key,
         enabled = enabled,
         readOnly = readOnly,
         isError = isError,

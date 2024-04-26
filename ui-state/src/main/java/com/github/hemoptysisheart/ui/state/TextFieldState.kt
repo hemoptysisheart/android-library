@@ -5,11 +5,17 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import java.util.UUID
 
 /**
  * 텍스트 필드의 상태.
  */
 interface TextFieldState {
+    /**
+     * 텍스트 필드의 고유 키.
+     */
+    val key: UUID
+
     /**
      * 텍스트 필드의 현재 값.
      */

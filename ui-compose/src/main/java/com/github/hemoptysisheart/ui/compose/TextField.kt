@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -55,7 +56,9 @@ fun TextField(
     androidx.compose.material3.TextField(
         value = state.value,
         onValueChange = state::onValueChange,
-        modifier = modifier.onFocusChanged { state.onFocusedChange(it) },
+        modifier = modifier
+            .testTag("${state.key}")
+            .onFocusChanged { state.onFocusedChange(it) },
         enabled = state.enabled,
         readOnly = state.readOnly,
         textStyle = textStyle,
