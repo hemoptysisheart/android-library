@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.hemoptysisheart.ui"
+    namespace = "com.github.hemoptysisheart.ui.compose"
     compileSdk = 34
 
     defaultConfig {
@@ -20,6 +20,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -55,9 +56,4 @@ dependencies {
 
     debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation(libs.androidx.ui.tooling)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
 }

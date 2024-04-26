@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":ui"))
+    implementation(project(":ui-compose"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
