@@ -12,9 +12,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.github.hemoptysisheart.ui.compose.preview.TextFieldStateProvider
 import com.github.hemoptysisheart.ui.state.MultiLines
-import com.github.hemoptysisheart.ui.state.SimpleTextFieldState
 import com.github.hemoptysisheart.ui.state.SingleLine
 import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.ui.state.TextLines
@@ -86,17 +85,6 @@ fun TextField(
         shape = shape,
         colors = colors
     )
-}
-
-private class TextFieldStateProvider : PreviewParameterProvider<TextFieldState> {
-    override val values = listOf(
-        SimpleTextFieldState(text = "", onValueChange = { }),
-        SimpleTextFieldState(text = "with value", onValueChange = { }),
-        SimpleTextFieldState(text = "disabled", enabled = false, onValueChange = { }),
-        SimpleTextFieldState(text = "read only", readOnly = true, onValueChange = { }),
-        SimpleTextFieldState(text = "with error", isError = true, onValueChange = { }),
-        SimpleTextFieldState(text = "multiple\nline\nfield", lines = MultiLines(4), onValueChange = { })
-    ).asSequence()
 }
 
 @Composable
