@@ -3,9 +3,9 @@ package com.github.hemoptysisheart.ui.compose
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,7 +23,7 @@ import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.ui.state.TextLines
 
 /**
- * 텍스트 필드.
+ * 외곽선이 있는 텍스트 필드.
  *
  * @param state 텍스트 필드의 상태.
  * @param modifier 컴포저의 Modifier.
@@ -40,7 +40,7 @@ import com.github.hemoptysisheart.ui.state.TextLines
  * @param colors 색상.
  */
 @Composable
-fun TextField(
+fun OutlinedTextField(
     state: TextFieldState,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = LocalTextStyle.current,
@@ -52,11 +52,11 @@ fun TextField(
     suffix: @Composable (() -> Unit)? = null,
     supportingText: @Composable (() -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    shape: Shape = TextFieldDefaults.shape,
-    colors: TextFieldColors = TextFieldDefaults.colors()
+    shape: Shape = OutlinedTextFieldDefaults.shape,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors()
 ) {
     val lines = state.lines
-    androidx.compose.material3.TextField(
+    androidx.compose.material3.OutlinedTextField(
         value = state.value,
         onValueChange = state::onValueChange,
         modifier = modifier
@@ -95,8 +95,8 @@ fun TextField(
 
 @Composable
 @Preview(showBackground = true)
-fun TextFieldPreview(@PreviewParameter(TextFieldStateProvider::class) state: TextFieldState) {
+fun OutlinedTextFieldPreview(@PreviewParameter(TextFieldStateProvider::class) state: TextFieldState) {
     Surface(modifier = Modifier.padding(10.dp)) {
-        TextField(state = state)
+        OutlinedTextField(state = state)
     }
 }
