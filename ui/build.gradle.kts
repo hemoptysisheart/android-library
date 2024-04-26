@@ -24,8 +24,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    buildFeatures {
+        compose = true
     }
 
     composeOptions {
@@ -40,10 +45,15 @@ android {
 }
 
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.material3)
+    api(platform(libs.androidx.compose.bom))
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.material3)
+    api(libs.androidx.ui)
+    api(libs.androidx.ui.graphics)
+    api(libs.androidx.ui.tooling.preview)
+
+    debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.androidx.ui.tooling)
 
     testImplementation(libs.junit)
 
