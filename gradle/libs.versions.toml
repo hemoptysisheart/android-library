@@ -7,13 +7,10 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.13.0" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.04.01" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation-android" }
-androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.7.0" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-test-rules = { module = "androidx.test:rules", version = "1.5.0" }
-androidx-test-runner = { module = "androidx.test:runner", version = "1.5.2" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
@@ -21,8 +18,6 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 junit = { group = "junit", name = "junit", version = "4.13.2" }
-kotlin-logging-jvm = { module = "io.github.microutils:kotlin-logging-jvm", version = "3.0.5" }
-logback-core = { module = "ch.qos.logback:logback-core", version = "1.5.6" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
