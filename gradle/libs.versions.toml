@@ -6,6 +6,7 @@ kotlin = "1.9.23"
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version = "1.9.0" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.13.0" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.04.01" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation-android" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.7.0" }
@@ -20,4 +21,5 @@ junit = { group = "junit", name = "junit", version = "4.13.2" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
