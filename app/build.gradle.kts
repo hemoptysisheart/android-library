@@ -53,6 +53,7 @@ android {
 
 dependencies {
     implementation(project(":ui-compose"))
+    implementation(project(":viewmodel"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
