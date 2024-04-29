@@ -1,13 +1,77 @@
 package com.github.hemoptysisheart.sample.ui.page
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
+import com.github.hemoptysisheart.ui.compose.OutlinedTextField
+import com.github.hemoptysisheart.ui.state.SimpleTextFieldState
 
 @Composable
 fun InputPage(navController: NavHostController) {
     Log.v(TAG, "#InputPage called.")
 
-    Text(text = "InputPage")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                state = SimpleTextFieldState(text = "", onValueChange = {}),
+                modifier = Modifier.weight(1F),
+                placeholder = {
+                    Text(text = "가로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                }
+            )
+            Text(text = "x", modifier = Modifier.padding(10.dp, 0.dp))
+            OutlinedTextField(
+                state = SimpleTextFieldState(text = "", onValueChange = {}),
+                modifier = Modifier.weight(1F),
+                placeholder = {
+                    Text(text = "세로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Button(modifier = Modifier.widthIn(200.dp), onClick = { navController.navigate("maze") }) {
+            Text(text = "미로 만들기", modifier = Modifier.padding(10.dp), fontWeight = Bold)
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Button(modifier = Modifier.widthIn(200.dp), onClick = { /*TODO*/ }) {
+            Text(text = "기본값", modifier = Modifier.padding(10.dp))
+        }
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true)
+private fun InputPagePreview() {
+    AndroidLibraryTheme {
+        InputPage(rememberNavController())
+    }
 }
