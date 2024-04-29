@@ -10,12 +10,15 @@ import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.SimpleTextFieldState
 import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.viewmodel.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class InputViewModel : ViewModel("InputViewModel") {
+@HiltViewModel
+class InputViewModel @Inject constructor() : ViewModel("InputViewModel") {
     companion object {
         const val DEFAULT_WIDTH = 10
         const val DEFAULT_HEIGHT = 10

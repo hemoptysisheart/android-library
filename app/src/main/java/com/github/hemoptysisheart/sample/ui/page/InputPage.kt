@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
@@ -38,7 +38,7 @@ import com.github.hemoptysisheart.ui.state.TextFieldState
 @Composable
 fun InputPage(
     navController: NavHostController,
-    viewModel: InputViewModel = viewModel()
+    viewModel: InputViewModel = hiltViewModel()
 ) {
     Log.v(TAG, "#InputPage args : navController=$navController, viewModel=$viewModel")
 
