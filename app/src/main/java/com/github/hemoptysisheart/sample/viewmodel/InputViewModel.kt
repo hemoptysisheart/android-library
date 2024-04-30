@@ -5,18 +5,15 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.github.hemoptysisheart.ui.state.SimpleTextFieldState
 import com.github.hemoptysisheart.ui.state.TextFieldState
+import com.github.hemoptysisheart.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.update
 
-class InputViewModel : ViewModel() {
+class InputViewModel : ViewModel("InputViewModel") {
     companion object {
-        private const val TAG = "InputViewModel"
-
         const val DEFAULT_WIDTH = 10
         const val DEFAULT_HEIGHT = 10
     }
@@ -45,19 +42,27 @@ class InputViewModel : ViewModel() {
     )
     val height: StateFlow<TextFieldState> = _height
 
+    /**
+     * TODO 단위테스트 작성 후 `@Suppress("MemberVisibilityCanBePrivate")` 제거.
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
     fun onChangeWidth(value: TextFieldValue) {
-        Log.w(TAG, "#onChangeWidth called : TODO")
+        Log.w(tag, "#onChangeWidth args : value=$value")
 
-        viewModelScope.launch {
-            _width.emit(_width.value.copy(value = value))
+        launch {
+            _width.update { it.copy(value = value) }
         }
     }
 
+    /**
+     * TODO 단위테스트 작성 후 `@Suppress("MemberVisibilityCanBePrivate")` 제거.
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
     fun onChangeHeight(value: TextFieldValue) {
-        Log.w(TAG, "#onChangeHeight called : TODO")
+        Log.w(tag, "#onChangeHeight args : value=$value")
 
-        viewModelScope.launch {
-            _height.emit(_height.value.copy(value = value))
+        launch {
+            _height.update { it.copy(value = value) }
         }
     }
 }

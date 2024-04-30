@@ -35,7 +35,7 @@ fun InputPage(
     navController: NavHostController,
     viewModel: InputViewModel = viewModel()
 ) {
-    Log.v(TAG, "#InputPage called.")
+    Log.v(TAG, "#InputPage args : navController=$navController, viewModel=$viewModel")
 
     val width by viewModel.width.collectAsStateWithLifecycle()
     val height by viewModel.height.collectAsStateWithLifecycle()
