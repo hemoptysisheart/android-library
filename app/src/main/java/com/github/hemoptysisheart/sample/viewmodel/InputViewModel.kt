@@ -5,9 +5,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
+import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.SimpleTextFieldState
 import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.viewmodel.ViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -63,6 +66,25 @@ class InputViewModel : ViewModel("InputViewModel") {
 
         launch {
             _height.update { it.copy(value = value) }
+        }
+    }
+
+    fun onClickGenerate(onComplete: () -> Unit) {
+        Log.d(tag, "#onClickGenerate args : onComplete=$onComplete")
+
+        launch(BLOCKING) {
+            delay(2_000)
+            onComplete()
+        }
+    }
+
+    fun onClickDefault() {
+        Log.d(tag, "#onClickDefault called.")
+
+        launch(VISIBLE) {
+            delay(2_000)
+            _width.update { it.copy(TextFieldValue("$DEFAULT_WIDTH")) }
+            _height.update { it.copy(TextFieldValue("$DEFAULT_HEIGHT")) }
         }
     }
 }

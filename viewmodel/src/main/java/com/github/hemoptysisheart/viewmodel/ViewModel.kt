@@ -2,10 +2,15 @@ package com.github.hemoptysisheart.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.github.hemoptysisheart.ui.state.InteractionImpact
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -15,54 +20,108 @@ import kotlin.coroutines.EmptyCoroutineContext
 open class ViewModel(
     protected val tag: String
 ) : androidx.lifecycle.ViewModel() {
+    private val visibleImpacts = AtomicInteger(0)
+    private val blockingImpacts = AtomicInteger(0)
+
+    private val _visibleProgress = MutableStateFlow(false)
+    val visibleProgress: StateFlow<Boolean> = _visibleProgress
+
+    private val _blockingProgress = MutableStateFlow(false)
+    val blockingProgress: StateFlow<Boolean> = _blockingProgress
+
     /**
      * [androidx.lifecycle.viewModelScope]를 이용하여 새 코루틴으로 [block]을 실행한다.
      *
-     * @param exceptionHandler 예외 처리기.
+     * @param impact 실행한 코루틴이 사용자 인터랙션에 미치는 영향.
+     * @param exceptionHandler [block]에서 발생한 예외 처리.
      * @param context 사용할 [CoroutineContext].
      * @param start [CoroutineStart].
      * @param block 실행할 블록.
      *
      * @return [kotlinx.coroutines.Job].
      */
-    @Suppress("NOTHING_TO_INLINE")
-    protected inline fun launch(
-        noinline exceptionHandler: (Exception) -> Unit = { e ->
+    protected fun launch(
+        impact: InteractionImpact = InteractionImpact.NONE,
+        exceptionHandler: (Exception) -> Unit = { e ->
             Log.w(tag, "#exceptionHandler : ${e.message}", e)
+            throw e
         },
         context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        noinline block: suspend CoroutineScope.() -> Unit
-    ) = viewModelScope.launch(context, start) {
+        block: suspend CoroutineScope.() -> Unit
+    ): Job = viewModelScope.launch(context, start) {
         try {
+            when (impact) {
+                InteractionImpact.NONE -> {}
+
+                InteractionImpact.VISIBLE ->
+                    _visibleProgress.emit(0 < visibleImpacts.incrementAndGet())
+
+                InteractionImpact.BLOCKING ->
+                    _blockingProgress.emit(0 < blockingImpacts.incrementAndGet())
+            }
+
             block()
         } catch (e: Exception) {
             exceptionHandler(e)
+        } finally {
+            when (impact) {
+                InteractionImpact.NONE -> {}
+
+                InteractionImpact.VISIBLE ->
+                    _visibleProgress.emit(0 < visibleImpacts.decrementAndGet())
+
+                InteractionImpact.BLOCKING ->
+                    _blockingProgress.emit(0 < blockingImpacts.decrementAndGet())
+            }
         }
     }
 
     /**
      * [androidx.lifecycle.viewModelScope]를 이용하여 새 코루틴으로 [block]을 실행한다.
      *
-     * @param exceptionHandler 예외 처리기.
+     * @param impact 실행한 코루틴이 사용자 인터랙션에 미치는 영향.
+     * @param exceptionHandler [block]에서 발생한 예외 처리.
      * @param context 사용할 [CoroutineContext].
      * @param start [CoroutineStart].
      * @param block 실행할 블록.
      *
      * @return [T]의 [kotlinx.coroutines.Deferred].
      */
-    protected inline fun <reified T> async(
-        noinline exceptionHandler: (Exception) -> Unit = { e ->
+    protected fun <T> async(
+        impact: InteractionImpact = InteractionImpact.NONE,
+        exceptionHandler: (Exception) -> Unit = { e ->
             Log.w(tag, "#exceptionHandler : ${e.message}", e)
+            throw e
         },
         context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        noinline block: suspend CoroutineScope.() -> T
+        block: suspend CoroutineScope.() -> T
     ) = viewModelScope.async(context, start) {
         try {
+            when (impact) {
+                InteractionImpact.NONE -> {}
+
+                InteractionImpact.VISIBLE ->
+                    _visibleProgress.emit(0 < visibleImpacts.incrementAndGet())
+
+                InteractionImpact.BLOCKING ->
+                    _blockingProgress.emit(0 < blockingImpacts.incrementAndGet())
+            }
+
             block()
         } catch (e: Exception) {
             exceptionHandler(e)
+        } finally {
+            when (impact) {
+                InteractionImpact.NONE -> {}
+
+                InteractionImpact.VISIBLE ->
+                    _visibleProgress.emit(0 < visibleImpacts.decrementAndGet())
+
+                InteractionImpact.BLOCKING ->
+                    _blockingProgress.emit(0 < blockingImpacts.decrementAndGet())
+            }
         }
     }
 }
