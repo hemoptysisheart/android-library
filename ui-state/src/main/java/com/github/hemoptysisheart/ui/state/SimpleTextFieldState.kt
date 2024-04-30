@@ -4,6 +4,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import java.util.UUID
@@ -41,7 +42,7 @@ open class SimpleTextFieldState(
         onFocusChange: (FocusState) -> Unit = { },
         onValueChange: (TextFieldValue) -> Unit
     ) : this(
-        TextFieldValue(text),
+        TextFieldValue(text = text, selection = TextRange(text.length)),
         key,
         enabled,
         readOnly,
