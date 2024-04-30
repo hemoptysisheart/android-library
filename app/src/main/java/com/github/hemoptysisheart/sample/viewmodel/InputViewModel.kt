@@ -84,10 +84,12 @@ class InputViewModel @Inject constructor() : ViewModel("InputViewModel") {
     fun onClickDefault() {
         Log.d(tag, "#onClickDefault called.")
 
-        launch(VISIBLE) {
+        async(VISIBLE) {
             delay(2_000)
             _width.update { it.copy(TextFieldValue("$DEFAULT_WIDTH")) }
             _height.update { it.copy(TextFieldValue("$DEFAULT_HEIGHT")) }
+        }.invokeOnCompletion { e ->
+            Log.w(tag, "#onClickDefault.invokeOnCompletion args : e=$e", e)
         }
     }
 }
