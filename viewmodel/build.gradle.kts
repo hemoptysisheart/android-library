@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":ui-state"))
-    implementation(project(":ui-compose"))
+    api(project(":ui-state"))
+    api(project(":ui-compose"))
+
+    implementation(libs.androidx.lifecycle.viewmodel)
 }
