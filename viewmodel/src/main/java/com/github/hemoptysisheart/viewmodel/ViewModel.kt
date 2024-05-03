@@ -1,6 +1,8 @@
 package com.github.hemoptysisheart.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.github.hemoptysisheart.ui.state.InteractionImpact
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +21,7 @@ import kotlin.coroutines.EmptyCoroutineContext
  */
 open class ViewModel(
     protected val tag: String
-) : androidx.lifecycle.ViewModel() {
+) : androidx.lifecycle.ViewModel(), DefaultLifecycleObserver {
     private val visibleImpacts = AtomicInteger(0)
     private val blockingImpacts = AtomicInteger(0)
 
@@ -123,5 +125,40 @@ open class ViewModel(
                     _blockingProgress.emit(0 < blockingImpacts.decrementAndGet())
             }
         }
+    }
+
+    override fun onCreate(owner: LifecycleOwner) {
+        Log.d(tag, "#onCreate args : owner=$owner")
+        super.onCreate(owner)
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        Log.d(tag, "#onStart : owner=$owner")
+        super.onStart(owner)
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        Log.d(tag, "#onResume : owner=$owner")
+        super.onResume(owner)
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        Log.d(tag, "#onPause args : owner=$owner")
+        super.onPause(owner)
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        Log.d(tag, "#onStop args : owner=$owner")
+        super.onStop(owner)
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        Log.d(tag, "#onDestroy args : owner=$owner")
+        super.onDestroy(owner)
+    }
+
+    override fun onCleared() {
+        Log.d(tag, "#onCleared called.")
+        super.onCleared()
     }
 }
