@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidlibrary">
         <activity
-            android:name=".app.activity.MainActivity"
+            android:name=".app.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Androidlibrary">
             <intent-filter>

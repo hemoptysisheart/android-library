@@ -1,4 +1,4 @@
-package com.github.hemoptysisheart.sample.app.activity
+package com.github.hemoptysisheart.sample.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
