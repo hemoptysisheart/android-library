@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import com.github.hemoptysisheart.sample.model.SampleModel
 import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.SimpleTextFieldState
@@ -18,7 +19,9 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class InputViewModel @Inject constructor() : ViewModel("InputViewModel") {
+class InputViewModel @Inject constructor(
+    private val sampleModel: SampleModel
+) : ViewModel("InputViewModel") {
     companion object {
         const val DEFAULT_WIDTH = 10
         const val DEFAULT_HEIGHT = 10
@@ -47,6 +50,10 @@ class InputViewModel @Inject constructor() : ViewModel("InputViewModel") {
         )
     )
     val height: StateFlow<TextFieldState> = _height
+
+    init {
+        Log.d(tag, "#init : sampleModel=$sampleModel")
+    }
 
     /**
      * TODO 단위테스트 작성 후 `@Suppress("MemberVisibilityCanBePrivate")` 제거.
