@@ -22,7 +22,7 @@ fun SplashPage(navController: NavHostController) {
     LaunchedEffect(Unit) {
         delay(5_000)
         navController.popBackStack()
-        navController.navigate("input")
+        navController.navigate("select-size")
     }
 
     Column(
