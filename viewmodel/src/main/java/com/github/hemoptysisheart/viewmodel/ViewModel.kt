@@ -20,6 +20,9 @@ import kotlin.coroutines.EmptyCoroutineContext
  * [androidx.lifecycle.ViewModel]에 일부 기능을 추가한 클래스.
  */
 open class ViewModel(
+    /**
+     * 로그에 사용할 태그. 추천값은 클래스 이름.
+     */
     protected val tag: String
 ) : androidx.lifecycle.ViewModel(), DefaultLifecycleObserver {
     /**
@@ -47,7 +50,7 @@ open class ViewModel(
     val blockingProgress: StateFlow<Boolean> = _blockingProgress
 
     init {
-        Log.d(tag, "#init")
+        Log.d(tag, "#init called.")
     }
 
     /**

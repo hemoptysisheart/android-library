@@ -30,15 +30,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
-import com.github.hemoptysisheart.sample.viewmodel.InputViewModel
+import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
 import com.github.hemoptysisheart.ui.navigation.viewModel
 import com.github.hemoptysisheart.ui.state.TextFieldState
 
 @Composable
-fun InputPage(
+fun SelectSizePage(
     navController: NavHostController,
-    viewModel: InputViewModel = viewModel()
+    viewModel: SelectSizeViewModel = viewModel()
 ) {
     Log.v(TAG, "#InputPage args : navController=$navController, viewModel=$viewModel")
 
@@ -134,6 +134,6 @@ private fun InputPateContent(
 @Preview(showSystemUi = true)
 private fun InputPagePreview() {
     AndroidLibraryTheme {
-        InputPage(rememberNavController())
+        SelectSizePage(rememberNavController())
     }
 }

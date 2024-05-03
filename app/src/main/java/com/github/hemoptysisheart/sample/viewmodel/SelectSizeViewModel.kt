@@ -19,9 +19,9 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class InputViewModel @Inject constructor(
+class SelectSizeViewModel @Inject constructor(
     private val sampleModel: SampleModel
-) : ViewModel("InputViewModel") {
+) : ViewModel("SelectSizeViewModel") {
     companion object {
         const val DEFAULT_WIDTH = 10
         const val DEFAULT_HEIGHT = 10
@@ -99,4 +99,10 @@ class InputViewModel @Inject constructor(
             Log.w(tag, "#onClickDefault.invokeOnCompletion args : e=$e", e)
         }
     }
+
+    override fun toString() = listOf(
+        "sampleModel=$sampleModel",
+        "width=$width",
+        "height=$height"
+    ).joinToString(", ", "$tag(${super.toString()}", ")")
 }
