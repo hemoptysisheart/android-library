@@ -16,7 +16,7 @@ import java.util.UUID
  * 로직을 실행할 수 있도록 해야 한다.
  */
 @Stable
-open class SimpleTextFieldState(
+open class SimpleTextFieldState public constructor(
     override val value: TextFieldValue,
     override val key: UUID = UUID.randomUUID(),
     override val enabled: Boolean = true,
@@ -26,8 +26,8 @@ open class SimpleTextFieldState(
     override val keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     override val keyboardActions: KeyboardActions = KeyboardActions.Default,
     override val lines: TextLines = TextLines.Default,
-    private val _onFocusChange: (FocusState) -> Unit = { },
-    private val _onValueChange: (TextFieldValue) -> Unit
+    protected val _onFocusChange: (FocusState) -> Unit = { },
+    protected val _onValueChange: (TextFieldValue) -> Unit
 ) : TextFieldState {
     constructor(
         text: String,

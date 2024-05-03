@@ -8,7 +8,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.github.hemoptysisheart.sample.model.SampleModel
 import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
-import com.github.hemoptysisheart.ui.state.SimpleTextFieldState
+import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
 import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.viewmodel.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,25 +28,27 @@ class SelectSizeViewModel @Inject constructor(
     }
 
     private val _width = MutableStateFlow(
-        SimpleTextFieldState(
-            text = "$DEFAULT_WIDTH",
+        ParsableTextFieldState(
+            value = DEFAULT_WIDTH,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
             ),
-            onValueChange = ::onChangeWidth
+            onValueChange = ::onChangeWidth,
+            parser = { it.toInt(10) }
         )
     )
     val width: StateFlow<TextFieldState> = _width
 
     private val _height = MutableStateFlow(
-        SimpleTextFieldState(
-            text = "$DEFAULT_HEIGHT",
+        ParsableTextFieldState(
+            value = DEFAULT_HEIGHT,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
             ),
-            onValueChange = ::onChangeHeight
+            onValueChange = ::onChangeHeight,
+            parser = { it.toInt(10) }
         )
     )
     val height: StateFlow<TextFieldState> = _height
