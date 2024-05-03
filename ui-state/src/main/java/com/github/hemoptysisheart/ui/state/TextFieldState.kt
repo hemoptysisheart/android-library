@@ -47,7 +47,7 @@ interface TextFieldState {
     /**
      * 텍스트 필드의 상태를 복사한 새로운 상태를 반환.
      *
-     * @param value 새로운 값.
+     * @param text 새로운 값.
      * @return 복사한 새로운 상태.
      */
     fun copy(
