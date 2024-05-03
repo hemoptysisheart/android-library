@@ -22,14 +22,33 @@ import kotlin.coroutines.EmptyCoroutineContext
 open class ViewModel(
     protected val tag: String
 ) : androidx.lifecycle.ViewModel(), DefaultLifecycleObserver {
+    /**
+     * 사용자 인터랙션을 막지 않지만 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
+     */
     private val visibleImpacts = AtomicInteger(0)
+
+    /**
+     * 사용자 인터랙션을 막으면서 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
+     */
     private val blockingImpacts = AtomicInteger(0)
 
     private val _visibleProgress = MutableStateFlow(false)
+
+    /**
+     * 사용자 인터랙션을 막지는 않지만 처리중임을 표시해야 하는지 여부.
+     */
     val visibleProgress: StateFlow<Boolean> = _visibleProgress
 
     private val _blockingProgress = MutableStateFlow(false)
+
+    /**
+     * 사용자 인터랙션을 막는 처리중임을 표시해야 하는지 여부.
+     */
     val blockingProgress: StateFlow<Boolean> = _blockingProgress
+
+    init {
+        Log.d(tag, "#init")
+    }
 
     /**
      * [androidx.lifecycle.viewModelScope]를 이용하여 새 코루틴으로 [block]을 실행한다.
@@ -127,38 +146,117 @@ open class ViewModel(
         }
     }
 
-    override fun onCreate(owner: LifecycleOwner) {
+    /**
+     * 공통 처리를 하기 위해 [onCreate]를 `final`로 선언하고, 구현 클래스 내부에서 처리할 내용을 위해 마련한 빈 메서드.
+     */
+    protected open fun doOnCreate(owner: LifecycleOwner) {}
+
+    /**
+     * 공통 처리를 하기 위해 [onStart]를 `final`로 선언하고, 구현 클래스 내부에서 처리할 내용을 위해 마련한 빈 메서드.
+     */
+    protected open fun doOnStart(owner: LifecycleOwner) {}
+
+    /**
+     * 공통 처리를 하기 위해 [onResume]를 `final`로 선언하고, 구현 클래스 내부에서 처리할 내용을 위해 마련한 빈 메서드.
+     */
+    protected open fun doOnResume(owner: LifecycleOwner) {}
+
+    /**
+     * 공통 처리를 하기 위해 [onPause]를 `final`로 선언하고, 구현 클래스 내부에서 처리할 내용을 위해 마련한 빈 메서드.
+     */
+    protected open fun doOnPause(owner: LifecycleOwner) {}
+
+    /**
+     * 공통 처리를 하기 위해 [onStop]를 `final`로 선언하고, 구현 클래스 내부에서 처리할 내용을 위해 마련한 빈 메서드.
+     */
+    protected open fun doOnStop(owner: LifecycleOwner) {}
+
+    /**
+     * 공통 처리를 하기 위해 [onDestroy]를 `final`로 선언하고, 구현 클래스 내부에서 처리할 내용을 위해 마련한 빈 메서드.
+     */
+    protected open fun doOnDestroy(owner: LifecycleOwner) {}
+
+    /**
+     * 공통 처리를 하기 위해 [onCleared]를 `final`로 선언하고, 구현 클래스 내부에서 처리할 내용을 위해 마련한 빈 메서드.
+     */
+    protected open fun doOnCleared() {}
+
+    /**
+     * @see doOnCreate
+     */
+    final override fun onCreate(owner: LifecycleOwner) {
         Log.d(tag, "#onCreate args : owner=$owner")
         super.onCreate(owner)
+
+        doOnCreate(owner)
     }
 
-    override fun onStart(owner: LifecycleOwner) {
+    /**
+     * @see doOnStart
+     */
+    final override fun onStart(owner: LifecycleOwner) {
         Log.d(tag, "#onStart : owner=$owner")
         super.onStart(owner)
+
+        doOnStart(owner)
     }
 
-    override fun onResume(owner: LifecycleOwner) {
+    /**
+     * @see doOnResume
+     */
+    final override fun onResume(owner: LifecycleOwner) {
         Log.d(tag, "#onResume : owner=$owner")
         super.onResume(owner)
+
+        doOnResume(owner)
     }
 
-    override fun onPause(owner: LifecycleOwner) {
+    /**
+     * @see doOnPause
+     */
+    final override fun onPause(owner: LifecycleOwner) {
         Log.d(tag, "#onPause args : owner=$owner")
         super.onPause(owner)
+
+        doOnPause(owner)
     }
 
-    override fun onStop(owner: LifecycleOwner) {
+    /**
+     * @see doOnStop
+     */
+    final override fun onStop(owner: LifecycleOwner) {
         Log.d(tag, "#onStop args : owner=$owner")
         super.onStop(owner)
+
+        doOnStop(owner)
     }
 
-    override fun onDestroy(owner: LifecycleOwner) {
+    /**
+     * @see doOnDestroy
+     */
+    final override fun onDestroy(owner: LifecycleOwner) {
         Log.d(tag, "#onDestroy args : owner=$owner")
         super.onDestroy(owner)
+
+        doOnDestroy(owner)
     }
 
-    override fun onCleared() {
+    /**
+     * @see doOnCleared
+     */
+    final override fun onCleared() {
         Log.d(tag, "#onCleared called.")
         super.onCleared()
+
+        doOnCleared()
     }
+
+    override fun toString() = listOf(
+        "tag='$tag'",
+        "visibleImpacts=$visibleImpacts",
+        "blockingImpacts=$blockingImpacts",
+        "visibleProgress=${visibleProgress.value}",
+        "blockingProgress=${blockingProgress.value}"
+    ).joinToString(", ")
 }
+
