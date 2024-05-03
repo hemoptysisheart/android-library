@@ -26,19 +26,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.InputViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
+import com.github.hemoptysisheart.ui.navigation.viewModel
 import com.github.hemoptysisheart.ui.state.TextFieldState
 
 @Composable
 fun InputPage(
     navController: NavHostController,
-    viewModel: InputViewModel = hiltViewModel()
+    viewModel: InputViewModel = viewModel()
 ) {
     Log.v(TAG, "#InputPage args : navController=$navController, viewModel=$viewModel")
 

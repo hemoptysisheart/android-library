@@ -1,25 +1,18 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.github.hemoptysisheart.sample"
+    namespace = "com.github.hemoptysisheart.ui.navigation"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.github.hemoptysisheart.sample"
         minSdk = 31
-        targetSdk = 34
-        versionCode = 1
-        versionName = "0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -54,17 +47,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":ui-compose"))
-    implementation(project(":ui-navigation"))
+    api(project(":viewmodel"))
 
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.hilt)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     ksp(libs.hilt.compiler)
-
-    debugImplementation(libs.androidx.ui.test.manifest)
-    debugImplementation(libs.androidx.ui.tooling)
 }

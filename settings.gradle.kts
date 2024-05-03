@@ -29,6 +29,7 @@ include(
     ":ui-state",
     ":ui-compose",
     ":viewmodel",
+    ":ui-navigation",
 
     ":app"
 )
