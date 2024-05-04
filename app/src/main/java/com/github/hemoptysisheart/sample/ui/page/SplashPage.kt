@@ -20,7 +20,7 @@ fun SplashPage(navController: NavHostController) {
     Log.v(TAG, "#SplashPage called.")
 
     LaunchedEffect(Unit) {
-        delay(5_000)
+        delay(3_000)
         navController.popBackStack()
         navController.navigate("select-size")
     }

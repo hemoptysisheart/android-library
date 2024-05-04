@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,26 +30,32 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.github.hemoptysisheart.sample.model.SampleModelImpl
+import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
+import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
 import com.github.hemoptysisheart.ui.navigation.viewModel
 import com.github.hemoptysisheart.ui.state.TextFieldState
+import com.github.hemoptysisheart.ui.state.TopBarState
 
 @Composable
 fun SelectSizePage(
     navController: NavHostController,
     viewModel: SelectSizeViewModel = viewModel()
 ) {
-    Log.v(TAG, "#InputPage args : navController=$navController, viewModel=$viewModel")
+    Log.v(TAG, "#SelectSizePage args : navController=$navController, viewModel=$viewModel")
 
+    val topBar by viewModel.topBar.collectAsStateWithLifecycle()
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
     val width by viewModel.width.collectAsStateWithLifecycle()
     val height by viewModel.height.collectAsStateWithLifecycle()
 
-    InputPateContent(
+    SelectSizePageContent(
         navController,
+        topBar,
         visibleProgress,
         blockingProgress,
         width,
@@ -59,8 +66,9 @@ fun SelectSizePage(
 }
 
 @Composable
-private fun InputPateContent(
+private fun SelectSizePageContent(
     navController: NavHostController,
+    topBar: TopBarState,
     visibleProgress: Boolean,
     blockingProgress: Boolean,
     width: TextFieldState,
@@ -68,63 +76,87 @@ private fun InputPateContent(
     onClickGenerate: (() -> Unit) -> Unit = { },
     onClickDefault: () -> Unit = { }
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        if (blockingProgress) {
-            Dialog(onDismissRequest = { }) {
-                CircularProgressIndicator()
-            }
-        } else if (visibleProgress) {
-            LinearProgressIndicator(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .zIndex(Float.MAX_VALUE)
-            )
-        }
+    Log.v(
+        TAG,
+        listOf(
+            "navController=$navController",
+            "topBar=$topBar",
+            "visibleProgress=$visibleProgress",
+            "blockingProgress=$blockingProgress",
+            "width=$width",
+            "height=$height",
+            "onClickGenerate=$onClickGenerate",
+            "onClickDefault=$onClickDefault"
+        ).joinToString(", ", "#SelectSizePage args : ")
+    )
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = { TopBar(navController, topBar) },
+        bottomBar = { BottomBar(navController) }
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedTextField(
-                    state = width,
-                    modifier = Modifier.weight(1F),
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-                    placeholder = {
-                        Text(text = "가로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-                    }
-                )
-                Text(text = "x", modifier = Modifier.padding(10.dp, 0.dp))
-                OutlinedTextField(
-                    state = height,
-                    modifier = Modifier.weight(1F),
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-                    placeholder = {
-                        Text(text = "세로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-                    }
-                )
-            }
-            Spacer(modifier = Modifier.height(30.dp))
-            Button(
-                modifier = Modifier.widthIn(200.dp),
-                onClick = {
-                    onClickGenerate {
-                        navController.navigate("maze")
-                    }
+            if (blockingProgress) {
+                Dialog(onDismissRequest = { }) {
+                    CircularProgressIndicator()
                 }
-            ) {
-                Text(text = "미로 만들기", modifier = Modifier.padding(10.dp), fontWeight = Bold)
+            } else if (visibleProgress) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .zIndex(Float.MAX_VALUE)
+                )
             }
-            Spacer(modifier = Modifier.height(30.dp))
-            Button(modifier = Modifier.widthIn(200.dp), onClick = onClickDefault) {
-                Text(text = "기본값", modifier = Modifier.padding(10.dp))
+
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        state = width,
+                        modifier = Modifier.weight(1F),
+                        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
+                        placeholder = {
+                            Text(text = "가로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                        }
+                    )
+                    Text(text = "x", modifier = Modifier.padding(10.dp, 0.dp))
+                    OutlinedTextField(
+                        state = height,
+                        modifier = Modifier.weight(1F),
+                        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
+                        placeholder = {
+                            Text(text = "세로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                        }
+                    )
+                }
+                Spacer(modifier = Modifier.height(30.dp))
+                Button(
+                    modifier = Modifier.widthIn(200.dp),
+                    onClick = {
+                        onClickGenerate {
+                            navController.navigate("maze")
+                        }
+                    }
+                ) {
+                    Text(text = "미로 만들기", modifier = Modifier.padding(10.dp), fontWeight = Bold)
+                }
+                Spacer(modifier = Modifier.height(30.dp))
+                Button(modifier = Modifier.widthIn(200.dp), onClick = onClickDefault) {
+                    Text(text = "기본값", modifier = Modifier.padding(10.dp))
+                }
             }
         }
     }
@@ -134,6 +166,6 @@ private fun InputPateContent(
 @Preview(showSystemUi = true)
 private fun InputPagePreview() {
     AndroidLibraryTheme {
-        SelectSizePage(rememberNavController())
+        SelectSizePage(rememberNavController(), SelectSizeViewModel(SampleModelImpl()))
     }
 }

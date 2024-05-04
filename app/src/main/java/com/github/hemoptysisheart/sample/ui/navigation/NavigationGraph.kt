@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.github.hemoptysisheart.sample.ui.page.HistoryPage
 import com.github.hemoptysisheart.sample.ui.page.MazeScreen
 import com.github.hemoptysisheart.sample.ui.page.SelectSizePage
 import com.github.hemoptysisheart.sample.ui.page.SplashPage
@@ -19,6 +20,10 @@ fun NavigationGraph() {
         composable("select-size") {
             SelectSizePage(navController)
         }
+        composable("history") {
+            HistoryPage(navController)
+        }
+
         composable("maze") {
             MazeScreen(navController)
         }

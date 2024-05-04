@@ -5,6 +5,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.github.hemoptysisheart.ui.state.InteractionImpact
+import com.github.hemoptysisheart.ui.state.TopBarState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
@@ -23,7 +24,11 @@ open class ViewModel(
     /**
      * 로그에 사용할 태그. 추천값은 클래스 이름.
      */
-    protected val tag: String
+    protected val tag: String,
+    /**
+     * `@Composable Scaffold`의 상단 바 초기값.
+     */
+    topBar: TopBarState = object : TopBarState {}
 ) : androidx.lifecycle.ViewModel(), DefaultLifecycleObserver {
     /**
      * 사용자 인터랙션을 막지 않지만 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
@@ -34,6 +39,9 @@ open class ViewModel(
      * 사용자 인터랙션을 막으면서 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
      */
     private val blockingImpacts = AtomicInteger(0)
+
+    private val _topBar = MutableStateFlow<TopBarState>(topBar)
+    val topBar: StateFlow<TopBarState> = _topBar
 
     private val _visibleProgress = MutableStateFlow(false)
 
@@ -185,6 +193,8 @@ open class ViewModel(
     protected open fun doOnCleared() {}
 
     /**
+     * **주의 : ViewModel 인스턴스의 수명주기가 아니라 UI(화면 단위)의 수명주기이기 때문에, 다른 화면으로 이동했다가 돌아올 때도 실행된다.**
+     *
      * @see doOnCreate
      */
     final override fun onCreate(owner: LifecycleOwner) {
@@ -195,6 +205,8 @@ open class ViewModel(
     }
 
     /**
+     * **주의 : ViewModel 인스턴스의 수명주기가 아니라 UI(화면 단위)의 수명주기이기 때문에, 다른 화면으로 이동했다가 돌아올 때도 실행된다.**
+     *
      * @see doOnStart
      */
     final override fun onStart(owner: LifecycleOwner) {
@@ -225,6 +237,8 @@ open class ViewModel(
     }
 
     /**
+     * **주의 : ViewModel 인스턴스의 수명주기가 아니라 UI(화면 단위)의 수명주기이기 때문에, 다른 화면으로 이동할 때도 실행된다.**
+     *
      * @see doOnStop
      */
     final override fun onStop(owner: LifecycleOwner) {
@@ -258,6 +272,7 @@ open class ViewModel(
         "tag='$tag'",
         "visibleImpacts=$visibleImpacts",
         "blockingImpacts=$blockingImpacts",
+        "topBar=${_topBar.value}",
         "visibleProgress=${visibleProgress.value}",
         "blockingProgress=${blockingProgress.value}"
     ).joinToString(", ")
