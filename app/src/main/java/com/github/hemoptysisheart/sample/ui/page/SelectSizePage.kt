@@ -45,7 +45,7 @@ fun SelectSizePage(
     navController: NavHostController,
     viewModel: SelectSizeViewModel = viewModel()
 ) {
-    Log.v(TAG, "#InputPage args : navController=$navController, viewModel=$viewModel")
+    Log.v(TAG, "#SelectSizePage args : navController=$navController, viewModel=$viewModel")
 
     val topBar by viewModel.topBar.collectAsStateWithLifecycle()
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
@@ -53,7 +53,7 @@ fun SelectSizePage(
     val width by viewModel.width.collectAsStateWithLifecycle()
     val height by viewModel.height.collectAsStateWithLifecycle()
 
-    InputPateContent(
+    SelectSizePageContent(
         navController,
         topBar,
         visibleProgress,
@@ -66,7 +66,7 @@ fun SelectSizePage(
 }
 
 @Composable
-private fun InputPateContent(
+private fun SelectSizePageContent(
     navController: NavHostController,
     topBar: TopBarState,
     visibleProgress: Boolean,
@@ -87,7 +87,7 @@ private fun InputPateContent(
             "height=$height",
             "onClickGenerate=$onClickGenerate",
             "onClickDefault=$onClickDefault"
-        ).joinToString(", ", "#InputPateContent args : ")
+        ).joinToString(", ", "#SelectSizePage args : ")
     )
 
     Scaffold(
