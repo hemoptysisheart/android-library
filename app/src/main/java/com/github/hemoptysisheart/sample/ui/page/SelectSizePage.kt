@@ -30,7 +30,6 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.github.hemoptysisheart.sample.model.SampleModelImpl
 import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
@@ -166,6 +165,6 @@ private fun SelectSizePageContent(
 @Preview(showSystemUi = true)
 private fun InputPagePreview() {
     AndroidLibraryTheme {
-        SelectSizePage(rememberNavController(), SelectSizeViewModel(SampleModelImpl()))
+        SelectSizePage(rememberNavController(), SelectSizeViewModel())
     }
 }
