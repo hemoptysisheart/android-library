@@ -2,7 +2,13 @@ package com.github.hemoptysisheart.sample.app
 
 import android.app.Application
 import android.util.Log
+import com.github.hemoptysisheart.sample.model.FallbackExceptionHandler
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltAndroidApp
 class AndroidLibraryApplication : Application() {
@@ -10,9 +16,20 @@ class AndroidLibraryApplication : Application() {
         private const val TAG = "AndroidLibraryApplication"
     }
 
+    @Inject
+    lateinit var fallbackExceptionHandler: FallbackExceptionHandler
+
     override fun onCreate() {
         Log.d(TAG, "#onCreate called.")
         super.onCreate()
+
+        Thread.setDefaultUncaughtExceptionHandler(fallbackExceptionHandler)
+
+        // 테스트용 예외 발생 샘플.
+        CoroutineScope(SupervisorJob()).launch {
+            delay(1000)
+            throw RuntimeException("Test exception")
+        }
     }
 
     override fun onTerminate() {
