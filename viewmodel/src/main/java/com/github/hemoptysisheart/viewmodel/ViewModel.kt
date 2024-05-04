@@ -193,6 +193,8 @@ open class ViewModel(
     protected open fun doOnCleared() {}
 
     /**
+     * **주의 : ViewModel 인스턴스의 수명주기가 아니라 UI(화면 단위)의 수명주기이기 때문에, 다른 화면으로 이동했다가 돌아올 때도 실행된다.**
+     *
      * @see doOnCreate
      */
     final override fun onCreate(owner: LifecycleOwner) {
@@ -203,6 +205,8 @@ open class ViewModel(
     }
 
     /**
+     * **주의 : ViewModel 인스턴스의 수명주기가 아니라 UI(화면 단위)의 수명주기이기 때문에, 다른 화면으로 이동했다가 돌아올 때도 실행된다.**
+     *
      * @see doOnStart
      */
     final override fun onStart(owner: LifecycleOwner) {
@@ -233,6 +237,8 @@ open class ViewModel(
     }
 
     /**
+     * **주의 : ViewModel 인스턴스의 수명주기가 아니라 UI(화면 단위)의 수명주기이기 때문에, 다른 화면으로 이동할 때도 실행된다.**
+     *
      * @see doOnStop
      */
     final override fun onStop(owner: LifecycleOwner) {
