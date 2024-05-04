@@ -9,15 +9,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.github.hemoptysisheart.sample.ui.template.BottomBar
-import com.github.hemoptysisheart.sample.ui.template.TopBar
+import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
+import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.MazeViewModel
 import com.github.hemoptysisheart.ui.navigation.viewModel
+import com.github.hemoptysisheart.ui.state.SimpleTopBarState
+import com.github.hemoptysisheart.ui.state.TopBarState
 
 @Composable
 fun MazeScreen(
@@ -26,16 +30,21 @@ fun MazeScreen(
 ) {
     Log.v(TAG, "#MazeScreen args : navController=$navController, viewModel=$viewModel")
 
-    MazeScreenContent(navController = navController)
+    val topBar by viewModel.topBar.collectAsStateWithLifecycle()
+
+    MazeScreenContent(navController, topBar)
 }
 
 @Composable
-private fun MazeScreenContent(navController: NavHostController) {
+private fun MazeScreenContent(
+    navController: NavHostController,
+    topBar: TopBarState
+) {
     Log.v(TAG, "#MazeScreenContent args : navController=$navController")
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(navController) },
+        topBar = { TopBar(navController, topBar) },
         bottomBar = { BottomBar(navController) }
     ) { padding ->
         LazyVerticalGrid(
@@ -57,6 +66,6 @@ private fun MazeScreenContent(navController: NavHostController) {
 @Preview(showSystemUi = true)
 private fun MazeScreenPreview() {
     AndroidLibraryTheme {
-        MazeScreenContent(rememberNavController())
+        MazeScreenContent(rememberNavController(), SimpleTopBarState(true, "Maze"))
     }
 }

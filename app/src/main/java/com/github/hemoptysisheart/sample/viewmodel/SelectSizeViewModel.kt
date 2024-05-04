@@ -9,6 +9,7 @@ import com.github.hemoptysisheart.sample.model.SampleModel
 import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
+import com.github.hemoptysisheart.ui.state.SimpleTopBarState
 import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.viewmodel.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectSizeViewModel @Inject constructor(
     private val sampleModel: SampleModel
-) : ViewModel("SelectSizeViewModel") {
+) : ViewModel(
+    tag = "SelectSizeViewModel",
+    topBar = SimpleTopBarState(enableBackward = false, title = "Select Size")
+) {
     companion object {
         const val DEFAULT_WIDTH = 10
         const val DEFAULT_HEIGHT = 10

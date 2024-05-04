@@ -31,13 +31,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.github.hemoptysisheart.sample.model.SampleModelImpl
-import com.github.hemoptysisheart.sample.ui.template.BottomBar
-import com.github.hemoptysisheart.sample.ui.template.TopBar
+import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
+import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
 import com.github.hemoptysisheart.ui.navigation.viewModel
 import com.github.hemoptysisheart.ui.state.TextFieldState
+import com.github.hemoptysisheart.ui.state.TopBarState
 
 @Composable
 fun SelectSizePage(
@@ -46,6 +47,7 @@ fun SelectSizePage(
 ) {
     Log.v(TAG, "#InputPage args : navController=$navController, viewModel=$viewModel")
 
+    val topBar by viewModel.topBar.collectAsStateWithLifecycle()
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
     val width by viewModel.width.collectAsStateWithLifecycle()
@@ -53,6 +55,7 @@ fun SelectSizePage(
 
     InputPateContent(
         navController,
+        topBar,
         visibleProgress,
         blockingProgress,
         width,
@@ -65,6 +68,7 @@ fun SelectSizePage(
 @Composable
 private fun InputPateContent(
     navController: NavHostController,
+    topBar: TopBarState,
     visibleProgress: Boolean,
     blockingProgress: Boolean,
     width: TextFieldState,
@@ -72,9 +76,23 @@ private fun InputPateContent(
     onClickGenerate: (() -> Unit) -> Unit = { },
     onClickDefault: () -> Unit = { }
 ) {
+    Log.v(
+        TAG,
+        listOf(
+            "navController=$navController",
+            "topBar=$topBar",
+            "visibleProgress=$visibleProgress",
+            "blockingProgress=$blockingProgress",
+            "width=$width",
+            "height=$height",
+            "onClickGenerate=$onClickGenerate",
+            "onClickDefault=$onClickDefault"
+        ).joinToString(", ", "#InputPateContent args : ")
+    )
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(navController) },
+        topBar = { TopBar(navController, topBar) },
         bottomBar = { BottomBar(navController) }
     ) { padding ->
         Box(

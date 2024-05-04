@@ -1,4 +1,4 @@
-package com.github.hemoptysisheart.sample.ui.template
+package com.github.hemoptysisheart.sample.ui.template.scaffold
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth

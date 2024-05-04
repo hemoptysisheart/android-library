@@ -7,32 +7,40 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.github.hemoptysisheart.sample.ui.template.BottomBar
-import com.github.hemoptysisheart.sample.ui.template.TopBar
+import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
+import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.HistoryViewModel
 import com.github.hemoptysisheart.ui.navigation.viewModel
+import com.github.hemoptysisheart.ui.state.SimpleTopBarState
+import com.github.hemoptysisheart.ui.state.TopBarState
 
 @Composable
 fun HistoryPage(
     navController: NavHostController,
     viewModel: HistoryViewModel = viewModel()
 ) {
-    HistoryPageContent(navController)
+    Log.v(TAG, "#HistoryPage args : navController=$navController, viewModel=$viewModel")
+
+    val topBar by viewModel.topBar.collectAsStateWithLifecycle()
+
+    HistoryPageContent(navController, topBar)
 }
 
 @Composable
-private fun HistoryPageContent(navController: NavHostController) {
+private fun HistoryPageContent(navController: NavHostController, topBar: TopBarState) {
     Log.v(TAG, "#HistoryPageContent args : navController=$navController")
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(navController) },
+        topBar = { TopBar(navController, topBar) },
         bottomBar = { BottomBar(navController) }
     ) { padding ->
         Box(
@@ -50,6 +58,6 @@ private fun HistoryPageContent(navController: NavHostController) {
 @Preview(showSystemUi = true)
 private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
-        HistoryPageContent(rememberNavController())
+        HistoryPageContent(rememberNavController(), SimpleTopBarState(true, "History"))
     }
 }
