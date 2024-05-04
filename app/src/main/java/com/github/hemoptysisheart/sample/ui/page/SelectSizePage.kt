@@ -74,8 +74,8 @@ private fun InputPateContent(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar() },
-        bottomBar = { BottomBar() }
+        topBar = { TopBar(navController) },
+        bottomBar = { BottomBar(navController) }
     ) { padding ->
         Box(
             modifier = Modifier

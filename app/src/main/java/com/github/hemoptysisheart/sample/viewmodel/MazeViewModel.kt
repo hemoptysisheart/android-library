@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor() : ViewModel("HistoryViewModel") {
+class MazeViewModel @Inject constructor() : ViewModel("MazeViewModel") {
     override fun toString() = listOf<String>(
     ).joinToString(", ", "$tag(${super.toString()}", ")")
 }

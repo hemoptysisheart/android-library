@@ -23,6 +23,7 @@ fun NavigationGraph() {
         composable("history") {
             HistoryPage(navController)
         }
+
         composable("maze") {
             MazeScreen(navController)
         }
