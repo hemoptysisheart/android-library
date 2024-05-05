@@ -12,5 +12,7 @@ class FallbackExceptionHandler : Thread.UncaughtExceptionHandler {
 
     override fun uncaughtException(thread: Thread, throwable: Throwable) {
         Log.w(TAG, "#uncaughtException : thread=$thread, throwable=$throwable", throwable)
+
+        // TODO 에러 보고.
     }
 }

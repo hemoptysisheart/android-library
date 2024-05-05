@@ -4,6 +4,7 @@ import android.util.Log
 import com.github.hemoptysisheart.sample.model.ApplicationCoroutineScope
 import com.github.hemoptysisheart.sample.model.FallbackCoroutineExceptionHandler
 import com.github.hemoptysisheart.sample.model.FallbackExceptionHandler
+import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +35,14 @@ class ModuleConfig {
     ): FallbackCoroutineExceptionHandler {
         val handler = FallbackCoroutineExceptionHandler(fallbackExceptionHandler)
         Log.i(TAG, "#provideFallbackCoroutineExceptionHandler : handler=$handler")
+        return handler
+    }
+
+    @Provides
+    @Singleton
+    fun provideFallbackViewModelScopeExceptionHandler(): FallbackViewModelScopeExceptionHandler {
+        val handler = FallbackViewModelScopeExceptionHandler()
+        Log.i(TAG, "#provideFallbackViewModelScopeExceptionHandler : handler=$handler")
         return handler
     }
 

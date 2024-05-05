@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
 import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
@@ -19,8 +20,11 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class SelectSizeViewModel @Inject constructor() : ViewModel(
+class SelectSizeViewModel @Inject constructor(
+    fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
+) : ViewModel(
     tag = "SelectSizeViewModel",
+    fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
     topBar = SimpleTopBarState(enableBackward = false, title = "Select Size")
 ) {
     companion object {
