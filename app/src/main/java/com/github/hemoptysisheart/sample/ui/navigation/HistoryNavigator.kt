@@ -2,6 +2,7 @@ package com.github.hemoptysisheart.sample.ui.navigation
 
 import android.util.Log
 import androidx.compose.runtime.Immutable
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.navigation.destination.Destination
 import com.github.hemoptysisheart.ui.navigation.destination.Navigator
@@ -32,6 +33,12 @@ class HistoryNavigator(
     fun selectSize() {
         Log.d(TAG, "#selectSize called.")
 
-        base.navHostController.navigate(SelectSizeNavigator.id)
+        base.navHostController.navigate(SelectSizeNavigator.id) {
+            this.popUpTo(base.navHostController.graph.findStartDestination().route!!) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
     }
 }
