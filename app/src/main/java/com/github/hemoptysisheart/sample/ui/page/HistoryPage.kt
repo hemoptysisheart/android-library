@@ -29,7 +29,7 @@ import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.HistoryViewModel
-import com.github.hemoptysisheart.ui.navigation.viewModel
+import com.github.hemoptysisheart.ui.navigation.compose.viewModel
 import com.github.hemoptysisheart.ui.state.SimpleTopBarState
 import com.github.hemoptysisheart.ui.state.TopBarState
 
