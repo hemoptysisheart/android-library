@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.rememberNavController
 import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
 import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
@@ -97,7 +96,7 @@ private fun SelectSizePageContent(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { TopBar(navigator, topBar) },
-        bottomBar = { BottomBar(rememberNavController()) }
+        bottomBar = { BottomBar(navigator) }
     ) { padding ->
         Box(
             modifier = Modifier
