@@ -43,7 +43,7 @@ private fun MazePageContent(navigator: MazeNavigator, topBar: TopBarState) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(rememberNavController(), topBar) },
+        topBar = { TopBar(navigator, topBar) },
         bottomBar = { BottomBar(rememberNavController()) }
     ) { padding ->
         LazyVerticalGrid(

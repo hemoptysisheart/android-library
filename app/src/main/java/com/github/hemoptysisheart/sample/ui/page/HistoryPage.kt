@@ -70,7 +70,7 @@ private fun HistoryPageContent(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(rememberNavController(), topBar) },
+        topBar = { TopBar(navigator, topBar) },
         bottomBar = { BottomBar(rememberNavController()) }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
