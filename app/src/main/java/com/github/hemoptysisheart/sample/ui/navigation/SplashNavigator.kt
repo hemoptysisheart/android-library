@@ -29,6 +29,10 @@ class SplashNavigator(
     fun selectSize() {
         Log.d(TAG, "#selectSize called.")
 
-        base.navHostController.navigate(SelectSizeNavigator.id)
+        base.navHostController.navigate(SelectSizeNavigator.id) {
+            popUpTo(destination.id) {
+                inclusive = true
+            }
+        }
     }
 }

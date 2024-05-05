@@ -29,13 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.github.hemoptysisheart.sample.app.MainActivity
+import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
 import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
+import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.compose.viewModel
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
 import com.github.hemoptysisheart.ui.state.SimpleTopBarState
@@ -44,10 +46,10 @@ import com.github.hemoptysisheart.ui.state.TopBarState
 
 @Composable
 fun SelectSizePage(
-    navController: NavHostController,
+    navigator: SelectSizeNavigator,
     viewModel: SelectSizeViewModel = viewModel()
 ) {
-    Log.v(TAG, "#SelectSizePage args : navController=$navController, viewModel=$viewModel")
+    Log.v(TAG, "#SelectSizePage args : navigator=$navigator, viewModel=$viewModel")
 
     val topBar by viewModel.topBar.collectAsStateWithLifecycle()
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
@@ -56,7 +58,7 @@ fun SelectSizePage(
     val height by viewModel.height.collectAsStateWithLifecycle()
 
     SelectSizePageContent(
-        navController,
+        navigator,
         topBar,
         visibleProgress,
         blockingProgress,
@@ -69,7 +71,7 @@ fun SelectSizePage(
 
 @Composable
 private fun SelectSizePageContent(
-    navController: NavHostController,
+    navigator: SelectSizeNavigator,
     topBar: TopBarState,
     visibleProgress: Boolean,
     blockingProgress: Boolean,
@@ -81,7 +83,7 @@ private fun SelectSizePageContent(
     Log.v(
         TAG,
         listOf(
-            "navController=$navController",
+            "navigator=$navigator",
             "topBar=$topBar",
             "visibleProgress=$visibleProgress",
             "blockingProgress=$blockingProgress",
@@ -94,8 +96,8 @@ private fun SelectSizePageContent(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(navController, topBar) },
-        bottomBar = { BottomBar(navController) }
+        topBar = { TopBar(rememberNavController(), topBar) },
+        bottomBar = { BottomBar(rememberNavController()) }
     ) { padding ->
         Box(
             modifier = Modifier
@@ -149,7 +151,7 @@ private fun SelectSizePageContent(
                     modifier = Modifier.widthIn(200.dp),
                     onClick = {
                         onClickGenerate {
-                            navController.navigate("maze")
+                            navigator.maze()
                         }
                     }
                 ) {
@@ -169,13 +171,14 @@ private fun SelectSizePageContent(
 private fun SelectSizePageContentPreview() {
     AndroidLibraryTheme {
         SelectSizePageContent(
-            navController = rememberNavController(),
+            navigator = SelectSizeNavigator(baseNavigator(MainActivity())),
             topBar = SimpleTopBarState(true, "Select Size"),
             visibleProgress = false,
             blockingProgress = false,
             width = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),
             height = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),
             onClickGenerate = {},
-            onClickDefault = {})
+            onClickDefault = {}
+        )
     }
 }
