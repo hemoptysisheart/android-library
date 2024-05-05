@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,8 @@ import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
 import com.github.hemoptysisheart.ui.navigation.viewModel
+import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
+import com.github.hemoptysisheart.ui.state.SimpleTopBarState
 import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.ui.state.TopBarState
 
@@ -163,8 +166,16 @@ private fun SelectSizePageContent(
 
 @Composable
 @Preview(showSystemUi = true)
-private fun InputPagePreview() {
+private fun SelectSizePageContentPreview() {
     AndroidLibraryTheme {
-        SelectSizePage(rememberNavController(), SelectSizeViewModel())
+        SelectSizePageContent(
+            navController = rememberNavController(),
+            topBar = SimpleTopBarState(true, "Select Size"),
+            visibleProgress = false,
+            blockingProgress = false,
+            width = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),
+            height = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),
+            onClickGenerate = {},
+            onClickDefault = {})
     }
 }
