@@ -18,13 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
-import com.github.hemoptysisheart.sample.app.MainActivity
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
@@ -108,7 +108,7 @@ private fun HistoryPageContent(
 private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
         HistoryPageContent(
-            navigator = HistoryNavigator(baseNavigator(MainActivity())),
+            navigator = HistoryNavigator(baseNavigator(PreviewActivity())),
             topBar = SimpleTopBarState(true, "History"),
             visibleProgress = false,
             blockingProgress = false

@@ -8,11 +8,11 @@ import androidx.navigation.NavHostController
 /**
  * [Navigator]의 공통 기능을 제공하는 클래스.
  */
-class BaseNavigator<A : Activity>(
+class BaseNavigator(
     /**
      * 이 [Navigator]가 속한 [Activity].
      */
-    val activity: A,
+    val activity: Activity,
     val navHostController: NavHostController,
     val softwareKeyboardController: SoftwareKeyboardController? = null
 ) : Navigator {
@@ -40,7 +40,7 @@ class BaseNavigator<A : Activity>(
     }
 
     override fun equals(other: Any?): Boolean = this === other || (
-            other is BaseNavigator<*> &&
+            other is BaseNavigator &&
                     activity == other.activity &&
                     navHostController == other.navHostController &&
                     softwareKeyboardController == other.softwareKeyboardController

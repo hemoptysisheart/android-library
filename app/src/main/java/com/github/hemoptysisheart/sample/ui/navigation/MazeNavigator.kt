@@ -1,12 +1,11 @@
 package com.github.hemoptysisheart.sample.ui.navigation
 
-import com.github.hemoptysisheart.sample.app.MainActivity
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.navigation.destination.Destination
 import com.github.hemoptysisheart.ui.navigation.destination.Navigator
 
 class MazeNavigator(
-    private val base: BaseNavigator<MainActivity>
+    private val base: BaseNavigator
 ) : Navigator by base {
     companion object : Destination {
         override val id = "maze"
