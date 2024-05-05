@@ -14,9 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.rememberNavController
 import com.github.hemoptysisheart.sample.ui.navigation.MazeNavigator
-import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.MazeViewModel
@@ -43,8 +41,7 @@ private fun MazePageContent(navigator: MazeNavigator, topBar: TopBarState) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(navigator, topBar) },
-        bottomBar = { BottomBar(rememberNavController()) }
+        topBar = { TopBar(navigator, topBar) }
     ) { padding ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(10),
