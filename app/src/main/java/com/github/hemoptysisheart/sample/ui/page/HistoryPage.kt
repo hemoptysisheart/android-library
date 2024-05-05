@@ -1,9 +1,17 @@
 package com.github.hemoptysisheart.sample.ui.page
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,6 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -30,12 +41,20 @@ fun HistoryPage(
     Log.v(TAG, "#HistoryPage args : navController=$navController, viewModel=$viewModel")
 
     val topBar by viewModel.topBar.collectAsStateWithLifecycle()
+    val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
+    val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
 
-    HistoryPageContent(navController, topBar)
+    HistoryPageContent(navController, topBar, visibleProgress, blockingProgress, viewModel::onClickError)
 }
 
 @Composable
-private fun HistoryPageContent(navController: NavHostController, topBar: TopBarState) {
+private fun HistoryPageContent(
+    navController: NavHostController,
+    topBar: TopBarState,
+    visibleProgress: Boolean,
+    blockingProgress: Boolean,
+    onClickError: () -> Unit = {}
+) {
     Log.v(TAG, "#HistoryPageContent args : navController=$navController")
 
     Scaffold(
@@ -43,13 +62,32 @@ private fun HistoryPageContent(navController: NavHostController, topBar: TopBarS
         topBar = { TopBar(navController, topBar) },
         bottomBar = { BottomBar(navController) }
     ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "History")
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (blockingProgress) {
+                Dialog(onDismissRequest = { }) {
+                    CircularProgressIndicator()
+                }
+            } else if (visibleProgress) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .zIndex(Float.MAX_VALUE)
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "History")
+                Spacer(modifier = Modifier.height(100.dp))
+                Button(onClick = onClickError) {
+                    Text(text = "Test Error")
+                }
+            }
         }
     }
 }
@@ -58,6 +96,11 @@ private fun HistoryPageContent(navController: NavHostController, topBar: TopBarS
 @Preview(showSystemUi = true)
 private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
-        HistoryPageContent(rememberNavController(), SimpleTopBarState(true, "History"))
+        HistoryPageContent(
+            navController = rememberNavController(),
+            topBar = SimpleTopBarState(true, "History"),
+            visibleProgress = false,
+            blockingProgress = false
+        )
     }
 }

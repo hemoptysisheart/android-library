@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.github.hemoptysisheart.ui.state.InteractionImpact
 import com.github.hemoptysisheart.ui.state.TopBarState
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
@@ -19,6 +20,8 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  * [androidx.lifecycle.ViewModel]에 일부 기능을 추가한 클래스.
+ *
+ * @param topBar `@Composable Scaffold`의 상단 바 초기값.
  */
 open class ViewModel(
     /**
@@ -26,9 +29,17 @@ open class ViewModel(
      */
     protected val tag: String,
     /**
-     * `@Composable Scaffold`의 상단 바 초기값.
+     * [androidx.lifecycle.viewModelScope]에서 발생한 예외를 마지막으로 처리하는 핸들러.
      */
-    topBar: TopBarState = object : TopBarState {}
+    @Suppress("MemberVisibilityCanBePrivate")
+    protected val fallbackCoroutineExceptionHandler: CoroutineExceptionHandler = object : CoroutineExceptionHandler {
+        override val key = CoroutineExceptionHandler.Key
+
+        override fun handleException(context: CoroutineContext, exception: Throwable) {
+            Log.w(tag, "#handleException : ${exception.message}", exception)
+        }
+    },
+    topBar: TopBarState = TopBarState.EMPTY
 ) : androidx.lifecycle.ViewModel(), DefaultLifecycleObserver {
     /**
      * 사용자 인터랙션을 막지 않지만 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
@@ -75,10 +86,10 @@ open class ViewModel(
     protected fun launch(
         impact: InteractionImpact = InteractionImpact.NONE,
         exceptionHandler: (Exception) -> Unit = { e ->
-            Log.w(tag, "#exceptionHandler : ${e.message}", e)
+            Log.w(tag, "#launch.exceptionHandler : ${e.message}", e)
             throw e
         },
-        context: CoroutineContext = EmptyCoroutineContext,
+        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
         start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> Unit
     ): Job = viewModelScope.launch(context, start) {
@@ -123,10 +134,10 @@ open class ViewModel(
     protected fun <T> async(
         impact: InteractionImpact = InteractionImpact.NONE,
         exceptionHandler: (Exception) -> Unit = { e ->
-            Log.w(tag, "#exceptionHandler : ${e.message}", e)
+            Log.w(tag, "#async.exceptionHandler : ${e.message}", e)
             throw e
         },
-        context: CoroutineContext = EmptyCoroutineContext,
+        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
         start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> T
     ) = viewModelScope.async(context, start) {
@@ -269,12 +280,12 @@ open class ViewModel(
     }
 
     override fun toString() = listOf(
-        "tag='$tag'",
+        "fallbackCoroutineExceptionHandler=$fallbackCoroutineExceptionHandler",
         "visibleImpacts=$visibleImpacts",
         "blockingImpacts=$blockingImpacts",
-        "topBar=${_topBar.value}",
         "visibleProgress=${visibleProgress.value}",
-        "blockingProgress=${blockingProgress.value}"
+        "blockingProgress=${blockingProgress.value}",
+        "topBar=${_topBar.value}"
     ).joinToString(", ")
 }
 
