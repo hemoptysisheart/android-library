@@ -1,6 +1,8 @@
 package com.github.hemoptysisheart.sample.ui.navigation
 
 import android.util.Log
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.navigation.destination.Destination
@@ -13,6 +15,8 @@ class SelectSizeNavigator(
         private const val TAG = "SelectSizeNavigator"
 
         override val id = "select-size"
+        override val arguments: List<NamedNavArgument> = emptyList()
+        override val deepLinks: List<NavDeepLink> = emptyList()
 
         override fun route(vararg arguments: Any): String {
             if (arguments.isNotEmpty()) {

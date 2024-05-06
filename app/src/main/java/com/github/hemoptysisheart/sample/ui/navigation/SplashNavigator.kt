@@ -1,6 +1,8 @@
 package com.github.hemoptysisheart.sample.ui.navigation
 
 import android.util.Log
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavDeepLink
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.navigation.destination.Destination
 import com.github.hemoptysisheart.ui.navigation.destination.Navigator
@@ -12,6 +14,8 @@ class SplashNavigator(
         private const val TAG = "SplashNavigator"
 
         override val id = "splash"
+        override val arguments: List<NamedNavArgument> = emptyList()
+        override val deepLinks: List<NavDeepLink> = emptyList()
 
         override fun route(vararg arguments: Any) = if (arguments.isNotEmpty()) {
             throw IllegalArgumentException("does not accept any arguments.")

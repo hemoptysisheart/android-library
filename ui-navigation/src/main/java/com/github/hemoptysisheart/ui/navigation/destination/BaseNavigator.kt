@@ -14,10 +14,11 @@ class BaseNavigator(
      */
     val activity: Activity,
     val navHostController: NavHostController,
+    val startDestination: Destination,
     val softwareKeyboardController: SoftwareKeyboardController? = null
 ) : Navigator {
     companion object {
-        private val TAG = "BaseNavigator"
+        private const val TAG = "BaseNavigator"
     }
 
     override val destination: Destination
@@ -56,6 +57,7 @@ class BaseNavigator(
     override fun toString() = listOf(
         "activity=$activity",
         "navHostController=$navHostController",
+        "startDestination=$startDestination",
         "softwareKeyboardController=$softwareKeyboardController"
     ).joinToString(", ", "BaseNavigator(", ")")
 }

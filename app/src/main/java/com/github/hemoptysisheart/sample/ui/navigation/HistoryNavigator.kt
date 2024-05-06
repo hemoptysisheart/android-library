@@ -2,6 +2,8 @@ package com.github.hemoptysisheart.sample.ui.navigation
 
 import android.util.Log
 import androidx.compose.runtime.Immutable
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.navigation.destination.Destination
@@ -18,6 +20,8 @@ class HistoryNavigator(
         private const val TAG = "HistoryNavigator"
 
         override val id = "history"
+        override val arguments: List<NamedNavArgument> = emptyList()
+        override val deepLinks: List<NavDeepLink> = emptyList()
 
         override fun route(vararg arguments: Any): String {
             if (arguments.isNotEmpty()) {

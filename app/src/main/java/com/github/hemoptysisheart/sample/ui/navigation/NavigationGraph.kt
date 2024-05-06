@@ -1,7 +1,7 @@
 package com.github.hemoptysisheart.sample.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.github.hemoptysisheart.sample.ui.page.HistoryPage
@@ -10,24 +10,33 @@ import com.github.hemoptysisheart.sample.ui.page.SelectSizePage
 import com.github.hemoptysisheart.sample.ui.page.SplashPage
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
+import com.github.hemoptysisheart.ui.navigation.destination.Navigator
 
 @Composable
 fun NavigationGraph(
     baseNavigator: BaseNavigator = baseNavigator()
 ) {
-    NavHost(startDestination = "splash", navController = baseNavigator.navHostController) {
-        composable(SplashNavigator.id) {
-            SplashPage(remember(SplashNavigator::class) { SplashNavigator(baseNavigator) })
+    NavHost(startDestination = baseNavigator.startDestination.id, navController = baseNavigator.navHostController) {
+        node(SplashNavigator(baseNavigator)) {
+            SplashPage(navigator = it)
         }
-        composable(SelectSizeNavigator.id) {
-            SelectSizePage(remember(SelectSizeNavigator::class) { SelectSizeNavigator(baseNavigator) })
+        node(SelectSizeNavigator(baseNavigator)) {
+            SelectSizePage(navigator = it)
         }
-        composable(HistoryNavigator.id) {
-            HistoryPage(remember(HistoryNavigator::class) { HistoryNavigator(baseNavigator) })
+        node(HistoryNavigator(baseNavigator)) {
+            HistoryPage(navigator = it)
         }
+        node(MazeNavigator(baseNavigator)) {
+            MazePage(navigator = it)
+        }
+    }
+}
 
-        composable(MazeNavigator.id) {
-            MazePage(remember(MazeNavigator::class) { MazeNavigator(baseNavigator) })
-        }
+private inline fun <reified N : Navigator> NavGraphBuilder.node(
+    navigator: N,
+    noinline content: @Composable (N) -> Unit
+) {
+    composable(navigator.destination.id) {
+        content(navigator)
     }
 }
