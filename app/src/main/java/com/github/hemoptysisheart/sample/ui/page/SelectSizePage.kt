@@ -76,7 +76,7 @@ private fun SelectSizePageContent(
     blockingProgress: Boolean,
     width: TextFieldState,
     height: TextFieldState,
-    onClickGenerate: (() -> Unit) -> Unit = { },
+    onClickGenerate: ((Int, Int) -> Unit) -> Unit = { },
     onClickDefault: () -> Unit = { }
 ) {
     Log.v(
@@ -148,11 +148,7 @@ private fun SelectSizePageContent(
                 Spacer(modifier = Modifier.height(30.dp))
                 Button(
                     modifier = Modifier.widthIn(200.dp),
-                    onClick = {
-                        onClickGenerate {
-                            navigator.maze()
-                        }
-                    }
+                    onClick = { onClickGenerate(navigator::maze) }
                 ) {
                     Text(text = "미로 만들기", modifier = Modifier.padding(10.dp), fontWeight = Bold)
                 }

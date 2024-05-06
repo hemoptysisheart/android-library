@@ -28,8 +28,8 @@ class SelectSizeViewModel @Inject constructor(
     topBar = SimpleTopBarState(enableBackward = false, title = "Select Size")
 ) {
     companion object {
-        const val DEFAULT_WIDTH = 10
-        const val DEFAULT_HEIGHT = 10
+        const val DEFAULT_WIDTH = 7
+        const val DEFAULT_HEIGHT = 13
     }
 
     private val _width = MutableStateFlow(
@@ -82,12 +82,12 @@ class SelectSizeViewModel @Inject constructor(
         }
     }
 
-    fun onClickGenerate(onComplete: () -> Unit) {
+    fun onClickGenerate(onComplete: (Int, Int) -> Unit) {
         Log.d(tag, "#onClickGenerate args : onComplete=$onComplete")
 
         launch(BLOCKING) {
             delay(2_000)
-            onComplete()
+            onComplete(_width.value.parse(), _height.value.parse())
         }
     }
 

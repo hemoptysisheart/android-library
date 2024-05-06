@@ -29,9 +29,9 @@ class SelectSizeNavigator(
 
     override val destination = Companion
 
-    fun maze() {
-        Log.d(TAG, "#maze called.")
-        base.navHostController.navigate(MazeNavigator.id)
+    fun maze(width: Int, height: Int) {
+        Log.d(TAG, "#maze args : width=$width, height=$height.")
+        base.navHostController.navigate(MazeNavigator.route(width, height))
     }
 
     fun history() {

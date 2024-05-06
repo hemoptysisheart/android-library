@@ -3,6 +3,7 @@ package com.github.hemoptysisheart.sample.ui.page
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Scaffold
@@ -13,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.navigation.MazeNavigator
 import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
@@ -32,26 +34,29 @@ fun MazePage(
 
     val topBar by viewModel.topBar.collectAsStateWithLifecycle()
 
-    MazePageContent(navigator, topBar)
+    MazePageContent(navigator, topBar, viewModel.width, viewModel.height)
 }
 
 @Composable
-private fun MazePageContent(navigator: MazeNavigator, topBar: TopBarState) {
-    Log.v(TAG, "#MazePageContent args : navigator=$navigator, topBar=$topBar")
+private fun MazePageContent(navigator: MazeNavigator, topBar: TopBarState, width: Int, height: Int) {
+    Log.v(TAG, "#MazePageContent args : navigator=$navigator, topBar=$topBar, width=$width, height=$height")
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { TopBar(navigator, topBar) }
     ) { padding ->
         LazyVerticalGrid(
-            columns = GridCells.Fixed(10),
+            columns = GridCells.Fixed(width),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            items(10 * 13) {
+            items(width * height) { index ->
                 TextButton(onClick = { /*TODO*/ }) {
-                    Text(text = "☐")
+                    Text(
+                        text = "index=$index, x=${index % width}, y=${index / width}",
+                        modifier = Modifier.sizeIn(minWidth = 60.dp, minHeight = 60.dp)
+                    )
                 }
             }
         }
@@ -64,7 +69,9 @@ private fun MazeScreenPreview() {
     AndroidLibraryTheme {
         MazePageContent(
             navigator = MazeNavigator(baseNavigator(PreviewActivity())),
-            topBar = SimpleTopBarState(true, "Maze")
+            topBar = SimpleTopBarState(true, "Maze"),
+            width = 7,
+            height = 13
         )
     }
 }
