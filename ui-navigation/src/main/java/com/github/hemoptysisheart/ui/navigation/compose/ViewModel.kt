@@ -1,4 +1,4 @@
-package com.github.hemoptysisheart.ui.navigation
+package com.github.hemoptysisheart.ui.navigation.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

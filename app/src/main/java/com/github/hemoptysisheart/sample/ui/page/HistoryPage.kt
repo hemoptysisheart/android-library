@@ -18,49 +18,59 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.HistoryViewModel
-import com.github.hemoptysisheart.ui.navigation.viewModel
+import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
+import com.github.hemoptysisheart.ui.navigation.compose.viewModel
 import com.github.hemoptysisheart.ui.state.SimpleTopBarState
 import com.github.hemoptysisheart.ui.state.TopBarState
 
 @Composable
 fun HistoryPage(
-    navController: NavHostController,
+    navigator: HistoryNavigator,
     viewModel: HistoryViewModel = viewModel()
 ) {
-    Log.v(TAG, "#HistoryPage args : navController=$navController, viewModel=$viewModel")
+    Log.v(TAG, "#HistoryPage args : navigator=$navigator, viewModel=$viewModel")
 
     val topBar by viewModel.topBar.collectAsStateWithLifecycle()
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
 
-    HistoryPageContent(navController, topBar, visibleProgress, blockingProgress, viewModel::onClickError)
+    HistoryPageContent(navigator, topBar, visibleProgress, blockingProgress, viewModel::onClickError)
 }
 
 @Composable
 private fun HistoryPageContent(
-    navController: NavHostController,
+    navigator: HistoryNavigator,
     topBar: TopBarState,
     visibleProgress: Boolean,
     blockingProgress: Boolean,
     onClickError: () -> Unit = {}
 ) {
-    Log.v(TAG, "#HistoryPageContent args : navController=$navController")
+    Log.v(
+        TAG,
+        listOf(
+            "navigator=$navigator",
+            "topBar=$topBar",
+            "visibleProgress=$visibleProgress",
+            "blockingProgress=$blockingProgress",
+            "onClickError=$onClickError"
+        ).joinToString(", ", "#HistoryPageContent args : ")
+    )
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(navController, topBar) },
-        bottomBar = { BottomBar(navController) }
+        topBar = { TopBar(navigator, topBar) },
+        bottomBar = { BottomBar(navigator) }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
             if (blockingProgress) {
@@ -97,7 +107,7 @@ private fun HistoryPageContent(
 private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
         HistoryPageContent(
-            navController = rememberNavController(),
+            navigator = HistoryNavigator(baseNavigator(PreviewActivity())),
             topBar = SimpleTopBarState(true, "History"),
             visibleProgress = false,
             blockingProgress = false

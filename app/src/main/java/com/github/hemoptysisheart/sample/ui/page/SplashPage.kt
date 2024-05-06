@@ -10,21 +10,24 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.github.hemoptysisheart.sample.ui.navigation.SplashNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashPage(navController: NavHostController) {
+fun SplashPage(navigator: SplashNavigator) {
     Log.v(TAG, "#SplashPage called.")
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(SplashNavigator::class) {
         delay(3_000)
-        navController.popBackStack()
-        navController.navigate("select-size")
+        navigator.selectSize()
     }
 
+    SplashPageContent()
+}
+
+@Composable
+private fun SplashPageContent() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -38,6 +41,6 @@ fun SplashPage(navController: NavHostController) {
 @Preview(showSystemUi = true)
 private fun SplashPagePreview() {
     AndroidLibraryTheme {
-        SplashPage(rememberNavController())
+        SplashPageContent()
     }
 }
