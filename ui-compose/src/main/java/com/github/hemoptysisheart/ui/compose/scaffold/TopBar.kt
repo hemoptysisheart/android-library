@@ -1,20 +1,24 @@
 package com.github.hemoptysisheart.ui.compose.scaffold
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TitleTopBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
 @Composable
-fun TopBar(state: TopBarState) {
+fun TopBar(state: TopBarState?, modifier: Modifier = Modifier) {
     when (state) {
-        is TitleTopBarState ->
-            TitleTopBar(state)
+        null -> {
+            // No TopBar
+        }
 
-        is SimpleTopBarState ->
-            SimpleTopBar(state)
+        is TitleTopBarState -> TitleTopBar(state, modifier)
 
-        else ->
-            throw IllegalArgumentException("unsupported state type : state=$state, state::class=${state::class.qualifiedName}")
+        is SimpleTopBarState -> SimpleTopBar(state, modifier)
+
+        else -> throw IllegalArgumentException(
+            "unsupported state type : state=$state, state::class=${state::class.qualifiedName}"
+        )
     }
 }

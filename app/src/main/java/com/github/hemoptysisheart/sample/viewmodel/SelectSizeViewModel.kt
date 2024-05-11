@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectSizeViewModel @Inject constructor(
     fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
-) : ViewModel(
+) : ViewModel<TitleTopBarState>(
     tag = "SelectSizeViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
     topBar = TitleTopBarState(title = "Select Size")

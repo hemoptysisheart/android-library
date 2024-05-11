@@ -23,7 +23,7 @@ import kotlin.coroutines.EmptyCoroutineContext
  *
  * @param topBar `@Composable Scaffold`의 상단 바 초기값.
  */
-open class ViewModel(
+open class ViewModel<TB : TopBarState>(
     /**
      * 로그에 사용할 태그. 추천값은 클래스 이름.
      */
@@ -39,7 +39,7 @@ open class ViewModel(
             Log.w(tag, "#handleException : ${exception.message}", exception)
         }
     },
-    topBar: TopBarState = TopBarState.EMPTY
+    topBar: TB? = null
 ) : androidx.lifecycle.ViewModel(), DefaultLifecycleObserver {
     /**
      * 사용자 인터랙션을 막지 않지만 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
@@ -51,8 +51,8 @@ open class ViewModel(
      */
     private val blockingImpacts = AtomicInteger(0)
 
-    private val _topBar = MutableStateFlow<TopBarState>(topBar)
-    val topBar: StateFlow<TopBarState> = _topBar
+    private val _topBar = MutableStateFlow(topBar)
+    val topBar: StateFlow<TB?> = _topBar
 
     private val _visibleProgress = MutableStateFlow(false)
 

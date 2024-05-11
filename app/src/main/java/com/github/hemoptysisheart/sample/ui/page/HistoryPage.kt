@@ -45,7 +45,7 @@ fun HistoryPage(
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
 
-    HistoryPageContent(navigator, topBar, visibleProgress, blockingProgress, viewModel::onClickError)
+    HistoryPageContent(navigator, topBar!!, visibleProgress, blockingProgress, viewModel::onClickError)
 }
 
 @Composable

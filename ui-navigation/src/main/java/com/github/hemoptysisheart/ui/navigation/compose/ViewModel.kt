@@ -6,6 +6,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 import com.github.hemoptysisheart.viewmodel.ViewModel
 
 /**
@@ -14,7 +15,7 @@ import com.github.hemoptysisheart.viewmodel.ViewModel
  * @see hiltViewModel
  */
 @Composable
-inline fun <reified VM : ViewModel> viewModel(
+inline fun <reified VM : ViewModel<out TopBarState>> viewModel(
     viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     },
@@ -32,7 +33,7 @@ inline fun <reified VM : ViewModel> viewModel(
 }
 
 @Composable
-inline fun <reified VM : ViewModel, reified VMF> hiltViewModel(
+inline fun <reified VM : ViewModel<out TopBarState>, reified VMF> hiltViewModel(
     viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     },

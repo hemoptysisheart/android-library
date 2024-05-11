@@ -58,7 +58,7 @@ fun SelectSizePage(
 
     SelectSizePageContent(
         navigator,
-        topBar,
+        topBar!!,
         visibleProgress,
         blockingProgress,
         width,

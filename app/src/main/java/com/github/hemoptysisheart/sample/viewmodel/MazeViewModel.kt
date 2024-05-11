@@ -13,18 +13,19 @@ import javax.inject.Inject
 class MazeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
-) : ViewModel(
+) : ViewModel<SimpleTopBarState>(
     tag = "MazeViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
     topBar = SimpleTopBarState(
         enableBack = true,
-        title = "Maze",
-        _back = { navigator -> }
+        title = "Maze"
     )
 ) {
     val width: Int = checkNotNull(savedStateHandle[ARG_WIDTH]).toString().toInt(10)
     val height: Int = checkNotNull(savedStateHandle[ARG_HEIGHT]).toString().toInt(10)
 
-    override fun toString() = listOf<String>(
+    override fun toString() = listOf(
+        "width=$width",
+        "height=$height"
     ).joinToString(", ", "$tag(${super.toString()}", ")")
 }
