@@ -1,24 +1,50 @@
 package com.github.hemoptysisheart.ui.state.scaffold
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Stable
+import com.github.hemoptysisheart.ui.state.TextState
 import java.util.UUID
 
 @Stable
 data class SimpleTopBarState(
     val enableBack: Boolean,
-    val title: String,
+    val title: TextState,
     @DrawableRes val leadingIcon: Int? = null,
     @DrawableRes val trailingIcon: Int? = null,
     override val key: UUID = UUID.randomUUID(),
     override val testTag: String = key.toString(),
-    private val _back: (Boolean) -> Unit = {},
+    private val _onClickBack: (Boolean, (() -> Unit)?) -> Unit = { enable, callback ->
+        Log.d(testTag, "#onClickBack args : enable=$enable, callback=$callback")
+        if (enable) callback?.invoke()
+    }
 ) : TopBarState {
-    fun back() = _back(enableBack)
+    constructor(
+        enableBack: Boolean,
+        title: String,
+        @DrawableRes leadingIcon: Int? = null,
+        @DrawableRes trailingIcon: Int? = null,
+        key: UUID = UUID.randomUUID(),
+        testTag: String = key.toString(),
+        onClickBack: (enable: Boolean, callback: (() -> Unit)?) -> Unit = { enable, callback ->
+            Log.d(testTag, "#onClickBack args : enable=$enable, callback=$callback")
+            if (enable) callback?.invoke()
+        }
+    ) : this(
+        enableBack = enableBack,
+        title = TextState(title),
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        key = key,
+        testTag = testTag,
+        _onClickBack = onClickBack
+    )
+
+    fun onClickBack(callback: (() -> Unit)?) = _onClickBack(enableBack, callback)
 
     fun copy(
         enableBack: Boolean = this.enableBack,
-        title: String = this.title,
+        title: TextState = this.title,
         leadingIcon: Int? = this.leadingIcon,
         trailingIcon: Int? = this.trailingIcon
     ) = SimpleTopBarState(
@@ -28,7 +54,7 @@ data class SimpleTopBarState(
         trailingIcon = trailingIcon,
         key = key,
         testTag = testTag,
-        _back = _back
+        _onClickBack = _onClickBack
     )
 
     override fun equals(other: Any?) = this === other || (
@@ -39,7 +65,7 @@ data class SimpleTopBarState(
                     trailingIcon == other.trailingIcon &&
                     key == other.key &&
                     testTag == other.testTag &&
-                    _back == other._back
+                    _onClickBack == other._onClickBack
             )
 
     override fun hashCode(): Int {
@@ -49,7 +75,7 @@ data class SimpleTopBarState(
         result = 31 * result + (trailingIcon ?: 0)
         result = 31 * result + key.hashCode()
         result = 31 * result + testTag.hashCode()
-        result = 31 * result + _back.hashCode()
+        result = 31 * result + _onClickBack.hashCode()
         return result
     }
 
@@ -59,6 +85,7 @@ data class SimpleTopBarState(
         "leadingIcon=$leadingIcon",
         "trailingIcon=$trailingIcon",
         "key=$key",
-        "testTag='$testTag'"
+        "testTag='$testTag'",
+        "onClickBack=$_onClickBack"
     ).joinToString(", ", "SimpleTopBarState(", ")")
 }

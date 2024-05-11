@@ -7,24 +7,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.github.hemoptysisheart.ui.compose.Text
 import com.github.hemoptysisheart.ui.compose.preview.SimpleTopBarStateProvider
 import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
 
 @Composable
-fun SimpleTopBar(state: SimpleTopBarState, modifier: Modifier = Modifier) {
+fun SimpleTopBar(state: SimpleTopBarState, modifier: Modifier = Modifier, onClickBack: (() -> Unit)? = null) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = state::back, enabled = state.enableBack) {
+        IconButton(
+            onClick = { state.onClickBack(onClickBack) },
+            enabled = state.enableBack
+        ) {
             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
         }
 
@@ -32,7 +34,7 @@ fun SimpleTopBar(state: SimpleTopBarState, modifier: Modifier = Modifier) {
         state.leadingIcon?.let { li ->
             Icon(painter = painterResource(li), contentDescription = null)
         }
-        Text(text = state.title, textAlign = TextAlign.Center)
+        Text(state = state.title)
         state.trailingIcon?.let { ti ->
             Icon(painter = painterResource(ti), contentDescription = null)
         }

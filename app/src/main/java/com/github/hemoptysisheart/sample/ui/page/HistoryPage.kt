@@ -69,7 +69,7 @@ private fun HistoryPageContent(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(topBar) },
+        topBar = { TopBar(state = topBar, modifier = Modifier.fillMaxWidth()) },
         bottomBar = { BottomBar(navigator) }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
