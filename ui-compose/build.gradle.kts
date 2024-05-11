@@ -48,12 +48,13 @@ android {
 dependencies {
     api(project(":ui-state"))
     api(platform(libs.androidx.compose.bom))
-    api(libs.androidx.core.ktx)
     api(libs.androidx.material.icons.extended)
     api(libs.androidx.material3)
     api(libs.androidx.ui)
     api(libs.androidx.ui.graphics)
     api(libs.androidx.ui.tooling.preview)
+
+    implementation(libs.androidx.core.ktx)
 
     debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation(libs.androidx.ui.tooling)
