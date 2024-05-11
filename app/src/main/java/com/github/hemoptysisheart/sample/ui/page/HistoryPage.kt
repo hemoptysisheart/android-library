@@ -26,13 +26,13 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
-import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.HistoryViewModel
+import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.compose.viewModel
-import com.github.hemoptysisheart.ui.state.SimpleTopBarState
-import com.github.hemoptysisheart.ui.state.TopBarState
+import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
+import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
 @Composable
 fun HistoryPage(
@@ -45,7 +45,7 @@ fun HistoryPage(
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
 
-    HistoryPageContent(navigator, topBar, visibleProgress, blockingProgress, viewModel::onClickError)
+    HistoryPageContent(navigator, topBar!!, visibleProgress, blockingProgress, viewModel::onClickError)
 }
 
 @Composable
@@ -69,7 +69,7 @@ private fun HistoryPageContent(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(navigator, topBar) },
+        topBar = { TopBar(state = topBar, modifier = Modifier.fillMaxWidth()) },
         bottomBar = { BottomBar(navigator) }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {

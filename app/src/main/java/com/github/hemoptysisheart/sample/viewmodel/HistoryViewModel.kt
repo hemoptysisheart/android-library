@@ -3,7 +3,7 @@ package com.github.hemoptysisheart.sample.viewmodel
 import android.util.Log
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
-import com.github.hemoptysisheart.ui.state.SimpleTopBarState
+import com.github.hemoptysisheart.ui.state.scaffold.TitleTopBarState
 import com.github.hemoptysisheart.viewmodel.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -13,10 +13,10 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
-) : ViewModel(
+) : ViewModel<TitleTopBarState>(
     tag = "HistoryViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
-    topBar = SimpleTopBarState(enableBackward = false, title = "History")
+    topBar = TitleTopBarState("History")
 ) {
     /**
      * [androidx.lifecycle.ViewModel]의 [CoroutineExceptionHandler] 테스트용 메서드.
