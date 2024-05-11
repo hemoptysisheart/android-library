@@ -9,8 +9,8 @@ import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHa
 import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
-import com.github.hemoptysisheart.ui.state.SimpleTopBarState
 import com.github.hemoptysisheart.ui.state.TextFieldState
+import com.github.hemoptysisheart.ui.state.scaffold.TitleTopBarState
 import com.github.hemoptysisheart.viewmodel.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -25,7 +25,7 @@ class SelectSizeViewModel @Inject constructor(
 ) : ViewModel(
     tag = "SelectSizeViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
-    topBar = SimpleTopBarState(enableBackward = false, title = "Select Size")
+    topBar = TitleTopBarState(title = "Select Size")
 ) {
     companion object {
         const val DEFAULT_WIDTH = 7

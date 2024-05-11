@@ -5,7 +5,7 @@ import com.github.hemoptysisheart.ui.state.TextState
 import java.util.UUID
 
 @Stable
-data class TitleTopBarState(
+open class TitleTopBarState(
     val title: TextState,
     override val key: UUID = UUID.randomUUID(),
     override val testTag: String = key.toString()

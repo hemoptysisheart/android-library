@@ -1,4 +1,4 @@
-package com.github.hemoptysisheart.sample.ui.template.scaffold
+package com.github.hemoptysisheart.ui.compose.scaffold
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,23 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.ui.compose.preview.SimpleTopBarStateProvider
-import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
-import com.github.hemoptysisheart.ui.navigation.destination.Navigator
-import com.github.hemoptysisheart.ui.state.SimpleTopBarState
-
+import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
 
 @Composable
-fun SimpleTopBar(navigator: Navigator, state: SimpleTopBarState, modifier: Modifier = Modifier) {
+fun SimpleTopBar(state: SimpleTopBarState, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = navigator::back, enabled = state.enableBackward) {
+        IconButton(onClick = state::back, enabled = state.enableBack) {
             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
         }
 
@@ -48,7 +43,5 @@ fun SimpleTopBar(navigator: Navigator, state: SimpleTopBarState, modifier: Modif
 @Composable
 @Preview(showBackground = true)
 private fun SimpleTopBarPreview(@PreviewParameter(SimpleTopBarStateProvider::class) state: SimpleTopBarState) {
-    AndroidLibraryTheme {
-        SimpleTopBar(baseNavigator(PreviewActivity()), state, Modifier.fillMaxWidth())
-    }
+    SimpleTopBar(state, Modifier.fillMaxWidth())
 }

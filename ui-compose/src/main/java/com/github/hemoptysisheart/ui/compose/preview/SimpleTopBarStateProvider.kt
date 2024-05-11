@@ -1,49 +1,52 @@
 package com.github.hemoptysisheart.ui.compose.preview
 
+import android.annotation.SuppressLint
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.github.hemoptysisheart.ui.state.SimpleTopBarState
+import androidx.core.R
+import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
 
 class SimpleTopBarStateProvider : PreviewParameterProvider<SimpleTopBarState> {
+    @SuppressLint("PrivateResource")
     override val values = sequenceOf(
         SimpleTopBarState(
-            enableBackward = true,
+            enableBack = true,
             title = "backward enable"
         ),
         SimpleTopBarState(
-            enableBackward = false,
+            enableBack = false,
             title = "backward disable"
         ),
         SimpleTopBarState(
-            enableBackward = true,
+            enableBack = true,
             title = "backward enable, leading icon",
-            leadingIcon = android.R.drawable.ic_media_next
+            leadingIcon = R.drawable.ic_call_decline
         ),
         SimpleTopBarState(
-            enableBackward = false,
+            enableBack = false,
             title = "backward disable, leading icon",
-            leadingIcon = android.R.drawable.ic_media_next
+            leadingIcon = R.drawable.ic_call_decline
         ),
         SimpleTopBarState(
-            enableBackward = true,
+            enableBack = true,
             title = "backward enable, trailing icon",
-            trailingIcon = android.R.drawable.ic_delete
+            trailingIcon = R.drawable.ic_call_answer
         ),
         SimpleTopBarState(
-            enableBackward = false,
+            enableBack = false,
             title = "backward disable, trailing icon",
-            trailingIcon = android.R.drawable.ic_delete
+            trailingIcon = R.drawable.ic_call_answer
         ),
         SimpleTopBarState(
-            enableBackward = true,
+            enableBack = true,
             title = "back enable, leading, trailing",
-            leadingIcon = android.R.drawable.ic_media_next,
-            trailingIcon = android.R.drawable.ic_delete
+            leadingIcon = R.drawable.ic_call_decline,
+            trailingIcon = R.drawable.ic_call_answer
         ),
         SimpleTopBarState(
-            enableBackward = false,
+            enableBack = false,
             title = "back disable, leading, trailing",
-            leadingIcon = android.R.drawable.ic_media_next,
-            trailingIcon = android.R.drawable.ic_delete
+            leadingIcon = R.drawable.ic_call_decline,
+            trailingIcon = R.drawable.ic_call_answer
         ),
     )
 }

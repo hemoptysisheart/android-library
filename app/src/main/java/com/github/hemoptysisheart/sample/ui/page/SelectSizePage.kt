@@ -32,16 +32,16 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
 import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
-import com.github.hemoptysisheart.sample.ui.template.scaffold.TopBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
+import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.compose.viewModel
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
-import com.github.hemoptysisheart.ui.state.SimpleTopBarState
 import com.github.hemoptysisheart.ui.state.TextFieldState
-import com.github.hemoptysisheart.ui.state.TopBarState
+import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
+import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
 @Composable
 fun SelectSizePage(
@@ -95,7 +95,7 @@ private fun SelectSizePageContent(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(navigator, topBar) },
+        topBar = { TopBar(topBar) },
         bottomBar = { BottomBar(navigator) }
     ) { padding ->
         Box(

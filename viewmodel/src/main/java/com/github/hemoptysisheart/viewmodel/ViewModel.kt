@@ -5,7 +5,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.github.hemoptysisheart.ui.state.InteractionImpact
-import com.github.hemoptysisheart.ui.state.TopBarState
+import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
