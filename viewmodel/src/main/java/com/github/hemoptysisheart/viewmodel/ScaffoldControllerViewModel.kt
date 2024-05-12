@@ -2,11 +2,7 @@ package com.github.hemoptysisheart.viewmodel
 
 import android.util.Log
 import com.github.hemoptysisheart.statepump.ScaffoldPump
-import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
-import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -14,8 +10,7 @@ import kotlin.coroutines.CoroutineContext
  *
  * @see com.github.hemoptysisheart.ui.navigation.compose.ScaffoldController
  */
-class ScaffoldControllerViewModel @Inject constructor(
-    tag: String,
+class ScaffoldControllerViewModel(
     fallbackCoroutineExceptionHandler: CoroutineExceptionHandler = object : CoroutineExceptionHandler {
         override val key = CoroutineExceptionHandler.Key
 
@@ -25,9 +20,14 @@ class ScaffoldControllerViewModel @Inject constructor(
     },
     scaffoldPump: ScaffoldPump
 ) : BaseViewModel(tag, fallbackCoroutineExceptionHandler) {
-    val topBar: StateFlow<TopBarState?> = scaffoldPump.topBar
+    companion object {
+        private val tag = ScaffoldControllerViewModel::class.java.simpleName
+    }
 
-    val bottomBar: StateFlow<BottomBarState?> = scaffoldPump.bottomBar
+
+    val topBar = scaffoldPump.topBar
+
+    val bottomBar = scaffoldPump.bottomBar
 
     override fun toString() = listOf(
         "topBar=$topBar",

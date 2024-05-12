@@ -2,7 +2,6 @@ package com.github.hemoptysisheart.sample.ui.page
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +14,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,7 +29,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
-import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
@@ -86,69 +83,58 @@ private fun SelectSizePageContent(
         ).joinToString(", ", "#SelectSizePage args : ")
     )
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = { BottomBar(navigator) }
-    ) { padding ->
-        Box(
+    if (blockingProgress) {
+        Dialog(onDismissRequest = { }) {
+            CircularProgressIndicator()
+        }
+    } else if (visibleProgress) {
+        LinearProgressIndicator(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            if (blockingProgress) {
-                Dialog(onDismissRequest = { }) {
-                    CircularProgressIndicator()
-                }
-            } else if (visibleProgress) {
-                LinearProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .zIndex(Float.MAX_VALUE)
-                )
-            }
+                .fillMaxWidth()
+                .zIndex(Float.MAX_VALUE)
+        )
+    }
 
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    OutlinedTextField(
-                        state = width,
-                        modifier = Modifier.weight(1F),
-                        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-                        placeholder = {
-                            Text(text = "가로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-                        }
-                    )
-                    Text(text = "x", modifier = Modifier.padding(10.dp, 0.dp))
-                    OutlinedTextField(
-                        state = height,
-                        modifier = Modifier.weight(1F),
-                        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-                        placeholder = {
-                            Text(text = "세로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-                        }
-                    )
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                state = width,
+                modifier = Modifier.weight(1F),
+                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
+                placeholder = {
+                    Text(text = "가로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
                 }
-                Spacer(modifier = Modifier.height(30.dp))
-                Button(
-                    modifier = Modifier.widthIn(200.dp),
-                    onClick = { onClickGenerate(navigator::maze) }
-                ) {
-                    Text(text = "미로 만들기", modifier = Modifier.padding(10.dp), fontWeight = Bold)
+            )
+            Text(text = "x", modifier = Modifier.padding(10.dp, 0.dp))
+            OutlinedTextField(
+                state = height,
+                modifier = Modifier.weight(1F),
+                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
+                placeholder = {
+                    Text(text = "세로", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
                 }
-                Spacer(modifier = Modifier.height(30.dp))
-                Button(modifier = Modifier.widthIn(200.dp), onClick = onClickDefault) {
-                    Text(text = "기본값", modifier = Modifier.padding(10.dp))
-                }
-            }
+            )
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Button(
+            modifier = Modifier.widthIn(200.dp),
+            onClick = { onClickGenerate(navigator::maze) }
+        ) {
+            Text(text = "미로 만들기", modifier = Modifier.padding(10.dp), fontWeight = Bold)
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Button(modifier = Modifier.widthIn(200.dp), onClick = onClickDefault) {
+            Text(text = "기본값", modifier = Modifier.padding(10.dp))
         }
     }
 }

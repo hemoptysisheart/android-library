@@ -5,16 +5,16 @@ import com.github.hemoptysisheart.sample.ui.page.HistoryPage
 import com.github.hemoptysisheart.sample.ui.page.MazePage
 import com.github.hemoptysisheart.sample.ui.page.SelectSizePage
 import com.github.hemoptysisheart.sample.ui.page.SplashPage
-import com.github.hemoptysisheart.ui.navigation.compose.NavigationGraph
+import com.github.hemoptysisheart.ui.navigation.compose.ScaffoldController
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.compose.node
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 
 @Composable
-fun NavigationGraphBuilder(
+fun GlobalLayout(
     baseNavigator: BaseNavigator = baseNavigator()
 ) {
-    NavigationGraph(baseNavigator = baseNavigator) {
+    ScaffoldController(baseNavigator = baseNavigator) {
         node(SplashNavigator(baseNavigator)) {
             SplashPage(navigator = it)
         }
