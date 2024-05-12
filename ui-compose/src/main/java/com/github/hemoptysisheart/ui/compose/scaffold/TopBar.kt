@@ -7,18 +7,34 @@ import com.github.hemoptysisheart.ui.state.scaffold.TitleTopBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
 @Composable
-fun TopBar(state: TopBarState?, modifier: Modifier = Modifier) {
+fun TopBar(
+    state: TopBarState?,
+    modifier: Modifier = Modifier,
+    actions: TopBarActions = TopBarActions.Default
+) {
     when (state) {
         null -> {
             // No TopBar
         }
 
-        is TitleTopBarState -> TitleTopBar(state, modifier)
+        is TitleTopBarState ->
+            TitleTopBar(state = state, modifier = modifier)
 
-        is SimpleTopBarState -> SimpleTopBar(state, modifier)
+        is SimpleTopBarState ->
+            SimpleTopBar(state = state, modifier = modifier, onClickBack = actions::onClickBack)
 
         else -> throw IllegalArgumentException(
             "unsupported state type : state=$state, state::class=${state::class.qualifiedName}"
         )
     }
+}
+
+interface TopBarActions {
+    companion object {
+        val Default = object : TopBarActions {
+            override fun onClickBack() {}
+        }
+    }
+
+    fun onClickBack()
 }

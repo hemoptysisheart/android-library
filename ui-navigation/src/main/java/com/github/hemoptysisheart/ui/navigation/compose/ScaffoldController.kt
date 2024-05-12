@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBar
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBarActions
 import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
+import com.github.hemoptysisheart.ui.compose.scaffold.TopBarActions
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
@@ -34,6 +35,7 @@ fun ScaffoldController(
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
+    topBarActions: TopBarActions = TopBarActions.Default,
     bottomBarActions: BottomBarActions = BottomBarActions.Default,
     content: @Composable () -> Unit
 ) {
@@ -42,7 +44,8 @@ fun ScaffoldController(
         topBar = {
             TopBar(
                 state = topBar,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                actions = topBarActions
             )
         },
         bottomBar = {

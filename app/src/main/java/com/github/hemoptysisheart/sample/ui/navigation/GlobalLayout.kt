@@ -12,6 +12,7 @@ import com.github.hemoptysisheart.sample.ui.page.SelectSizePage
 import com.github.hemoptysisheart.sample.ui.page.SplashPage
 import com.github.hemoptysisheart.statepump.ScaffoldPump
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBarActions
+import com.github.hemoptysisheart.ui.compose.scaffold.TopBarActions
 import com.github.hemoptysisheart.ui.navigation.compose.NavigationGraph
 import com.github.hemoptysisheart.ui.navigation.compose.ScaffoldController
 import com.github.hemoptysisheart.ui.navigation.compose.page
@@ -29,6 +30,11 @@ fun GlobalLayout(
     val topBar by scaffoldPump.topBar.collectAsStateWithLifecycle()
     val bottomBar by scaffoldPump.bottomBar.collectAsStateWithLifecycle()
 
+    val topBarActions = remember(baseNavigator) {
+        object : TopBarActions {
+            override fun onClickBack() = baseNavigator.back()
+        }
+    }
     val bottomBarActions = remember(scaffoldPump) {
         object : BottomBarActions {
             override fun onClickNavigationBarItem(item: NavigationBarItemState) {
@@ -48,6 +54,7 @@ fun GlobalLayout(
         topBar = topBar,
         bottomBar = bottomBar,
         modifier = Modifier.fillMaxSize(),
+        topBarActions = topBarActions,
         bottomBarActions = bottomBarActions
     ) {
         NavigationGraph(
