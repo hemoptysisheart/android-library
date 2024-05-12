@@ -35,13 +35,10 @@ import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
-import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.compose.viewModel
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
 import com.github.hemoptysisheart.ui.state.TextFieldState
-import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
-import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
 @Composable
 fun SelectSizePage(
@@ -50,7 +47,6 @@ fun SelectSizePage(
 ) {
     Log.v(TAG, "#SelectSizePage args : navigator=$navigator, viewModel=$viewModel")
 
-    val topBar by viewModel.topBar.collectAsStateWithLifecycle()
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
     val width by viewModel.width.collectAsStateWithLifecycle()
@@ -58,7 +54,6 @@ fun SelectSizePage(
 
     SelectSizePageContent(
         navigator,
-        topBar!!,
         visibleProgress,
         blockingProgress,
         width,
@@ -71,7 +66,6 @@ fun SelectSizePage(
 @Composable
 private fun SelectSizePageContent(
     navigator: SelectSizeNavigator,
-    topBar: TopBarState,
     visibleProgress: Boolean,
     blockingProgress: Boolean,
     width: TextFieldState,
@@ -83,7 +77,6 @@ private fun SelectSizePageContent(
         TAG,
         listOf(
             "navigator=$navigator",
-            "topBar=$topBar",
             "visibleProgress=$visibleProgress",
             "blockingProgress=$blockingProgress",
             "width=$width",
@@ -95,7 +88,6 @@ private fun SelectSizePageContent(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(state = topBar, modifier = Modifier.fillMaxWidth()) },
         bottomBar = { BottomBar(navigator) }
     ) { padding ->
         Box(
@@ -167,7 +159,6 @@ private fun SelectSizePageContentPreview() {
     AndroidLibraryTheme {
         SelectSizePageContent(
             navigator = SelectSizeNavigator(baseNavigator(PreviewActivity())),
-            topBar = SimpleTopBarState(true, "Select Size"),
             visibleProgress = false,
             blockingProgress = false,
             width = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),

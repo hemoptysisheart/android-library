@@ -20,7 +20,6 @@ class ScaffoldPumpImpl : ScaffoldPump {
     private val scope = CoroutineScope(Dispatchers.Main)
 
     private val _topBar = MutableStateFlow<TopBarState?>(null)
-
     override val topBar: StateFlow<TopBarState?> = _topBar
 
     private val _bottomBar = MutableStateFlow<BottomBarState?>(null)

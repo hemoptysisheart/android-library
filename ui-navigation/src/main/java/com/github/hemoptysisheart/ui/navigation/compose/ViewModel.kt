@@ -7,15 +7,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
-import com.github.hemoptysisheart.viewmodel.ViewModel
+import com.github.hemoptysisheart.viewmodel.ScaffoldContentViewModel
 
 /**
- * `@Composable`에서 [ViewModel]을 사용할 수 있도록 [hiltViewModel]을 확장한다.
+ * `@Composable`에서 [ScaffoldContentViewModel]을 사용할 수 있도록 [hiltViewModel]을 확장한다.
  *
  * @see hiltViewModel
  */
 @Composable
-inline fun <reified VM : ViewModel<out TopBarState>> viewModel(
+inline fun <reified VM : ScaffoldContentViewModel<out TopBarState>> viewModel(
     viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     },
@@ -33,7 +33,7 @@ inline fun <reified VM : ViewModel<out TopBarState>> viewModel(
 }
 
 @Composable
-inline fun <reified VM : ViewModel<out TopBarState>, reified VMF> hiltViewModel(
+inline fun <reified VM : ScaffoldContentViewModel<out TopBarState>, reified VMF> hiltViewModel(
     viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     },

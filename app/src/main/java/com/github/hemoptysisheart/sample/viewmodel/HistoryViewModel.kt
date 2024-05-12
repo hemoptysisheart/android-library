@@ -4,7 +4,7 @@ import android.util.Log
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.scaffold.TitleTopBarState
-import com.github.hemoptysisheart.viewmodel.ViewModel
+import com.github.hemoptysisheart.viewmodel.ScaffoldContentViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
-) : ViewModel<TitleTopBarState>(
+) : ScaffoldContentViewModel<TitleTopBarState>(
     tag = "HistoryViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
     topBar = TitleTopBarState("History")

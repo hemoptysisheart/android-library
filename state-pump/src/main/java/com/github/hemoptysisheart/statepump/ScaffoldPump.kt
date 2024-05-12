@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.StateFlow
 
 /**
  * [androidx.compose.material3.Scaffold]의 `content`를 제외한 상태 정보를 전달한다.
+ *
+ * 스캐폴드 컨텐트를 담당하는 뷰모델이 `topBar`, `bottomBar` 상태를 스캐폴드 레이아웃을 괄리하는 `@Composable` 콜 스택에서 상위 함수로 전달한다.
  */
 interface ScaffoldPump {
     /**

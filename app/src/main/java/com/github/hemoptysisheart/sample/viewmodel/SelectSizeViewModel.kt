@@ -11,7 +11,7 @@ import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
 import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.ui.state.scaffold.TitleTopBarState
-import com.github.hemoptysisheart.viewmodel.ViewModel
+import com.github.hemoptysisheart.viewmodel.ScaffoldContentViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectSizeViewModel @Inject constructor(
     fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
-) : ViewModel<TitleTopBarState>(
+) : ScaffoldContentViewModel<TitleTopBarState>(
     tag = "SelectSizeViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
     topBar = TitleTopBarState(title = "Select Size")

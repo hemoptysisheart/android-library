@@ -5,6 +5,8 @@ import com.github.hemoptysisheart.sample.model.ApplicationCoroutineScope
 import com.github.hemoptysisheart.sample.model.FallbackCoroutineExceptionHandler
 import com.github.hemoptysisheart.sample.model.FallbackExceptionHandler
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
+import com.github.hemoptysisheart.statepump.ScaffoldPump
+import com.github.hemoptysisheart.statepump.ScaffoldPumpImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,5 +58,13 @@ class ModuleConfig {
         )
         Log.i(TAG, "#provideApplicationCoroutineScope : scope=$scope")
         return scope
+    }
+
+    @Provides
+    @Singleton
+    fun provideScaffoldPump(): ScaffoldPump {
+        val pump = ScaffoldPumpImpl()
+        Log.i(TAG, "#provideScaffoldPump : pump=$pump")
+        return pump
     }
 }

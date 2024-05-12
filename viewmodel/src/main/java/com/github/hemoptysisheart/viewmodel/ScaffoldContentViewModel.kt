@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
+import com.github.hemoptysisheart.statepump.ScaffoldPump
 import com.github.hemoptysisheart.ui.state.InteractionImpact
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicInteger
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -23,7 +25,7 @@ import kotlin.coroutines.EmptyCoroutineContext
  *
  * @param topBar `@Composable Scaffold`의 상단 바 초기값.
  */
-open class ViewModel<TB : TopBarState>(
+open class ScaffoldContentViewModel<TB : TopBarState>(
     /**
      * 로그에 사용할 태그. 추천값은 클래스 이름.
      */
@@ -39,6 +41,11 @@ open class ViewModel<TB : TopBarState>(
             Log.w(tag, "#handleException : ${exception.message}", exception)
         }
     },
+    /**
+     * `@Composable Scaffold`의 상단 바 초기값. 앱 사용 중에 상단바 상태가 바껴야 한다면 구현 클래스에서 [scaffoldPump]를 이용하여 변경해야 한다.
+     *
+     * @see scaffoldPump
+     */
     topBar: TB? = null
 ) : androidx.lifecycle.ViewModel(), DefaultLifecycleObserver {
     /**
@@ -50,9 +57,6 @@ open class ViewModel<TB : TopBarState>(
      * 사용자 인터랙션을 막으면서 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
      */
     private val blockingImpacts = AtomicInteger(0)
-
-    private val _topBar = MutableStateFlow(topBar)
-    val topBar: StateFlow<TB?> = _topBar
 
     private val _visibleProgress = MutableStateFlow(false)
 
@@ -68,8 +72,13 @@ open class ViewModel<TB : TopBarState>(
      */
     val blockingProgress: StateFlow<Boolean> = _blockingProgress
 
+    @Inject
+    lateinit var scaffoldPump: ScaffoldPump
+
     init {
         Log.d(tag, "#init called.")
+
+        scaffoldPump.update(topBar)
     }
 
     /**
@@ -285,7 +294,6 @@ open class ViewModel<TB : TopBarState>(
         "blockingImpacts=$blockingImpacts",
         "visibleProgress=${visibleProgress.value}",
         "blockingProgress=${blockingProgress.value}",
-        "topBar=${_topBar.value}"
+        "scaffoldPump=$scaffoldPump"
     ).joinToString(", ")
 }
-

@@ -28,11 +28,8 @@ import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.HistoryViewModel
-import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.compose.viewModel
-import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
-import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
 @Composable
 fun HistoryPage(
@@ -41,17 +38,15 @@ fun HistoryPage(
 ) {
     Log.v(TAG, "#HistoryPage args : navigator=$navigator, viewModel=$viewModel")
 
-    val topBar by viewModel.topBar.collectAsStateWithLifecycle()
     val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
 
-    HistoryPageContent(navigator, topBar!!, visibleProgress, blockingProgress, viewModel::onClickError)
+    HistoryPageContent(navigator, visibleProgress, blockingProgress, viewModel::onClickError)
 }
 
 @Composable
 private fun HistoryPageContent(
     navigator: HistoryNavigator,
-    topBar: TopBarState,
     visibleProgress: Boolean,
     blockingProgress: Boolean,
     onClickError: () -> Unit = {}
@@ -60,7 +55,6 @@ private fun HistoryPageContent(
         TAG,
         listOf(
             "navigator=$navigator",
-            "topBar=$topBar",
             "visibleProgress=$visibleProgress",
             "blockingProgress=$blockingProgress",
             "onClickError=$onClickError"
@@ -69,7 +63,6 @@ private fun HistoryPageContent(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar(state = topBar, modifier = Modifier.fillMaxWidth()) },
         bottomBar = { BottomBar(navigator) }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
@@ -108,7 +101,6 @@ private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
         HistoryPageContent(
             navigator = HistoryNavigator(baseNavigator(PreviewActivity())),
-            topBar = SimpleTopBarState(true, "History"),
             visibleProgress = false,
             blockingProgress = false
         )
