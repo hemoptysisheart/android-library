@@ -6,6 +6,7 @@ import androidx.compose.runtime.Stable
 import com.github.hemoptysisheart.ui.state.TextState
 import java.util.UUID
 
+@Deprecated("샘플 코드.")
 @Stable
 data class SimpleTopBarState(
     val enableBack: Boolean,

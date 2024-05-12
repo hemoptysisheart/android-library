@@ -18,6 +18,7 @@ import com.github.hemoptysisheart.ui.compose.preview.SimpleTopBarStateProvider
 import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
 
 @Composable
+@Deprecated("샘플 코드.")
 fun SimpleTopBar(state: SimpleTopBarState, modifier: Modifier = Modifier, onClickBack: (() -> Unit)? = null) {
     Row(
         modifier = modifier,

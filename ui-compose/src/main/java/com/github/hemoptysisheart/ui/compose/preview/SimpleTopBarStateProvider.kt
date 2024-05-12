@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.core.R
 import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
 
+@Deprecated("샘플 코드.")
 class SimpleTopBarStateProvider : PreviewParameterProvider<SimpleTopBarState> {
     @SuppressLint("PrivateResource")
     override val values = sequenceOf(
