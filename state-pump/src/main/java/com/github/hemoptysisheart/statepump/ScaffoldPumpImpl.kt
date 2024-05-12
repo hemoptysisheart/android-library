@@ -25,6 +25,9 @@ class ScaffoldPumpImpl : ScaffoldPump {
     private val _bottomBar = MutableStateFlow<BottomBarState?>(null)
     override val bottomBar: StateFlow<BottomBarState?> = _bottomBar
 
+    private val _visibleProgress = MutableStateFlow(false)
+    override val visibleProgress: StateFlow<Boolean> = _visibleProgress
+
     override fun update(topBar: TopBarState?) {
         Log.d(TAG, "#update args : topBar=$topBar")
 
@@ -41,8 +44,17 @@ class ScaffoldPumpImpl : ScaffoldPump {
         }
     }
 
+    override fun visibleProgress(visible: Boolean) {
+        Log.d(TAG, "#visibleProgress args : visible=$visible")
+
+        scope.launch {
+            _visibleProgress.emit(visible)
+        }
+    }
+
     override fun toString() = listOf(
         "topBar=${topBar.value}",
-        "bottomBar=${bottomBar.value}"
+        "bottomBar=${bottomBar.value}",
+        "visibleProgress=${visibleProgress.value}"
     ).joinToString(", ", "$TAG(", ")")
 }

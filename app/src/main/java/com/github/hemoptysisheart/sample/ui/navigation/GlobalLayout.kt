@@ -27,6 +27,7 @@ fun GlobalLayout(
     baseNavigator: BaseNavigator,
     scaffoldPump: ScaffoldPump
 ) {
+    val visibleProgress by scaffoldPump.visibleProgress.collectAsStateWithLifecycle()
     val topBar by scaffoldPump.topBar.collectAsStateWithLifecycle()
     val bottomBar by scaffoldPump.bottomBar.collectAsStateWithLifecycle()
 
@@ -50,7 +51,7 @@ fun GlobalLayout(
     }
 
     Scaffold(
-        baseNavigator = baseNavigator,
+        visibleProgress = visibleProgress,
         topBar = topBar,
         bottomBar = bottomBar,
         modifier = Modifier.fillMaxSize(),

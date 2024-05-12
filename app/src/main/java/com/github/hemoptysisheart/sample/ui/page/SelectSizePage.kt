@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +25,6 @@ import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
@@ -44,14 +42,12 @@ fun SelectSizePage(
 ) {
     Log.v(TAG, "#SelectSizePage args : navigator=$navigator, viewModel=$viewModel")
 
-    val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
     val width by viewModel.width.collectAsStateWithLifecycle()
     val height by viewModel.height.collectAsStateWithLifecycle()
 
     SelectSizePageContent(
         navigator,
-        visibleProgress,
         blockingProgress,
         width,
         height,
@@ -63,7 +59,6 @@ fun SelectSizePage(
 @Composable
 private fun SelectSizePageContent(
     navigator: SelectSizeNavigator,
-    visibleProgress: Boolean,
     blockingProgress: Boolean,
     width: TextFieldState,
     height: TextFieldState,
@@ -74,7 +69,6 @@ private fun SelectSizePageContent(
         TAG,
         listOf(
             "navigator=$navigator",
-            "visibleProgress=$visibleProgress",
             "blockingProgress=$blockingProgress",
             "width=$width",
             "height=$height",
@@ -87,12 +81,6 @@ private fun SelectSizePageContent(
         Dialog(onDismissRequest = { }) {
             CircularProgressIndicator()
         }
-    } else if (visibleProgress) {
-        LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxWidth()
-                .zIndex(Float.MAX_VALUE)
-        )
     }
 
     Column(
@@ -145,7 +133,6 @@ private fun SelectSizePageContentPreview() {
     AndroidLibraryTheme {
         SelectSizePageContent(
             navigator = SelectSizeNavigator(baseNavigator(PreviewActivity())),
-            visibleProgress = false,
             blockingProgress = false,
             width = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),
             height = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),

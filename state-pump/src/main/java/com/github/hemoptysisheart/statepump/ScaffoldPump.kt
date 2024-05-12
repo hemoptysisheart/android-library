@@ -25,6 +25,11 @@ interface ScaffoldPump {
     val bottomBar: StateFlow<BottomBarState?>
 
     /**
+     * 사용자 인터랙션을 막지는 않지만 처리중임을 표시해야 하는지 여부.
+     */
+    val visibleProgress: StateFlow<Boolean>
+
+    /**
      * 상단바 상태를 갱신한다.
      *
      * @param topBar 새 상단바 상태.
@@ -41,4 +46,11 @@ interface ScaffoldPump {
      * @see ScaffoldPump.bottomBar
      */
     fun update(bottomBar: BottomBarState?)
+
+    /**
+     * 프로그레스 인디케이터(`visibleProgress`) 상태를 바꾼다.
+     *
+     * @param visible `true`면 프로그레스 인디케이터를 표시한다.
+     */
+    fun visibleProgress(visible: Boolean)
 }

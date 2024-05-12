@@ -6,27 +6,29 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.zIndex
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBar
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBarActions
 import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
 import com.github.hemoptysisheart.ui.compose.scaffold.TopBarActions
-import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
 /**
  * 전체적으로 스캐폴드 레이아웃을 제어하는 컴포저블.
+ *
  */
 @Composable
 fun Scaffold(
-    baseNavigator: BaseNavigator,
     modifier: Modifier = Modifier,
+    visibleProgress: Boolean = false,
     topBar: TopBarState? = null,
     bottomBar: BottomBarState? = null,
     snackbarHost: @Composable () -> Unit = {},
@@ -42,8 +44,8 @@ fun Scaffold(
     Log.v(
         TAG,
         listOf(
-            "baseNavigator=$baseNavigator",
             "modifier=$modifier",
+            "visibleProgress=$visibleProgress",
             "topBar=$topBar",
             "bottomBar=$bottomBar",
             "snackbarHost=$snackbarHost",
@@ -81,6 +83,13 @@ fun Scaffold(
         contentWindowInsets = contentWindowInsets
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
+            if (visibleProgress) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .zIndex(Float.MAX_VALUE)
+                )
+            }
             content()
         }
     }

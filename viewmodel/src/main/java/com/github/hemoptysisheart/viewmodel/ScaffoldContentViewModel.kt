@@ -3,10 +3,13 @@ package com.github.hemoptysisheart.viewmodel
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.viewModelScope
 import com.github.hemoptysisheart.statepump.ScaffoldPump
 import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -44,9 +47,22 @@ abstract class ScaffoldContentViewModel<TB : TopBarState, BB : BottomBarState>(
     }
 
     override fun doOnCreate(owner: LifecycleOwner) {
-        super.doOnCreate(owner)
         scaffoldPump.update(topBar)
         scaffoldPump.update(bottomBar)
+    }
+
+    override fun doOnStart(owner: LifecycleOwner) {
+        viewModelScope.launch {
+            visibleProgress.collectLatest {
+                scaffoldPump.visibleProgress(it)
+            }
+        }
+    }
+
+    override fun doOnStop(owner: LifecycleOwner) {
+        viewModelScope.launch {
+            scaffoldPump.visibleProgress(false)
+        }
     }
 
     override fun toString() = listOf(

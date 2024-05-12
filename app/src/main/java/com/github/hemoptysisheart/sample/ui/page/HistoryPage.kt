@@ -5,11 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,7 +17,6 @@ import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
@@ -34,16 +31,14 @@ fun HistoryPage(
 ) {
     Log.v(TAG, "#HistoryPage args : navigator=$navigator, viewModel=$viewModel")
 
-    val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
     val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
 
-    HistoryPageContent(navigator, visibleProgress, blockingProgress, viewModel::onClickError)
+    HistoryPageContent(navigator, blockingProgress, viewModel::onClickError)
 }
 
 @Composable
 private fun HistoryPageContent(
     navigator: HistoryNavigator,
-    visibleProgress: Boolean,
     blockingProgress: Boolean,
     onClickError: () -> Unit = {}
 ) {
@@ -51,7 +46,6 @@ private fun HistoryPageContent(
         TAG,
         listOf(
             "navigator=$navigator",
-            "visibleProgress=$visibleProgress",
             "blockingProgress=$blockingProgress",
             "onClickError=$onClickError"
         ).joinToString(", ", "#HistoryPageContent args : ")
@@ -61,12 +55,6 @@ private fun HistoryPageContent(
         Dialog(onDismissRequest = { }) {
             CircularProgressIndicator()
         }
-    } else if (visibleProgress) {
-        LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxWidth()
-                .zIndex(Float.MAX_VALUE)
-        )
     }
 
     Column(
@@ -89,7 +77,6 @@ private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
         HistoryPageContent(
             navigator = HistoryNavigator(baseNavigator(PreviewActivity())),
-            visibleProgress = false,
             blockingProgress = false
         )
     }
