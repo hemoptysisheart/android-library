@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
 import com.github.hemoptysisheart.sample.ui.navigation.MazeNavigator.Companion.ARG_HEIGHT
 import com.github.hemoptysisheart.sample.ui.navigation.MazeNavigator.Companion.ARG_WIDTH
+import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
 import com.github.hemoptysisheart.ui.state.scaffold.SimpleTopBarState
 import com.github.hemoptysisheart.viewmodel.ScaffoldContentViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class MazeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
-) : ScaffoldContentViewModel<SimpleTopBarState>(
+) : ScaffoldContentViewModel<SimpleTopBarState, BottomBarState>(
     tag = "MazeViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
     topBar = SimpleTopBarState(

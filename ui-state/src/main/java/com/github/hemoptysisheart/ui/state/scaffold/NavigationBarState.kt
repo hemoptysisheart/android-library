@@ -5,7 +5,7 @@ import java.util.UUID
 
 
 @Stable
-data class NavigationBottomBarState(
+class NavigationBarState(
     val items: List<NavigationBarItemState>,
     override val key: UUID = UUID.randomUUID(),
     override val testTag: String = key.toString()

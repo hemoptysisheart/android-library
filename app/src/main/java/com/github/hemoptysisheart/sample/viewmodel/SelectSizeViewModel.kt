@@ -5,11 +5,16 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import com.github.hemoptysisheart.sample.R
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
+import com.github.hemoptysisheart.ui.state.IconState
 import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
 import com.github.hemoptysisheart.ui.state.TextFieldState
+import com.github.hemoptysisheart.ui.state.TextState
+import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarItemState
+import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TitleTopBarState
 import com.github.hemoptysisheart.viewmodel.ScaffoldContentViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,10 +27,24 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectSizeViewModel @Inject constructor(
     fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
-) : ScaffoldContentViewModel<TitleTopBarState>(
+) : ScaffoldContentViewModel<TitleTopBarState, NavigationBarState>(
     tag = "SelectSizeViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
-    topBar = TitleTopBarState(title = "Select Size")
+    topBar = TitleTopBarState(title = "Select Size"),
+    bottomBar = NavigationBarState(
+        listOf(
+            NavigationBarItemState(
+                selected = true,
+                icon = IconState(resourceId = R.drawable.ic_launcher_foreground),
+                label = TextState(text = "Home")
+            ),
+            NavigationBarItemState(
+                selected = false,
+                icon = IconState(resourceId = R.drawable.ic_launcher_background),
+                label = TextState(text = "History")
+            )
+        )
+    )
 ) {
     companion object {
         const val DEFAULT_WIDTH = 7

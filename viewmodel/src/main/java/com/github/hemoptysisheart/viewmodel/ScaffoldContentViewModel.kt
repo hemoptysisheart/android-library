@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.github.hemoptysisheart.statepump.ScaffoldPump
+import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import javax.inject.Inject
@@ -12,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
 /**
  * [androidx.lifecycle.ViewModel]에 일부 기능을 추가한 클래스.
  */
-abstract class ScaffoldContentViewModel<TB : TopBarState>(
+abstract class ScaffoldContentViewModel<TB : TopBarState, BB : BottomBarState>(
     /**
      * 로그에 사용할 태그. 추천값은 클래스 이름.
      */
@@ -32,7 +33,8 @@ abstract class ScaffoldContentViewModel<TB : TopBarState>(
      *
      * @see scaffoldPump
      */
-    private val topBar: TB? = null
+    private val topBar: TB? = null,
+    private val bottomBar: BB? = null
 ) : BaseViewModel(tag, fallbackCoroutineExceptionHandler), DefaultLifecycleObserver {
     @Inject
     lateinit var scaffoldPump: ScaffoldPump
@@ -44,6 +46,7 @@ abstract class ScaffoldContentViewModel<TB : TopBarState>(
     override fun doOnCreate(owner: LifecycleOwner) {
         super.doOnCreate(owner)
         scaffoldPump.update(topBar)
+        scaffoldPump.update(bottomBar)
     }
 
     override fun toString() = listOf(

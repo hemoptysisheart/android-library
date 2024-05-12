@@ -1,8 +1,13 @@
 package com.github.hemoptysisheart.sample.viewmodel
 
 import android.util.Log
+import com.github.hemoptysisheart.sample.R.drawable
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
+import com.github.hemoptysisheart.ui.state.IconState
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
+import com.github.hemoptysisheart.ui.state.TextState
+import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarItemState
+import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TitleTopBarState
 import com.github.hemoptysisheart.viewmodel.ScaffoldContentViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,10 +18,24 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
-) : ScaffoldContentViewModel<TitleTopBarState>(
+) : ScaffoldContentViewModel<TitleTopBarState, NavigationBarState>(
     tag = "HistoryViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
-    topBar = TitleTopBarState("History")
+    topBar = TitleTopBarState("History"),
+    bottomBar = NavigationBarState(
+        listOf(
+            NavigationBarItemState(
+                selected = false,
+                icon = IconState(resourceId = drawable.ic_launcher_foreground),
+                label = TextState(text = "Home")
+            ),
+            NavigationBarItemState(
+                selected = true,
+                icon = IconState(resourceId = drawable.ic_launcher_background),
+                label = TextState(text = "History")
+            )
+        )
+    )
 ) {
     /**
      * [androidx.lifecycle.ViewModel]의 [CoroutineExceptionHandler] 테스트용 메서드.
