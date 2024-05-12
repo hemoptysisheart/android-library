@@ -32,7 +32,7 @@ data class SimpleTopBarState(
         }
     ) : this(
         enableBack = enableBack,
-        title = TextState(title),
+        title = TextState(text = title),
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         key = key,

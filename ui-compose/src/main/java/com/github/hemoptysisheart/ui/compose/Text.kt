@@ -4,6 +4,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -20,7 +21,9 @@ fun Text(
     onTextLayout: (TextLayoutResult) -> Unit = {}
 ) {
     androidx.compose.material3.Text(
-        text = state.text,
+        text = state.resourceId?.let { stringResource(id = it) }
+            ?: state.text
+            ?: throw IllegalStateException("TextState must have resourceId or text."),
         modifier = modifier.testTag(state.testTag),
         color = state.color,
         fontSize = state.fontSize,

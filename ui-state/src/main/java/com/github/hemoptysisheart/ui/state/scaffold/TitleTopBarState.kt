@@ -14,5 +14,5 @@ open class TitleTopBarState(
         title: String,
         key: UUID = UUID.randomUUID(),
         testTag: String = key.toString()
-    ) : this(TextState(title), key, testTag)
+    ) : this(TextState(text = title), key, testTag)
 }
