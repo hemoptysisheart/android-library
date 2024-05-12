@@ -11,10 +11,8 @@ import kotlin.coroutines.CoroutineContext
 
 /**
  * [androidx.lifecycle.ViewModel]에 일부 기능을 추가한 클래스.
- *
- * @param topBar `@Composable Scaffold`의 상단 바 초기값.
  */
-open class ScaffoldContentViewModel<TB : TopBarState>(
+abstract class ScaffoldContentViewModel<TB : TopBarState>(
     /**
      * 로그에 사용할 태그. 추천값은 클래스 이름.
      */
@@ -22,7 +20,6 @@ open class ScaffoldContentViewModel<TB : TopBarState>(
     /**
      * [androidx.lifecycle.viewModelScope]에서 발생한 예외를 마지막으로 처리하는 핸들러.
      */
-    @Suppress("MemberVisibilityCanBePrivate")
     fallbackCoroutineExceptionHandler: CoroutineExceptionHandler = object : CoroutineExceptionHandler {
         override val key = CoroutineExceptionHandler.Key
 

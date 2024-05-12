@@ -1,6 +1,7 @@
 package com.github.hemoptysisheart.ui.navigation.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -8,12 +9,17 @@ import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.navigation.destination.Navigator
 
 @Composable
-fun NavigationGraph(baseNavigator: BaseNavigator, nodeBuilder: NavGraphBuilder.(BaseNavigator) -> Unit) {
+fun NavigationGraph(
+    baseNavigator: BaseNavigator,
+    modifier: Modifier = Modifier,
+    graphBuilder: NavGraphBuilder.(BaseNavigator) -> Unit
+) {
     NavHost(
+        navController = baseNavigator.navHostController,
         startDestination = baseNavigator.startDestination.id,
-        navController = baseNavigator.navHostController
+        modifier = modifier
     ) {
-        nodeBuilder(baseNavigator)
+        graphBuilder(baseNavigator)
     }
 }
 

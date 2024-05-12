@@ -18,7 +18,10 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-open class BaseViewModel(
+/**
+ * UI, UX와 관련된 여러가지 추가기능을 제공하는 ViewModel의 기본 클래스.
+ */
+abstract class BaseViewModel(
     /**
      * 로그에 사용할 태그. 추천값은 클래스 이름.
      */
