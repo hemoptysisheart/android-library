@@ -9,7 +9,6 @@ import com.github.hemoptysisheart.ui.state.InteractionImpact
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -75,14 +74,14 @@ abstract class BaseViewModel(
      */
     protected fun launch(
         impact: InteractionImpact = InteractionImpact.NONE,
+        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
         exceptionHandler: (Exception) -> Unit = { e ->
             Log.w(tag, "#launch.exceptionHandler : ${e.message}", e)
             throw e
         },
-        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
-        start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> Unit
-    ): Job = viewModelScope.launch(context, start) {
+    ) = viewModelScope.launch(context, start) {
         try {
             when (impact) {
                 InteractionImpact.NONE -> {}
@@ -123,12 +122,12 @@ abstract class BaseViewModel(
      */
     protected fun <T> async(
         impact: InteractionImpact = InteractionImpact.NONE,
+        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
         exceptionHandler: (Exception) -> Unit = { e ->
             Log.w(tag, "#async.exceptionHandler : ${e.message}", e)
             throw e
         },
-        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
-        start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> T
     ) = viewModelScope.async(context, start) {
         try {
