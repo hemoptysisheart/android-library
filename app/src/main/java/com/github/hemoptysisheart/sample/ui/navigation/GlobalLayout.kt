@@ -14,7 +14,7 @@ import com.github.hemoptysisheart.statepump.ScaffoldPump
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBarActions
 import com.github.hemoptysisheart.ui.compose.scaffold.TopBarActions
 import com.github.hemoptysisheart.ui.navigation.compose.NavigationGraph
-import com.github.hemoptysisheart.ui.navigation.compose.ScaffoldController
+import com.github.hemoptysisheart.ui.navigation.compose.Scaffold
 import com.github.hemoptysisheart.ui.navigation.compose.page
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
 import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarItemState
@@ -49,7 +49,7 @@ fun GlobalLayout(
         }
     }
 
-    ScaffoldController(
+    Scaffold(
         baseNavigator = baseNavigator,
         topBar = topBar,
         bottomBar = bottomBar,

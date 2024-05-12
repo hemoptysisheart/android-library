@@ -1,12 +1,12 @@
 package com.github.hemoptysisheart.ui.navigation.compose
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
@@ -24,7 +24,7 @@ import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
  * 전체적으로 스캐폴드 레이아웃을 제어하는 컴포저블.
  */
 @Composable
-fun ScaffoldController(
+fun Scaffold(
     baseNavigator: BaseNavigator,
     modifier: Modifier = Modifier,
     topBar: TopBarState? = null,
@@ -39,7 +39,25 @@ fun ScaffoldController(
     bottomBarActions: BottomBarActions = BottomBarActions.Default,
     content: @Composable () -> Unit
 ) {
-    Scaffold(
+    Log.v(
+        TAG,
+        listOf(
+            "baseNavigator=$baseNavigator",
+            "modifier=$modifier",
+            "topBar=$topBar",
+            "bottomBar=$bottomBar",
+            "snackbarHost=$snackbarHost",
+            "floatingActionButton=$floatingActionButton",
+            "floatingActionButtonPosition=$floatingActionButtonPosition",
+            "containerColor=$containerColor",
+            "contentColor=$contentColor",
+            "contentWindowInsets=$contentWindowInsets",
+            "topBarActions=$topBarActions",
+            "bottomBarActions=$bottomBarActions"
+        ).joinToString(", ", "#ScaffoldController args :")
+    )
+
+    androidx.compose.material3.Scaffold(
         modifier = modifier,
         topBar = {
             TopBar(

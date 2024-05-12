@@ -1,5 +1,6 @@
 package com.github.hemoptysisheart.ui.navigation.compose
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
@@ -16,6 +17,15 @@ fun NavigationGraph(
     modifier: Modifier = Modifier,
     graphBuilder: NavGraphBuilder.() -> Unit
 ) {
+    Log.v(
+        TAG,
+        listOf(
+            "navHostController=$navHostController",
+            "startDestinationId=$startDestinationId",
+            "modifier=$modifier"
+        ).joinToString(", ", "#NavigationGraph args :")
+    )
+
     NavHost(
         navController = navHostController,
         startDestination = startDestinationId,
