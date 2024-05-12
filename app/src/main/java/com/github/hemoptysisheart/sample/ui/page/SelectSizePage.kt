@@ -36,14 +36,14 @@ import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.SelectSizeViewModel
 import com.github.hemoptysisheart.ui.compose.OutlinedTextField
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
-import com.github.hemoptysisheart.ui.navigation.compose.viewModel
+import com.github.hemoptysisheart.ui.navigation.compose.baseViewModel
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
 import com.github.hemoptysisheart.ui.state.TextFieldState
 
 @Composable
 fun SelectSizePage(
     navigator: SelectSizeNavigator,
-    viewModel: SelectSizeViewModel = viewModel()
+    viewModel: SelectSizeViewModel = baseViewModel()
 ) {
     Log.v(TAG, "#SelectSizePage args : navigator=$navigator, viewModel=$viewModel")
 

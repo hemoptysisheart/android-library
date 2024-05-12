@@ -18,12 +18,12 @@ import com.github.hemoptysisheart.sample.ui.navigation.MazeNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.MazeViewModel
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
-import com.github.hemoptysisheart.ui.navigation.compose.viewModel
+import com.github.hemoptysisheart.ui.navigation.compose.baseViewModel
 
 @Composable
 fun MazePage(
     navigator: MazeNavigator,
-    viewModel: MazeViewModel = viewModel()
+    viewModel: MazeViewModel = baseViewModel()
 ) {
     Log.v(TAG, "#MazePage args : navigator=$navigator, viewModel=$viewModel")
 

@@ -29,12 +29,12 @@ import com.github.hemoptysisheart.sample.ui.template.scaffold.BottomBar
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.HistoryViewModel
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
-import com.github.hemoptysisheart.ui.navigation.compose.viewModel
+import com.github.hemoptysisheart.ui.navigation.compose.baseViewModel
 
 @Composable
 fun HistoryPage(
     navigator: HistoryNavigator,
-    viewModel: HistoryViewModel = viewModel()
+    viewModel: HistoryViewModel = baseViewModel()
 ) {
     Log.v(TAG, "#HistoryPage args : navigator=$navigator, viewModel=$viewModel")
 
