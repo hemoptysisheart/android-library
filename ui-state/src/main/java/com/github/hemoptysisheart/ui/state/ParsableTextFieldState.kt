@@ -92,4 +92,28 @@ open class ParsableTextFieldState<V>(
         onValueChange = _onValueChange,
         _parser = _parser
     )
+
+    override fun copy(
+        text: String,
+        enabled: Boolean,
+        readOnly: Boolean,
+        isError: Boolean,
+        visualTransformation: VisualTransformation,
+        keyboardOptions: KeyboardOptions,
+        keyboardActions: KeyboardActions,
+        lines: TextLines
+    ) = ParsableTextFieldState(
+        value = TextFieldValue(text, TextRange(text.length)),
+        key = key,
+        enabled = enabled,
+        readOnly = readOnly,
+        isError = isError,
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        lines = lines,
+        onFocusChange = _onFocusChange,
+        onValueChange = _onValueChange,
+        _parser = _parser
+    )
 }

@@ -119,8 +119,8 @@ class SelectSizeViewModel @Inject constructor(
 
         async(VISIBLE) {
             delay(2_000)
-            _width.update { it.copy(TextFieldValue("$DEFAULT_WIDTH")) }
-            _height.update { it.copy(TextFieldValue("$DEFAULT_HEIGHT")) }
+            _width.update { it.copy("$DEFAULT_WIDTH") }
+            _height.update { it.copy("$DEFAULT_HEIGHT") }
         }.invokeOnCompletion { e ->
             Log.w(tag, "#onClickDefault.invokeOnCompletion args : e=$e", e)
         }

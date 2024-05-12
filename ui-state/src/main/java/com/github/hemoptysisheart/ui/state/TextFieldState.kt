@@ -47,11 +47,28 @@ interface TextFieldState {
     /**
      * 텍스트 필드의 상태를 복사한 새로운 상태를 반환.
      *
-     * @param text 새로운 값.
+     * @param value 새로운 값.
      * @return 복사한 새로운 상태.
      */
     fun copy(
         value: TextFieldValue = this.value,
+        enabled: Boolean = this.enabled,
+        readOnly: Boolean = this.readOnly,
+        isError: Boolean = this.isError,
+        visualTransformation: VisualTransformation = this.visualTransformation,
+        keyboardOptions: KeyboardOptions = this.keyboardOptions,
+        keyboardActions: KeyboardActions = this.keyboardActions,
+        lines: TextLines = this.lines
+    ): SimpleTextFieldState
+
+    /**
+     * 텍스트 필드의 상태를 복사한 새로운 상태를 반환.
+     *
+     * @param text 새로운 값.
+     * @return 복사한 새로운 상태.
+     */
+    fun copy(
+        text: String = this.value.text,
         enabled: Boolean = this.enabled,
         readOnly: Boolean = this.readOnly,
         isError: Boolean = this.isError,
