@@ -37,7 +37,8 @@ fun NavigationBar(
                 selected = item.selected,
                 icon = { item.icon?.let { Icon(it) } },
                 label = { item.label?.let { Text(it) } },
-                onClick = { onClickItem(item) }
+                onClick = { onClickItem(item) },
+                modifier = Modifier.testTag(item.testTag)
             )
         }
     }

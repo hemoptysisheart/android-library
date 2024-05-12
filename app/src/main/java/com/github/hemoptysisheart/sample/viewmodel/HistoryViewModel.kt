@@ -3,6 +3,8 @@ package com.github.hemoptysisheart.sample.viewmodel
 import android.util.Log
 import com.github.hemoptysisheart.sample.R.drawable
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
+import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
+import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
 import com.github.hemoptysisheart.ui.state.IconState
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.TextState
@@ -25,11 +27,13 @@ class HistoryViewModel @Inject constructor(
     bottomBar = NavigationBarState(
         listOf(
             NavigationBarItemState(
+                destination = SelectSizeNavigator.id,
                 selected = false,
                 icon = IconState(resourceId = drawable.ic_launcher_foreground),
-                label = TextState(text = "Home")
+                label = TextState(text = "Maze")
             ),
             NavigationBarItemState(
+                destination = HistoryNavigator.id,
                 selected = true,
                 icon = IconState(resourceId = drawable.ic_launcher_background),
                 label = TextState(text = "History")

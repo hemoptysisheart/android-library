@@ -12,6 +12,12 @@ import java.util.UUID
 @Stable
 class NavigationBarItemState(
     /**
+     * 백스택 엔트리 ID.
+     *
+     * @see com.github.hemoptysisheart.ui.navigation.destination.Destination.id
+     */
+    val destination: String,
+    /**
      * 선택 여부.
      * @see androidx.compose.material3.NavigationBarItem `selected`
      */
@@ -32,6 +38,7 @@ class NavigationBarItemState(
         icon: IconState? = this.icon,
         label: TextState? = this.label
     ) = NavigationBarItemState(
+        destination = destination,
         selected = selected,
         icon = icon,
         label = label,
@@ -41,6 +48,7 @@ class NavigationBarItemState(
 
     override fun equals(other: Any?) = this === other || (
             other is NavigationBarItemState &&
+                    destination == other.destination &&
                     selected == other.selected &&
                     icon == other.icon &&
                     label == other.label &&
@@ -49,7 +57,8 @@ class NavigationBarItemState(
             )
 
     override fun hashCode(): Int {
-        var result = selected.hashCode()
+        var result = destination.hashCode()
+        result = 31 * result + selected.hashCode()
         result = 31 * result + (icon?.hashCode() ?: 0)
         result = 31 * result + (label?.hashCode() ?: 0)
         result = 31 * result + key.hashCode()
@@ -58,6 +67,7 @@ class NavigationBarItemState(
     }
 
     override fun toString() = listOfNotNull(
+        "destination='$destination'",
         "selected=$selected",
         icon?.let { "icon=$it" },
         label?.let { "label=$it" },

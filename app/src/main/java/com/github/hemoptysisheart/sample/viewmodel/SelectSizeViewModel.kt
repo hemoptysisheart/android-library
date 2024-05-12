@@ -7,6 +7,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import com.github.hemoptysisheart.sample.R
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
+import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
+import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
 import com.github.hemoptysisheart.ui.state.IconState
 import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
@@ -34,11 +36,13 @@ class SelectSizeViewModel @Inject constructor(
     bottomBar = NavigationBarState(
         listOf(
             NavigationBarItemState(
+                destination = SelectSizeNavigator.id,
                 selected = true,
                 icon = IconState(resourceId = R.drawable.ic_launcher_foreground),
-                label = TextState(text = "Home")
+                label = TextState(text = "Maze")
             ),
             NavigationBarItemState(
+                destination = HistoryNavigator.id,
                 selected = false,
                 icon = IconState(resourceId = R.drawable.ic_launcher_background),
                 label = TextState(text = "History")

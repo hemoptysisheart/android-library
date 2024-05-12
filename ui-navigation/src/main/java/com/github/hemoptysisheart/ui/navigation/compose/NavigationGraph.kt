@@ -31,7 +31,7 @@ fun NavigationGraph(
  * @param navigator 화면에서 사용할 내비게이터.
  * @param destination 화면.
  */
-inline fun <reified N : Navigator> NavGraphBuilder.node(navigator: N, noinline destination: @Composable (N) -> Unit) {
+inline fun <reified N : Navigator> NavGraphBuilder.page(navigator: N, noinline destination: @Composable (N) -> Unit) {
     if (navigator is BaseNavigator) {
         throw IllegalArgumentException("BaseNavigator is not allowed.")
     }
