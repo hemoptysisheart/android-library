@@ -7,17 +7,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.HistoryViewModel
@@ -31,31 +27,21 @@ fun HistoryPage(
 ) {
     Log.v(TAG, "#HistoryPage args : navigator=$navigator, viewModel=$viewModel")
 
-    val blockingProgress by viewModel.blockingProgress.collectAsStateWithLifecycle()
-
-    HistoryPageContent(navigator, blockingProgress, viewModel::onClickError)
+    HistoryPageContent(navigator, viewModel::onClickError)
 }
 
 @Composable
 private fun HistoryPageContent(
     navigator: HistoryNavigator,
-    blockingProgress: Boolean,
     onClickError: () -> Unit = {}
 ) {
     Log.v(
         TAG,
         listOf(
             "navigator=$navigator",
-            "blockingProgress=$blockingProgress",
             "onClickError=$onClickError"
         ).joinToString(", ", "#HistoryPageContent args : ")
     )
-
-    if (blockingProgress) {
-        Dialog(onDismissRequest = { }) {
-            CircularProgressIndicator()
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -76,8 +62,7 @@ private fun HistoryPageContent(
 private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
         HistoryPageContent(
-            navigator = HistoryNavigator(baseNavigator(PreviewActivity())),
-            blockingProgress = false
+            navigator = HistoryNavigator(baseNavigator(PreviewActivity()))
         )
     }
 }

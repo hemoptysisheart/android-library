@@ -14,10 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.zIndex
+import com.github.hemoptysisheart.ui.compose.Dialog
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBar
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBarActions
 import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
 import com.github.hemoptysisheart.ui.compose.scaffold.TopBarActions
+import com.github.hemoptysisheart.ui.state.DialogState
 import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
@@ -28,6 +30,7 @@ import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 @Composable
 fun Scaffold(
     modifier: Modifier = Modifier,
+    dialog: DialogState? = null,
     visibleProgress: Boolean = false,
     topBar: TopBarState? = null,
     bottomBar: BottomBarState? = null,
@@ -45,6 +48,7 @@ fun Scaffold(
         TAG,
         listOf(
             "modifier=$modifier",
+            "dialog=$dialog",
             "visibleProgress=$visibleProgress",
             "topBar=$topBar",
             "bottomBar=$bottomBar",
@@ -56,8 +60,12 @@ fun Scaffold(
             "contentWindowInsets=$contentWindowInsets",
             "topBarActions=$topBarActions",
             "bottomBarActions=$bottomBarActions"
-        ).joinToString(", ", "#ScaffoldController args :")
+        ).joinToString(", ", "#Scaffold args : ")
     )
+
+    if (null != dialog) {
+        Dialog(state = dialog)
+    }
 
     androidx.compose.material3.Scaffold(
         modifier = modifier,

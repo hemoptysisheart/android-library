@@ -8,8 +8,10 @@ import com.github.hemoptysisheart.statepump.ScaffoldPump
 import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
 import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -42,6 +44,13 @@ abstract class ScaffoldContentViewModel<TB : TopBarState, BB : BottomBarState>(
     @Inject
     lateinit var scaffoldPump: ScaffoldPump
 
+    /**
+     * TODO 다른 방식으로 BaseViewModel 속성을 구독하는 방법이 있을 듯.
+     *
+     * @see doOnCreate
+     */
+    private lateinit var pumping: StateFlow<Unit>
+
     init {
         Log.d(tag, "#init called.")
     }
@@ -49,20 +58,16 @@ abstract class ScaffoldContentViewModel<TB : TopBarState, BB : BottomBarState>(
     override fun doOnCreate(owner: LifecycleOwner) {
         scaffoldPump.update(topBar)
         scaffoldPump.update(bottomBar)
+
+        pumping = combine(blockingProgress, visibleProgress) { bp, vp ->
+            scaffoldPump.blockingProgress(bp)
+            scaffoldPump.visibleProgress(vp)
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, Unit)
     }
 
-    override fun doOnStart(owner: LifecycleOwner) {
-        viewModelScope.launch {
-            visibleProgress.collectLatest {
-                scaffoldPump.visibleProgress(it)
-            }
-        }
-    }
-
-    override fun doOnStop(owner: LifecycleOwner) {
-        viewModelScope.launch {
-            scaffoldPump.visibleProgress(false)
-        }
+    override fun doOnCleared() {
+        scaffoldPump.blockingProgress(false)
+        scaffoldPump.visibleProgress(false)
     }
 
     override fun toString() = listOf(

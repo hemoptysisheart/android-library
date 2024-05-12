@@ -23,7 +23,7 @@ fun NavigationGraph(
             "navHostController=$navHostController",
             "startDestinationId=$startDestinationId",
             "modifier=$modifier"
-        ).joinToString(", ", "#NavigationGraph args :")
+        ).joinToString(", ", "#NavigationGraph args : ")
     )
 
     NavHost(

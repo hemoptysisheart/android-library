@@ -1,5 +1,6 @@
 package com.github.hemoptysisheart.sample.ui.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +28,15 @@ fun GlobalLayout(
     baseNavigator: BaseNavigator,
     scaffoldPump: ScaffoldPump
 ) {
+    Log.v(
+        TAG,
+        listOf(
+            "baseNavigator=$baseNavigator",
+            "scaffoldPump=$scaffoldPump"
+        ).joinToString(", ", "#GlobalLayout args : ")
+    )
+
+    val dialog by scaffoldPump.dialog.collectAsStateWithLifecycle()
     val visibleProgress by scaffoldPump.visibleProgress.collectAsStateWithLifecycle()
     val topBar by scaffoldPump.topBar.collectAsStateWithLifecycle()
     val bottomBar by scaffoldPump.bottomBar.collectAsStateWithLifecycle()
@@ -51,6 +61,7 @@ fun GlobalLayout(
     }
 
     Scaffold(
+        dialog = dialog,
         visibleProgress = visibleProgress,
         topBar = topBar,
         bottomBar = bottomBar,
