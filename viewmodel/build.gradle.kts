@@ -43,6 +43,6 @@ dependencies {
     api(project(":state-pump"))
 
     implementation(libs.androidx.lifecycle.common)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.javax.inject)
 }

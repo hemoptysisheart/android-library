@@ -57,10 +57,10 @@ dependencies {
     implementation(project(":ui-compose"))
     implementation(project(":ui-navigation"))
 
-    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.activity)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.navigation)
     implementation(libs.hilt)
 
     ksp(libs.hilt.compiler)
