@@ -199,7 +199,9 @@ abstract class BaseViewModel(
      */
     final override fun onCreate(owner: LifecycleOwner) {
         Log.d(tag, "#onCreate args : owner=$owner")
-        super.onCreate(owner)
+
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnCreate에 추가한다.
 
         doOnCreate(owner)
     }
@@ -211,7 +213,8 @@ abstract class BaseViewModel(
      */
     final override fun onStart(owner: LifecycleOwner) {
         Log.d(tag, "#onStart : owner=$owner")
-        super.onStart(owner)
+
+        // 공통 처리는 여기에 추가ㅏ 하고, 구현 클래스에서 처리할 내용은 doOnStart에 추가한다.
 
         doOnStart(owner)
     }
@@ -221,7 +224,8 @@ abstract class BaseViewModel(
      */
     final override fun onResume(owner: LifecycleOwner) {
         Log.d(tag, "#onResume : owner=$owner")
-        super.onResume(owner)
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnResume에 추가한다.
 
         doOnResume(owner)
     }
@@ -231,7 +235,8 @@ abstract class BaseViewModel(
      */
     final override fun onPause(owner: LifecycleOwner) {
         Log.d(tag, "#onPause args : owner=$owner")
-        super.onPause(owner)
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnPause에 추가한다.
 
         doOnPause(owner)
     }
@@ -243,7 +248,8 @@ abstract class BaseViewModel(
      */
     final override fun onStop(owner: LifecycleOwner) {
         Log.d(tag, "#onStop args : owner=$owner")
-        super.onStop(owner)
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnStop에 추가한다.
 
         doOnStop(owner)
     }
@@ -253,7 +259,8 @@ abstract class BaseViewModel(
      */
     final override fun onDestroy(owner: LifecycleOwner) {
         Log.d(tag, "#onDestroy args : owner=$owner")
-        super.onDestroy(owner)
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnDestroy에 추가한다.
 
         doOnDestroy(owner)
     }
@@ -263,7 +270,8 @@ abstract class BaseViewModel(
      */
     final override fun onCleared() {
         Log.d(tag, "#onCleared called.")
-        super.onCleared()
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnCleared에 추가한다.
 
         doOnCleared()
     }
