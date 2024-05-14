@@ -1,4 +1,4 @@
-package com.github.hemoptysisheart.sample.ui.navigation
+package com.github.hemoptysisheart.sample.ui
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
+import com.github.hemoptysisheart.sample.ui.navigation.MazeNavigator
+import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
+import com.github.hemoptysisheart.sample.ui.navigation.SplashNavigator
+import com.github.hemoptysisheart.sample.ui.navigation.TAG
 import com.github.hemoptysisheart.sample.ui.page.HistoryPage
 import com.github.hemoptysisheart.sample.ui.page.MazePage
 import com.github.hemoptysisheart.sample.ui.page.SelectSizePage
@@ -28,7 +33,7 @@ import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarItemState
  * 앱의 전반적인 레이아웃을 구성한다.
  */
 @Composable
-fun GlobalLayout(
+fun RootLayout(
     baseNavigator: BaseNavigator,
     viewModel: ScaffoldControlViewModel = hiltViewModel()
 ) {

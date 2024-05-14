@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.github.hemoptysisheart.sample.ui.navigation.GlobalLayout
+import com.github.hemoptysisheart.sample.ui.RootLayout
 import com.github.hemoptysisheart.sample.ui.navigation.SplashNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AndroidLibraryTheme {
-                GlobalLayout(baseNavigator(this, SplashNavigator.Companion))
+                RootLayout(baseNavigator(this, SplashNavigator))
             }
         }
     }
