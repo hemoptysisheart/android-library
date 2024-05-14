@@ -7,19 +7,14 @@ import androidx.activity.compose.setContent
 import com.github.hemoptysisheart.sample.ui.navigation.GlobalLayout
 import com.github.hemoptysisheart.sample.ui.navigation.SplashNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
-import com.github.hemoptysisheart.statepump.ScaffoldPump
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     companion object {
         private const val TAG = "MainActivity"
     }
-
-    @Inject
-    lateinit var scaffoldPump: ScaffoldPump
 
     init {
         Log.i(TAG, "#init called.")
@@ -31,10 +26,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AndroidLibraryTheme {
-                GlobalLayout(
-                    baseNavigator = baseNavigator(activity = this, startDestination = SplashNavigator.Companion),
-                    scaffoldPump = scaffoldPump
-                )
+                GlobalLayout(baseNavigator(this, SplashNavigator.Companion))
             }
         }
     }

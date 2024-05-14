@@ -6,18 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.page.HistoryPage
 import com.github.hemoptysisheart.sample.ui.page.MazePage
 import com.github.hemoptysisheart.sample.ui.page.SelectSizePage
 import com.github.hemoptysisheart.sample.ui.page.SplashPage
-import com.github.hemoptysisheart.statepump.ScaffoldPump
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBarActions
 import com.github.hemoptysisheart.ui.compose.scaffold.TopBarActions
 import com.github.hemoptysisheart.ui.navigation.compose.NavigationGraph
 import com.github.hemoptysisheart.ui.navigation.compose.Scaffold
 import com.github.hemoptysisheart.ui.navigation.compose.page
 import com.github.hemoptysisheart.ui.navigation.destination.BaseNavigator
+import com.github.hemoptysisheart.ui.navigation.viewmodel.ScaffoldControlViewModel
 import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarItemState
 
 /**
@@ -26,27 +27,27 @@ import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarItemState
 @Composable
 fun GlobalLayout(
     baseNavigator: BaseNavigator,
-    scaffoldPump: ScaffoldPump
+    viewModel: ScaffoldControlViewModel = hiltViewModel()
 ) {
     Log.v(
         TAG,
         listOf(
             "baseNavigator=$baseNavigator",
-            "scaffoldPump=$scaffoldPump"
+            "viewModel=$viewModel"
         ).joinToString(", ", "#GlobalLayout args : ")
     )
 
-    val dialog by scaffoldPump.dialog.collectAsStateWithLifecycle()
-    val visibleProgress by scaffoldPump.visibleProgress.collectAsStateWithLifecycle()
-    val topBar by scaffoldPump.topBar.collectAsStateWithLifecycle()
-    val bottomBar by scaffoldPump.bottomBar.collectAsStateWithLifecycle()
+    val dialog by viewModel.dialog.collectAsStateWithLifecycle()
+    val visibleProgress by viewModel.visibleProgress.collectAsStateWithLifecycle()
+    val topBar by viewModel.topBar.collectAsStateWithLifecycle()
+    val bottomBar by viewModel.bottomBar.collectAsStateWithLifecycle()
 
-    val topBarActions = remember(baseNavigator) {
+    val topBarActions = remember(viewModel) {
         object : TopBarActions {
             override fun onClickBack() = baseNavigator.back()
         }
     }
-    val bottomBarActions = remember(scaffoldPump) {
+    val bottomBarActions = remember(viewModel) {
         object : BottomBarActions {
             override fun onClickNavigationBarItem(item: NavigationBarItemState) {
                 baseNavigator.navHostController.navigate(item.destination) {
