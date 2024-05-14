@@ -3,13 +3,12 @@ package com.github.hemoptysisheart.viewmodel
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.hemoptysisheart.ui.state.InteractionImpact
-import com.github.hemoptysisheart.ui.state.TopBarState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,11 +18,9 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
 /**
- * [androidx.lifecycle.ViewModel]에 일부 기능을 추가한 클래스.
- *
- * @param topBar `@Composable Scaffold`의 상단 바 초기값.
+ * UI, UX와 관련된 여러가지 추가기능을 제공하는 ViewModel의 기본 클래스.
  */
-open class ViewModel(
+abstract class BaseViewModel(
     /**
      * 로그에 사용할 태그. 추천값은 클래스 이름.
      */
@@ -38,9 +35,8 @@ open class ViewModel(
         override fun handleException(context: CoroutineContext, exception: Throwable) {
             Log.w(tag, "#handleException : ${exception.message}", exception)
         }
-    },
-    topBar: TopBarState = TopBarState.EMPTY
-) : androidx.lifecycle.ViewModel(), DefaultLifecycleObserver {
+    }
+) : ViewModel(), DefaultLifecycleObserver {
     /**
      * 사용자 인터랙션을 막지 않지만 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
      */
@@ -50,9 +46,6 @@ open class ViewModel(
      * 사용자 인터랙션을 막으면서 사용자에게 처리중임을 표시해야 하는 코루틴의 수.
      */
     private val blockingImpacts = AtomicInteger(0)
-
-    private val _topBar = MutableStateFlow<TopBarState>(topBar)
-    val topBar: StateFlow<TopBarState> = _topBar
 
     private val _visibleProgress = MutableStateFlow(false)
 
@@ -68,10 +61,6 @@ open class ViewModel(
      */
     val blockingProgress: StateFlow<Boolean> = _blockingProgress
 
-    init {
-        Log.d(tag, "#init called.")
-    }
-
     /**
      * [androidx.lifecycle.viewModelScope]를 이용하여 새 코루틴으로 [block]을 실행한다.
      *
@@ -85,14 +74,14 @@ open class ViewModel(
      */
     protected fun launch(
         impact: InteractionImpact = InteractionImpact.NONE,
+        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
         exceptionHandler: (Exception) -> Unit = { e ->
             Log.w(tag, "#launch.exceptionHandler : ${e.message}", e)
             throw e
         },
-        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
-        start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> Unit
-    ): Job = viewModelScope.launch(context, start) {
+    ) = viewModelScope.launch(context, start) {
         try {
             when (impact) {
                 InteractionImpact.NONE -> {}
@@ -133,12 +122,12 @@ open class ViewModel(
      */
     protected fun <T> async(
         impact: InteractionImpact = InteractionImpact.NONE,
+        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
         exceptionHandler: (Exception) -> Unit = { e ->
             Log.w(tag, "#async.exceptionHandler : ${e.message}", e)
             throw e
         },
-        context: CoroutineContext = EmptyCoroutineContext + fallbackCoroutineExceptionHandler,
-        start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> T
     ) = viewModelScope.async(context, start) {
         try {
@@ -210,7 +199,9 @@ open class ViewModel(
      */
     final override fun onCreate(owner: LifecycleOwner) {
         Log.d(tag, "#onCreate args : owner=$owner")
-        super.onCreate(owner)
+
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnCreate에 추가한다.
 
         doOnCreate(owner)
     }
@@ -222,7 +213,8 @@ open class ViewModel(
      */
     final override fun onStart(owner: LifecycleOwner) {
         Log.d(tag, "#onStart : owner=$owner")
-        super.onStart(owner)
+
+        // 공통 처리는 여기에 추가ㅏ 하고, 구현 클래스에서 처리할 내용은 doOnStart에 추가한다.
 
         doOnStart(owner)
     }
@@ -232,7 +224,8 @@ open class ViewModel(
      */
     final override fun onResume(owner: LifecycleOwner) {
         Log.d(tag, "#onResume : owner=$owner")
-        super.onResume(owner)
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnResume에 추가한다.
 
         doOnResume(owner)
     }
@@ -242,7 +235,8 @@ open class ViewModel(
      */
     final override fun onPause(owner: LifecycleOwner) {
         Log.d(tag, "#onPause args : owner=$owner")
-        super.onPause(owner)
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnPause에 추가한다.
 
         doOnPause(owner)
     }
@@ -254,7 +248,8 @@ open class ViewModel(
      */
     final override fun onStop(owner: LifecycleOwner) {
         Log.d(tag, "#onStop args : owner=$owner")
-        super.onStop(owner)
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnStop에 추가한다.
 
         doOnStop(owner)
     }
@@ -264,7 +259,8 @@ open class ViewModel(
      */
     final override fun onDestroy(owner: LifecycleOwner) {
         Log.d(tag, "#onDestroy args : owner=$owner")
-        super.onDestroy(owner)
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnDestroy에 추가한다.
 
         doOnDestroy(owner)
     }
@@ -274,7 +270,8 @@ open class ViewModel(
      */
     final override fun onCleared() {
         Log.d(tag, "#onCleared called.")
-        super.onCleared()
+
+        // 공통 처리는 여기에 추가하고, 구현 클래스에서 처리할 내용은 doOnCleared에 추가한다.
 
         doOnCleared()
     }
@@ -284,8 +281,6 @@ open class ViewModel(
         "visibleImpacts=$visibleImpacts",
         "blockingImpacts=$blockingImpacts",
         "visibleProgress=${visibleProgress.value}",
-        "blockingProgress=${blockingProgress.value}",
-        "topBar=${_topBar.value}"
+        "blockingProgress=${blockingProgress.value}"
     ).joinToString(", ")
 }
-

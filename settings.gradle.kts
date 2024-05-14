@@ -28,6 +28,7 @@ rootProject.name = "android-library"
 include(
     ":ui-state",
     ":ui-compose",
+    ":state-pump",
     ":viewmodel",
     ":ui-navigation",
 

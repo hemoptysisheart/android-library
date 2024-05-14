@@ -40,6 +40,9 @@ android {
 dependencies {
     api(project(":ui-state"))
     api(project(":ui-compose"))
+    api(project(":state-pump"))
 
+    implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.javax.inject)
 }

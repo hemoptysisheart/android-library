@@ -48,10 +48,11 @@ android {
 
 dependencies {
     api(project(":viewmodel"))
+    api(libs.androidx.hilt.navigation)
 
     implementation(libs.hilt)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.navigation)
 
     ksp(libs.hilt.compiler)
 }

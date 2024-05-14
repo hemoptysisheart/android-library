@@ -6,15 +6,13 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import com.github.hemoptysisheart.viewmodel.ViewModel
+import com.github.hemoptysisheart.viewmodel.BaseViewModel
 
 /**
- * `@Composable`에서 [ViewModel]을 사용할 수 있도록 [hiltViewModel]을 확장한다.
- *
- * @see hiltViewModel
+ * `@Composable`에서 [BaseViewModel]을 사용할 수 있도록 [hiltViewModel]을 확장한다.
  */
 @Composable
-inline fun <reified VM : ViewModel> viewModel(
+inline fun <reified VM : BaseViewModel> baseViewModel(
     viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     },
@@ -31,8 +29,11 @@ inline fun <reified VM : ViewModel> viewModel(
     return viewModel
 }
 
+/**
+ * `@Composable`에서 [BaseViewModel]을 사용할 수 있도록 [hiltViewModel]을 확장한다.
+ */
 @Composable
-inline fun <reified VM : ViewModel, reified VMF> hiltViewModel(
+inline fun <reified VM : BaseViewModel, reified VMF> baseViewModel(
     viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     },
