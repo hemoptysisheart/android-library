@@ -1,6 +1,7 @@
 package com.github.hemoptysisheart.sample.viewmodel
 
 import android.util.Log
+import androidx.compose.ui.text.style.TextAlign
 import com.github.hemoptysisheart.sample.R.drawable
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
@@ -23,7 +24,7 @@ class HistoryViewModel @Inject constructor(
 ) : ScaffoldContentViewModel<TitleTopBarState, NavigationBarState>(
     tag = "HistoryViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
-    topBar = TitleTopBarState("History"),
+    topBar = TitleTopBarState(TextState(text = "History", textAlign = TextAlign.Center)),
     bottomBar = NavigationBarState(
         listOf(
             NavigationBarItemState(
@@ -53,5 +54,6 @@ class HistoryViewModel @Inject constructor(
     }
 
     override fun toString() = listOf<String>(
-    ).joinToString(", ", "$tag(${super.toString()}", ")")
+        super.toString()
+    ).joinToString(", ", "$tag(", ")")
 }

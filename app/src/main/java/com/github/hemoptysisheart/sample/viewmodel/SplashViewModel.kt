@@ -34,6 +34,7 @@ class SplashViewModel @Inject constructor(
     }
 
     override fun toString() = listOf(
+        super.toString(),
         "timeout=${timeout.value}"
     ).joinToString(", ", "$tag(", ")")
 }

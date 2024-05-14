@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import com.github.hemoptysisheart.sample.R
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
@@ -32,7 +33,7 @@ class SelectSizeViewModel @Inject constructor(
 ) : ScaffoldContentViewModel<TitleTopBarState, NavigationBarState>(
     tag = "SelectSizeViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
-    topBar = TitleTopBarState(title = "Select Size"),
+    topBar = TitleTopBarState(TextState(text = "Select Size", textAlign = TextAlign.Center)),
     bottomBar = NavigationBarState(
         listOf(
             NavigationBarItemState(
@@ -127,7 +128,8 @@ class SelectSizeViewModel @Inject constructor(
     }
 
     override fun toString() = listOf(
-        "width=$width",
-        "height=$height"
-    ).joinToString(", ", "$tag(${super.toString()}", ")")
+        super.toString(),
+        "width=${width.value}",
+        "height=${height.value}"
+    ).joinToString(", ", "$tag(", ")")
 }

@@ -15,13 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.zIndex
 import com.github.hemoptysisheart.ui.compose.Dialog
-import com.github.hemoptysisheart.ui.compose.scaffold.BottomBar
-import com.github.hemoptysisheart.ui.compose.scaffold.BottomBarActions
-import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
-import com.github.hemoptysisheart.ui.compose.scaffold.TopBarActions
 import com.github.hemoptysisheart.ui.state.DialogState
-import com.github.hemoptysisheart.ui.state.scaffold.BottomBarState
-import com.github.hemoptysisheart.ui.state.scaffold.TopBarState
 
 /**
  * 전체적으로 스캐폴드 레이아웃을 제어하는 컴포저블.
@@ -32,16 +26,14 @@ fun Scaffold(
     modifier: Modifier = Modifier,
     dialog: DialogState? = null,
     visibleProgress: Boolean = false,
-    topBar: TopBarState? = null,
-    bottomBar: BottomBarState? = null,
-    snackbarHost: @Composable () -> Unit = {},
+    topBar: @Composable () -> Unit = { },
+    bottomBar: @Composable () -> Unit = { },
+    snackbarHost: @Composable () -> Unit = { },
     floatingActionButton: @Composable () -> Unit = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
-    topBarActions: TopBarActions = TopBarActions.Default,
-    bottomBarActions: BottomBarActions = BottomBarActions.Default,
     content: @Composable () -> Unit
 ) {
     Log.v(
@@ -58,8 +50,6 @@ fun Scaffold(
             "containerColor=$containerColor",
             "contentColor=$contentColor",
             "contentWindowInsets=$contentWindowInsets",
-            "topBarActions=$topBarActions",
-            "bottomBarActions=$bottomBarActions"
         ).joinToString(", ", "#Scaffold args : ")
     )
 
@@ -69,20 +59,8 @@ fun Scaffold(
 
     androidx.compose.material3.Scaffold(
         modifier = modifier,
-        topBar = {
-            TopBar(
-                state = topBar,
-                modifier = Modifier.fillMaxWidth(),
-                actions = topBarActions
-            )
-        },
-        bottomBar = {
-            BottomBar(
-                state = bottomBar,
-                modifier = Modifier.fillMaxWidth(),
-                actions = bottomBarActions
-            )
-        },
+        topBar = topBar,
+        bottomBar = bottomBar,
         snackbarHost = snackbarHost,
         floatingActionButton = floatingActionButton,
         floatingActionButtonPosition = floatingActionButtonPosition,

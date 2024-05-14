@@ -2,6 +2,7 @@ package com.github.hemoptysisheart.sample.ui.navigation
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -12,7 +13,9 @@ import com.github.hemoptysisheart.sample.ui.page.HistoryPage
 import com.github.hemoptysisheart.sample.ui.page.MazePage
 import com.github.hemoptysisheart.sample.ui.page.SelectSizePage
 import com.github.hemoptysisheart.sample.ui.page.SplashPage
+import com.github.hemoptysisheart.ui.compose.scaffold.BottomBar
 import com.github.hemoptysisheart.ui.compose.scaffold.BottomBarActions
+import com.github.hemoptysisheart.ui.compose.scaffold.TopBar
 import com.github.hemoptysisheart.ui.compose.scaffold.TopBarActions
 import com.github.hemoptysisheart.ui.navigation.compose.NavigationGraph
 import com.github.hemoptysisheart.ui.navigation.compose.Scaffold
@@ -64,11 +67,13 @@ fun GlobalLayout(
     Scaffold(
         dialog = dialog,
         visibleProgress = visibleProgress,
-        topBar = topBar,
-        bottomBar = bottomBar,
-        modifier = Modifier.fillMaxSize(),
-        topBarActions = topBarActions,
-        bottomBarActions = bottomBarActions
+        topBar = {
+            TopBar(state = topBar, modifier = Modifier.fillMaxWidth(), actions = topBarActions)
+        },
+        bottomBar = {
+            BottomBar(state = bottomBar, modifier = Modifier.fillMaxWidth(), actions = bottomBarActions)
+        },
+        modifier = Modifier.fillMaxSize()
     ) {
         NavigationGraph(
             navHostController = baseNavigator.navHostController,
