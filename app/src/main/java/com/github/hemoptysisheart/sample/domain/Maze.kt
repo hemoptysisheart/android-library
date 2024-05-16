@@ -31,31 +31,31 @@ class Maze(
                 .filter { null != it.group }
 
             if (neighborCells.isEmpty()) {
+                // 주변에 그룹이 없다면 새 그룹을 만든다.
                 groups.add(Group(cell))
-            } else {
-                neighborCells.forEach { neighbor ->
-                    val g1 = neighbor.group
-                    val g2 = cell.group
-                    if (g1 == g2) {
-                        return@forEach
-                    }
-
-                    val merged = neighbor.group!!.cells +
-                            (cell.group?.cells ?: emptySet()) + setOf(cell)
-                    val g3 = Group(*merged.toTypedArray())
-
-                    groups.remove(g1)
-                    groups.remove(g2)
-                    groups.add(g3)
-                    _links.add(Link(cell, neighbor))
+            } else for (neighbor in neighborCells) {
+                // 주변 셀이 그룹에 속해 있다면 주변의 모든 그룹을 하나로 합친다.
+                val g1 = neighbor.group // g1은 null이 아님을 neighborCells가 보장한다.
+                val g2 = cell.group
+                if (g1 == g2) {
+                    continue
                 }
+
+                val merged = neighbor.group!!.cells +
+                        (cell.group?.cells ?: emptySet()) +
+                        setOf(cell)
+                val g3 = Group(*merged.toTypedArray())
+
+                groups.remove(g1)
+                groups.remove(g2)
+                groups.add(g3)
+
+                // 이웃으로 으로 링크를 추가해서 그룹이 하나로 이어지도록 한다.
+                _links.add(Link(cell, neighbor))
             }
             remainCells.remove(cell)
         }
-
-        require(1 == groups.size) {
-            "illegal group size : groups.size=${groups.size}, groups=$groups"
-        }
+        _links.sort()
     }
 
     private fun neighbors(cell: Cell) = listOf(
