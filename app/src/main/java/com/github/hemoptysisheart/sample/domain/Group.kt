@@ -1,28 +1,31 @@
 package com.github.hemoptysisheart.sample.domain
 
-import java.util.UUID
-
 class Group(
     vararg cells: Cell
 ) {
-    val id = UUID.randomUUID()
+    companion object {
+        private var idCounter = 0
+    }
 
-    private val _cells = cells.toMutableSet()
-    val cells: Set<Cell> = _cells
+    val id = idCounter++
+
+    val cells: Set<Cell> = cells.toSet()
 
     init {
         cells.forEach { it.group = this }
     }
 
-    fun contains(cell: Cell) = _cells.contains(cell)
+    fun contains(cell: Cell) = cells.contains(cell)
 
-    fun add(cell: Cell): Boolean {
-        cell.group = this
-        return _cells.add(cell)
+    operator fun plus(other: Group): Group {
+        val list = cells.toMutableList()
+        list.addAll(other.cells)
+        val merged = Group(*list.toTypedArray())
+        return merged
     }
 
     override fun toString() = listOf(
         "id=$id",
-        "cells=$_cells"
+        "cells=$cells"
     ).joinToString(", ", "Group(", ")")
 }

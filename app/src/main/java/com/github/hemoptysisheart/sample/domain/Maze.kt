@@ -27,21 +27,34 @@ class Maze(
         val groups = mutableListOf(Group(start), Group(end))
         while (remainCells.isNotEmpty()) {
             val cell = remainCells.random()
-            val neighbor = neighbors(cell)
-                .shuffled()
-                .firstOrNull { null != it.group }
+            val neighborCells = neighbors(cell)
+                .filter { null != it.group }
 
-            if (null == neighbor) {
-                val group = Group(cell)
-                groups.add(group)
+            if (neighborCells.isEmpty()) {
+                groups.add(Group(cell))
             } else {
-                _links.add(Link(cell, neighbor))
-                val group = groups.find { it.contains(neighbor) }
-                group!!.add(cell)
+                neighborCells.forEach { neighbor ->
+                    val g1 = neighbor.group
+                    val g2 = cell.group
+                    if (g1 == g2) {
+                        return@forEach
+                    }
+
+                    val merged = neighbor.group!!.cells +
+                            (cell.group?.cells ?: emptySet()) + setOf(cell)
+                    val g3 = Group(*merged.toTypedArray())
+
+                    groups.remove(g1)
+                    groups.remove(g2)
+                    groups.add(g3)
+                    _links.add(Link(cell, neighbor))
+                }
             }
             remainCells.remove(cell)
+        }
 
-            // TODO 그룹 합치기
+        require(1 == groups.size) {
+            "illegal group size : groups.size=${groups.size}, groups=$groups"
         }
     }
 
