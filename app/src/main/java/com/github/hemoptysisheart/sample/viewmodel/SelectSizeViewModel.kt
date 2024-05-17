@@ -7,7 +7,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import com.github.hemoptysisheart.sample.R
+import com.github.hemoptysisheart.sample.domain.Maze.Companion.HEIGHT_DEFAULT
+import com.github.hemoptysisheart.sample.domain.Maze.Companion.WIDTH_DEFAULT
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
+import com.github.hemoptysisheart.sample.model.MazeHolder
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
 import com.github.hemoptysisheart.ui.state.IconState
@@ -29,7 +32,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectSizeViewModel @Inject constructor(
-    fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler
+    fallbackViewModelScopeExceptionHandler: FallbackViewModelScopeExceptionHandler,
+    private val mazeHolder: MazeHolder
 ) : ScaffoldContentViewModel<TitleTopBarState, NavigationBarState>(
     tag = "SelectSizeViewModel",
     fallbackCoroutineExceptionHandler = fallbackViewModelScopeExceptionHandler,
@@ -51,14 +55,9 @@ class SelectSizeViewModel @Inject constructor(
         )
     )
 ) {
-    companion object {
-        const val DEFAULT_WIDTH = 7
-        const val DEFAULT_HEIGHT = 13
-    }
-
     private val _width = MutableStateFlow(
         ParsableTextFieldState(
-            value = DEFAULT_WIDTH,
+            value = WIDTH_DEFAULT,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
@@ -71,7 +70,7 @@ class SelectSizeViewModel @Inject constructor(
 
     private val _height = MutableStateFlow(
         ParsableTextFieldState(
-            value = DEFAULT_HEIGHT,
+            value = HEIGHT_DEFAULT,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
@@ -90,6 +89,7 @@ class SelectSizeViewModel @Inject constructor(
         Log.w(tag, "#onChangeWidth args : value=$value")
 
         launch {
+            // TODO 최소값 확인.
             _width.update { it.copy(value = value) }
         }
     }
@@ -102,6 +102,7 @@ class SelectSizeViewModel @Inject constructor(
         Log.w(tag, "#onChangeHeight args : value=$value")
 
         launch {
+            // TODO 최소값 확인.
             _height.update { it.copy(value = value) }
         }
     }
@@ -110,7 +111,7 @@ class SelectSizeViewModel @Inject constructor(
         Log.d(tag, "#onClickGenerate args : onComplete=$onComplete")
 
         launch(BLOCKING) {
-            delay(2_000)
+            mazeHolder.generate(_width.value.parse(), _height.value.parse())
             onComplete(_width.value.parse(), _height.value.parse())
         }
     }
@@ -120,8 +121,8 @@ class SelectSizeViewModel @Inject constructor(
 
         async(VISIBLE) {
             delay(2_000)
-            _width.update { it.copy("$DEFAULT_WIDTH") }
-            _height.update { it.copy("$DEFAULT_HEIGHT") }
+            _width.update { it.copy("$WIDTH_DEFAULT") }
+            _height.update { it.copy("$HEIGHT_DEFAULT") }
         }.invokeOnCompletion { e ->
             Log.w(tag, "#onClickDefault.invokeOnCompletion args : e=$e", e)
         }
