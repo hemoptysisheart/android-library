@@ -1,8 +1,10 @@
 package com.github.hemoptysisheart.sample.ui.organism
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Start
 import androidx.compose.material3.Icon
@@ -15,7 +17,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.github.hemoptysisheart.sample.domain.Cell
 import com.github.hemoptysisheart.sample.domain.Direction
 import com.github.hemoptysisheart.sample.domain.Direction.EAST
 import com.github.hemoptysisheart.sample.domain.Direction.NORTH
@@ -27,11 +28,13 @@ import com.github.hemoptysisheart.sample.ui.state.CellState
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 
 @Composable
-fun Cell(cell: CellState) {
+fun Cell(cell: CellState, onClick: (CellState) -> Unit = {}) {
     Log.v(TAG, "#Cell args : cell=$cell")
 
     val openWalls = remember(cell) { cell.openWalls }
-    ConstraintLayout(modifier = Modifier.size(CELL_SIZE.dp)) {
+    ConstraintLayout(modifier = Modifier
+        .size(CELL_SIZE.dp)
+        .clickable { onClick(cell) }) {
         val (westNorth, northEast, eastSouth, southWest, westWall, northWall, eastWall, southWall, center) = createRefs()
 
         Pillar(constraint = westNorth) {
@@ -77,66 +80,80 @@ fun Cell(cell: CellState) {
             }
         }
 
-        if (cell.start) {
-            Icon(
-                imageVector = Icons.Default.Start,
-                contentDescription = "start",
-                modifier = Modifier.constrainAs(center) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                tint = Color.Red
-            )
-        }
+        when {
+            cell.start ->
+                Icon(
+                    imageVector = Icons.Default.Start,
+                    contentDescription = "start",
+                    modifier = Modifier.constrainAs(center) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+                    tint = Color.Red
+                )
 
-        if (cell.end) {
-            Icon(
-                imageVector = Icons.Default.Flag,
-                contentDescription = "end",
-                modifier = Modifier.constrainAs(center) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                tint = Color.Red
-            )
+            cell.end ->
+                Icon(
+                    imageVector = Icons.Default.Flag,
+                    contentDescription = "end",
+                    modifier = Modifier.constrainAs(center) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+                    tint = Color.Red
+                )
+
+            cell.progress ->
+                Icon(
+                    imageVector = Icons.Default.Circle,
+                    contentDescription = "progress",
+                    modifier = Modifier.constrainAs(center) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+                    tint = Color.Red
+                )
         }
     }
 }
 
 private class CellProvider : PreviewParameterProvider<CellState> {
     override val values: Sequence<CellState> = sequenceOf(
-        CellState(cell = Cell(1, 1), start = true),
-        CellState(cell = Cell(1, 1), end = true),
+        CellState(1, 1, start = true),
+        CellState(1, 1, end = true),
+        CellState(1, 1, progress = true),
 
         // 0
-        CellState(Cell(1, 1)),
+        CellState(1, 1),
 
         // 1
-        CellState(Cell(1, 1), listOf(WEST)),
-        CellState(Cell(1, 1), listOf(NORTH)),
-        CellState(Cell(1, 1), listOf(EAST)),
-        CellState(Cell(1, 1), listOf(SOUTH)),
+        CellState(1, 1, listOf(WEST)),
+        CellState(1, 1, listOf(NORTH)),
+        CellState(1, 1, listOf(EAST)),
+        CellState(1, 1, listOf(SOUTH)),
 
         // 2
-        CellState(Cell(1, 1), listOf(WEST, NORTH)),
-        CellState(Cell(1, 1), listOf(WEST, EAST)),
-        CellState(Cell(1, 1), listOf(WEST, SOUTH)),
-        CellState(Cell(1, 1), listOf(NORTH, EAST)),
-        CellState(Cell(1, 1), listOf(NORTH, SOUTH)),
-        CellState(Cell(1, 1), listOf(EAST, SOUTH)),
+        CellState(1, 1, listOf(WEST, NORTH)),
+        CellState(1, 1, listOf(WEST, EAST)),
+        CellState(1, 1, listOf(WEST, SOUTH)),
+        CellState(1, 1, listOf(NORTH, EAST)),
+        CellState(1, 1, listOf(NORTH, SOUTH)),
+        CellState(1, 1, listOf(EAST, SOUTH)),
 
         // 3
-        CellState(Cell(1, 1), listOf(WEST, NORTH, EAST)),
-        CellState(Cell(1, 1), listOf(NORTH, EAST, SOUTH)),
-        CellState(Cell(1, 1), listOf(EAST, SOUTH, WEST)),
-        CellState(Cell(1, 1), listOf(SOUTH, WEST, NORTH)),
+        CellState(1, 1, listOf(WEST, NORTH, EAST)),
+        CellState(1, 1, listOf(NORTH, EAST, SOUTH)),
+        CellState(1, 1, listOf(EAST, SOUTH, WEST)),
+        CellState(1, 1, listOf(SOUTH, WEST, NORTH)),
 
         // 4
-        CellState(Cell(1, 1), Direction.entries.toList())
+        CellState(1, 1, Direction.entries.toList())
     )
 }
 
