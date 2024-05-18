@@ -7,9 +7,10 @@ import com.github.hemoptysisheart.sample.domain.Direction
 @Immutable
 data class CellState(
     private val cell: Cell,
-    val openWalls: List<Direction>
+    val openWalls: List<Direction> = emptyList(),
+    val start: Boolean = false,
+    val end: Boolean = false
 ) {
     val x = cell.x
     val y = cell.y
-
 }

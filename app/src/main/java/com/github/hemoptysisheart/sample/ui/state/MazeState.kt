@@ -14,7 +14,9 @@ data class MazeState(
             CellState(
                 cell = cell,
                 openWalls = maze.links(cell)
-                    .mapNotNull { cell.direction(it) }
+                    .mapNotNull { cell.direction(it) },
+                start = cell == maze.start,
+                end = cell == maze.end
             )
         }
 }
