@@ -16,4 +16,4 @@ jobs:
       - uses: gradle/actions/setup-gradle@v3
       - name: Run Unit Test
         run: |
-          ./gradlew test --continue --rerun-tasks
+          ./gradlew testDebugUnitTest --continue --rerun-tasks
