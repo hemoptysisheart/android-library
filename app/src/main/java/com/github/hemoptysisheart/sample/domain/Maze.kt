@@ -4,6 +4,14 @@ class Maze(
     val width: Int,
     val height: Int
 ) {
+    companion object {
+        const val WIDTH_DEFAULT = 7
+        const val WIDTH_MIN = 3
+
+        const val HEIGHT_DEFAULT = 13
+        const val HEIGHT_MIN = 3
+    }
+
     private val _cells = Array(width * height) { index ->
         Cell(index % width, index / width)
     }
@@ -18,6 +26,9 @@ class Maze(
     val end: Cell
 
     init {
+        require(width >= WIDTH_MIN) { "width($width) < WIDTH_MIN($WIDTH_MIN)" }
+        require(height >= HEIGHT_MIN) { "height($height) < HEIGHT_MIN($HEIGHT_MIN)" }
+
         val remainCells = _cells.toMutableSet()
         start = _cells[0, 0]
         end = _cells[width - 1, height - 1]
@@ -80,6 +91,8 @@ class Maze(
      * 좌표값으로 배열 인덱스를 계산한다.
      */
     private fun index(x: Int, y: Int) = y * width + x
+
+    fun links(cell: Cell) = _links.filter { it.contains(cell) }
 
     override fun toString() = listOf(
         "width=$width",

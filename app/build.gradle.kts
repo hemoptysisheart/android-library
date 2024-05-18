@@ -67,6 +67,7 @@ dependencies {
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.layout.constraint)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.navigation)
     implementation(libs.hilt)
