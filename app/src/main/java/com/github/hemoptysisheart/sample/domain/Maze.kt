@@ -92,6 +92,8 @@ class Maze(
      */
     private fun index(x: Int, y: Int) = y * width + x
 
+    fun links(cell: Cell) = _links.filter { it.contains(cell) }
+
     override fun toString() = listOf(
         "width=$width",
         "height=$height",
