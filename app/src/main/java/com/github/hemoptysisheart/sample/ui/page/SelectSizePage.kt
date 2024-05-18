@@ -31,7 +31,6 @@ import com.github.hemoptysisheart.ui.compose.OutlinedTextField
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.compose.baseViewModel
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
-import com.github.hemoptysisheart.ui.state.TextFieldState
 
 @Composable
 fun SelectSizePage(
@@ -44,20 +43,20 @@ fun SelectSizePage(
     val height by viewModel.height.collectAsStateWithLifecycle()
 
     SelectSizePageContent(
-        navigator,
-        width,
-        height,
-        viewModel::onClickGenerate,
-        viewModel::onClickDefault
+        navigator = navigator,
+        width = width,
+        height = height,
+        onClickGenerate = viewModel::onClickGenerate,
+        onClickDefault = viewModel::onClickDefault
     )
 }
 
 @Composable
 private fun SelectSizePageContent(
     navigator: SelectSizeNavigator,
-    width: TextFieldState,
-    height: TextFieldState,
-    onClickGenerate: ((Int, Int) -> Unit) -> Unit = { },
+    width: ParsableTextFieldState<Int>,
+    height: ParsableTextFieldState<Int>,
+    onClickGenerate: (() -> Unit) -> Unit = { },
     onClickDefault: () -> Unit = { }
 ) {
     Log.v(
@@ -104,7 +103,11 @@ private fun SelectSizePageContent(
         Spacer(modifier = Modifier.height(30.dp))
         Button(
             modifier = Modifier.widthIn(200.dp),
-            onClick = { onClickGenerate(navigator::maze) }
+            onClick = {
+                onClickGenerate {
+                    navigator.maze(width.parse(), height.parse())
+                }
+            }
         ) {
             Text(text = "미로 만들기", modifier = Modifier.padding(10.dp), fontWeight = Bold)
         }

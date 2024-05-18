@@ -17,7 +17,6 @@ import com.github.hemoptysisheart.ui.state.IconState
 import com.github.hemoptysisheart.ui.state.InteractionImpact.BLOCKING
 import com.github.hemoptysisheart.ui.state.InteractionImpact.VISIBLE
 import com.github.hemoptysisheart.ui.state.ParsableTextFieldState
-import com.github.hemoptysisheart.ui.state.TextFieldState
 import com.github.hemoptysisheart.ui.state.TextState
 import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarItemState
 import com.github.hemoptysisheart.ui.state.scaffold.NavigationBarState
@@ -66,7 +65,7 @@ class SelectSizeViewModel @Inject constructor(
             parser = { it.toInt(10) }
         )
     )
-    val width: StateFlow<TextFieldState> = _width
+    val width: StateFlow<ParsableTextFieldState<Int>> = _width
 
     private val _height = MutableStateFlow(
         ParsableTextFieldState(
@@ -79,7 +78,7 @@ class SelectSizeViewModel @Inject constructor(
             parser = { it.toInt(10) }
         )
     )
-    val height: StateFlow<TextFieldState> = _height
+    val height: StateFlow<ParsableTextFieldState<Int>> = _height
 
     /**
      * TODO 단위테스트 작성 후 `@Suppress("MemberVisibilityCanBePrivate")` 제거.
@@ -107,12 +106,14 @@ class SelectSizeViewModel @Inject constructor(
         }
     }
 
-    fun onClickGenerate(onComplete: (Int, Int) -> Unit) {
-        Log.d(tag, "#onClickGenerate args : onComplete=$onComplete")
+    fun onClickGenerate(callback: () -> Unit) {
+        Log.d(tag, "#onClickGenerate args : callback=$callback")
 
-        launch(BLOCKING) {
+        launch {
+            val wait = async(BLOCKING) { delay(2000) }
             mazeHolder.generate(_width.value.parse(), _height.value.parse())
-            onComplete(_width.value.parse(), _height.value.parse())
+            wait.await()
+            callback()
         }
     }
 
