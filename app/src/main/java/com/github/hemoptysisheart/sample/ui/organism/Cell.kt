@@ -3,22 +3,16 @@ package com.github.hemoptysisheart.sample.ui.organism
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.github.hemoptysisheart.sample.domain.Cell
 import com.github.hemoptysisheart.sample.domain.Direction
 import com.github.hemoptysisheart.sample.domain.Direction.EAST
@@ -28,104 +22,94 @@ import com.github.hemoptysisheart.sample.domain.Direction.WEST
 import com.github.hemoptysisheart.sample.ui.state.CellState
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 
-const val CELL_SIZE = 60
-const val PILLAR_SIZE = 10
-const val WALL_THICKNESS = 5
-
 @Composable
 fun Cell(cell: CellState) {
     Log.v(TAG, "#Cell args : cell=$cell")
 
     val openWalls = remember(cell) { cell.openWalls }
-    Column(
-        modifier = Modifier
-            .size(CELL_SIZE.dp)
-            .background(MaterialTheme.colorScheme.background)
-    ) {
-        Row(modifier = Modifier.size(CELL_SIZE.dp, PILLAR_SIZE.dp), verticalAlignment = Alignment.Top) {
+    ConstraintLayout(modifier = Modifier.size(CELL_SIZE.dp)) {
+        val (westNorth, northEast, eastSouth, southWest, westWall, northWall, eastWall, southWall) = createRefs()
+        Box(
+            Modifier
+                .size(PILLAR_SIZE.dp)
+                .background(Color.Black)
+                .constrainAs(westNorth) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                }
+        )
+        Box(
+            Modifier
+                .size(PILLAR_SIZE.dp)
+                .background(Color.Black)
+                .constrainAs(northEast) {
+                    top.linkTo(parent.top)
+                    end.linkTo(parent.end)
+                }
+        )
+        Box(
+            Modifier
+                .size(PILLAR_SIZE.dp)
+                .background(Color.Black)
+                .constrainAs(eastSouth) {
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                }
+        )
+        Box(
+            Modifier
+                .size(PILLAR_SIZE.dp)
+                .background(Color.Black)
+                .constrainAs(southWest) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                }
+        )
+
+        if (!openWalls.contains(WEST)) {
             Box(
-                modifier = Modifier
-                    .size(PILLAR_SIZE.dp)
+                Modifier
+                    .size(WALL_THICKNESS.dp, CELL_SIZE.dp)
                     .background(Color.Black)
-            )
-            val color = if (openWalls.contains(NORTH)) {
-                Color.Transparent
-            } else {
-                Color.Black
-            }
-            Box(
-                modifier = Modifier
-                    .height(WALL_THICKNESS.dp)
-                    .background(color)
-                    .weight(1F)
-            )
-            Box(
-                modifier = Modifier
-                    .size(PILLAR_SIZE.dp)
-                    .background(Color.Black)
+                    .constrainAs(westWall) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                    }
             )
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height((CELL_SIZE - 2 * PILLAR_SIZE).dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            openWalls.contains(WEST).let {
-                val color = if (it) {
-                    Color.Transparent
-                } else {
-                    Color.Black
-                }
-                Box(
-                    modifier = Modifier
-                        .size(WALL_THICKNESS.dp, (CELL_SIZE - 2 * PILLAR_SIZE).dp)
-                        .background(color)
-                )
-            }
-            Spacer(modifier = Modifier.weight(1F))
+        if (!openWalls.contains(NORTH)) {
             Box(
-                modifier = Modifier
-                    .size((CELL_SIZE - 2 * PILLAR_SIZE).dp, WALL_THICKNESS.dp)
-                    .weight(1F),
-                contentAlignment = Alignment.Center
-            ) {
-            }
-            Spacer(modifier = Modifier.weight(1F))
-            openWalls.contains(EAST).let {
-                val color = if (it) {
-                    Color.Transparent
-                } else {
-                    Color.Black
-                }
-                Box(
-                    modifier = Modifier
-                        .size(WALL_THICKNESS.dp, (CELL_SIZE - 2 * PILLAR_SIZE).dp)
-                        .background(color)
-                )
-            }
+                Modifier
+                    .size(CELL_SIZE.dp, WALL_THICKNESS.dp)
+                    .background(Color.Black)
+                    .constrainAs(northWall) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)
+                    }
+            )
         }
-        Row(modifier = Modifier.size(CELL_SIZE.dp, PILLAR_SIZE.dp), verticalAlignment = Alignment.Bottom) {
+        if (!openWalls.contains(EAST)) {
             Box(
-                modifier = Modifier
-                    .size(PILLAR_SIZE.dp)
+                Modifier
+                    .size(WALL_THICKNESS.dp, CELL_SIZE.dp)
                     .background(Color.Black)
+                    .constrainAs(eastWall) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        end.linkTo(parent.end)
+                    }
             )
-            val color = if (openWalls.contains(SOUTH)) {
-                Color.Transparent
-            } else {
-                Color.Black
-            }
+        }
+        if (!openWalls.contains(SOUTH)) {
             Box(
-                modifier = Modifier
-                    .height(WALL_THICKNESS.dp)
-                    .background(color)
-                    .weight(1F)
-            )
-            Box(
-                modifier = Modifier
-                    .size(PILLAR_SIZE.dp)
+                Modifier
+                    .size(CELL_SIZE.dp, WALL_THICKNESS.dp)
                     .background(Color.Black)
+                    .constrainAs(southWall) {
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                    }
             )
         }
     }
