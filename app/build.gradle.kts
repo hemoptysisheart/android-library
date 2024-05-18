@@ -51,6 +51,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -59,6 +67,7 @@ dependencies {
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.layout.constraint)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.navigation)
     implementation(libs.hilt)
@@ -67,4 +76,9 @@ dependencies {
 
     debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation(libs.androidx.ui.tooling)
+
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.kotlin.logging)
+    testImplementation(libs.logback.classic)
+    testImplementation(libs.mockk)
 }

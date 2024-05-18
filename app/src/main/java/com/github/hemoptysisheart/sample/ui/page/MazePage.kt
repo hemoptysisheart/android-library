@@ -1,18 +1,16 @@
 package com.github.hemoptysisheart.sample.ui.page
 
 import android.util.Log
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.github.hemoptysisheart.sample.domain.Maze
 import com.github.hemoptysisheart.sample.ui.navigation.MazeNavigator
+import com.github.hemoptysisheart.sample.ui.organism.Maze
+import com.github.hemoptysisheart.sample.ui.state.CellState
+import com.github.hemoptysisheart.sample.ui.state.MazeState
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.sample.viewmodel.MazeViewModel
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
@@ -25,45 +23,44 @@ fun MazePage(
 ) {
     Log.v(TAG, "#MazePage args : navigator=$navigator, viewModel=$viewModel")
 
+    val maze by viewModel.maze.collectAsStateWithLifecycle()
+
     MazePageContent(
         navigator = navigator,
-        width = viewModel.width,
-        height = viewModel.height
+        maze = maze,
+        onClickCell = viewModel::onClickCell
     )
 }
 
 @Composable
 private fun MazePageContent(
     navigator: MazeNavigator,
-    width: Int,
-    height: Int
+    maze: MazeState,
+    onClickCell: (CellState) -> Unit = {},
 ) {
-    Log.v(TAG, "#MazePageContent args : navigator=$navigator, width=$width, height=$height")
+    Log.v(TAG, "#MazePageContent args : navigator=$navigator, maze=$maze")
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(width),
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        items(width * height) { index ->
-            TextButton(onClick = { /*TODO*/ }) {
-                Text(
-                    text = "i=$index, x=${index % width}, y=${index / width}",
-                    modifier = Modifier.sizeIn(minWidth = 60.dp, minHeight = 60.dp)
-                )
-            }
-        }
-    }
+    Maze(maze = maze, onClickCell = onClickCell)
 }
 
 @Composable
 @Preview(showSystemUi = true)
 private fun MazeScreenPreview() {
+    val maze = Maze(Maze.WIDTH_DEFAULT, Maze.HEIGHT_DEFAULT)
     AndroidLibraryTheme {
         MazePageContent(
             navigator = MazeNavigator(baseNavigator(PreviewActivity())),
-            width = 7,
-            height = 13
+            maze = MazeState(
+                width = maze.width,
+                height = maze.height,
+                cells = maze.cells.map {
+                    CellState(
+                        x = it.x,
+                        y = it.y,
+                        openWalls = maze.links(it).mapNotNull { cell -> it.direction(cell) }
+                    )
+                }
+            )
         )
     }
 }

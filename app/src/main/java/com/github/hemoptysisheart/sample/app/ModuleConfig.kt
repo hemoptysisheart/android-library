@@ -5,6 +5,7 @@ import com.github.hemoptysisheart.sample.model.ApplicationCoroutineScope
 import com.github.hemoptysisheart.sample.model.FallbackCoroutineExceptionHandler
 import com.github.hemoptysisheart.sample.model.FallbackExceptionHandler
 import com.github.hemoptysisheart.sample.model.FallbackViewModelScopeExceptionHandler
+import com.github.hemoptysisheart.sample.model.MazeHolder
 import com.github.hemoptysisheart.statepump.ScaffoldPump
 import com.github.hemoptysisheart.statepump.ScaffoldPumpImpl
 import dagger.Module
@@ -20,6 +21,14 @@ import javax.inject.Singleton
 class ModuleConfig {
     companion object {
         private const val TAG = "ModuleConfig"
+    }
+
+    @Provides
+    @Singleton
+    fun provideMazeModel(): MazeHolder {
+        val model = MazeHolder()
+        Log.i(TAG, "#provideMazeModel : model=$model")
+        return model
     }
 
     @Provides
