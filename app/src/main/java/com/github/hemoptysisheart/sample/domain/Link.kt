@@ -11,6 +11,25 @@ class Link(
         require(a != b) { "a must not be equal to b : a=$a, b=$b" }
     }
 
+    /**
+     * 링크의 반대쪽 셀을 반환한다.
+     *
+     * @param cell 셀
+     * @return 링크의 반대쪽 셀을 반환한다. 주어진 셀이 링크에 포함되어 있지 않다면 `null`을 반환한다.
+     */
+    fun opposite(cell: Cell): Cell? = when (cell) {
+        a ->
+            b
+
+        b ->
+            a
+
+        else ->
+            null
+    }
+
+    fun contains(cell: Cell) = a == cell || b == cell
+
     override fun compareTo(other: Link): Int {
         val diff = a.compareTo(other.a)
         if (0 != diff) {
