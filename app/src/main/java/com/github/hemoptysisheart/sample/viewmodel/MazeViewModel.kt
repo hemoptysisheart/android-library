@@ -43,7 +43,7 @@ class MazeViewModel @Inject constructor(
                 throw IllegalStateException("maze is not match. maze=$maze, width=$width, height=$height")
 
             else ->
-                _maze = MutableStateFlow(MazeState(width, height, maze))
+                _maze = MutableStateFlow(MazeState(maze))
         }
     }
 
