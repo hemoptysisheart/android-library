@@ -1,7 +1,7 @@
 package com.github.hemoptysisheart.sample.ui.organism
 
+import com.github.hemoptysisheart.sample.ui.molecule.WALL_LENGTH
+
 internal const val TAG = "ui.organism"
 
-const val CELL_SIZE = 60
-const val PILLAR_SIZE = 10
-const val WALL_THICKNESS = 5
+const val CELL_SIZE = WALL_LENGTH
