@@ -25,6 +25,10 @@ class Maze(
     val start: Cell
     val end: Cell
 
+    private val _progress: MutableList<Cell>
+    val progress: List<Cell>
+        get() = _progress
+
     init {
         require(width >= WIDTH_MIN) { "width($width) < WIDTH_MIN($WIDTH_MIN)" }
         require(height >= HEIGHT_MIN) { "height($height) < HEIGHT_MIN($HEIGHT_MIN)" }
@@ -32,6 +36,7 @@ class Maze(
         val remainCells = _cells.toMutableSet()
         start = _cells[0, 0]
         end = _cells[width - 1, height - 1]
+        _progress = mutableListOf(start)
         remainCells.remove(start)
         remainCells.remove(end)
 
@@ -82,6 +87,8 @@ class Maze(
         }
     }
 
+    fun neighbors(x: Int, y: Int) = neighbors(_cells[x, y])
+
     /**
      * 좌표값으로 배열 요소를 반환한다.
      */
@@ -94,12 +101,54 @@ class Maze(
 
     fun links(cell: Cell) = _links.filter { it.contains(cell) }
 
+    fun progressTo(x: Int, y: Int): Boolean {
+        val target = _cells[x, y]
+
+        if (progress.contains(target)) {
+            // 선택한 셀 이후 찾은 길을 취소.
+            val from = progress.indexOf(target)
+            for (i in progress.size - 1 downTo from + 1) {
+                _progress.removeAt(i)
+            }
+            return true
+        } else if (neighbors(target).contains(progress.last())) {
+            // 선택한 셀까지 이어지는 길을 찾음.
+            _progress.add(target)
+            return true
+        } else {
+            return false
+        }
+    }
+
+    override fun equals(other: Any?) = this === other || (
+            other is Maze &&
+                    width == other.width &&
+                    height == other.height &&
+                    _cells.contentEquals(other._cells) &&
+                    _links == other._links &&
+                    start == other.start &&
+                    end == other.end &&
+                    _progress == other._progress
+            )
+
+    override fun hashCode(): Int {
+        var result = width
+        result = 31 * result + height
+        result = 31 * result + _cells.contentHashCode()
+        result = 31 * result + _links.hashCode()
+        result = 31 * result + start.hashCode()
+        result = 31 * result + end.hashCode()
+        result = 31 * result + _progress.hashCode()
+        return result
+    }
+
     override fun toString() = listOf(
         "width=$width",
         "height=$height",
         "start=$start",
         "end=$end",
         "cells=$cells",
-        "links=$links"
+        "links=$links",
+        "progress=$progress"
     ).joinToString(", ", "Maze(", ")")
 }
