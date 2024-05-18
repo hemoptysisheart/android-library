@@ -102,11 +102,21 @@ class Maze(
     fun links(cell: Cell) = _links.filter { it.contains(cell) }
 
     fun progressTo(x: Int, y: Int): Boolean {
-        if (!neighbors(x, y).contains(progress.last())) {
-            return false
-        } else {
-            _progress.add(_cells[x, y])
+        val target = _cells[x, y]
+
+        if (progress.contains(target)) {
+            // 선택한 셀 이후 찾은 길을 취소.
+            val from = progress.indexOf(target)
+            for (i in progress.size - 1 downTo from + 1) {
+                _progress.removeAt(i)
+            }
             return true
+        } else if (neighbors(target).contains(progress.last())) {
+            // 선택한 셀까지 이어지는 길을 찾음.
+            _progress.add(target)
+            return true
+        } else {
+            return false
         }
     }
 
