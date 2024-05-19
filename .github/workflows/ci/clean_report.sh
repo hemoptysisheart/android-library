@@ -5,6 +5,7 @@ dir="./abc"
 
 # 삭제할 디렉토리의 최대 숫자 설정
 max_num=$(expr $GITHUB_RUN_NUMBER - 2)
+echo "max_num: $max_num"
 
 # 디렉토리 내의 모든 항목에 대해 반복
 for file in "$dir"/*; do
