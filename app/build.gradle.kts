@@ -54,14 +54,10 @@ android {
 
     @Suppress("UnstableApiUsage")
     testOptions {
-        val output = "${rootProject.projectDir}/build/reports/tests/${project.name}"
-        file(output).mkdirs()
-        reportDir = output
-        println("reportDir=$reportDir")
-
         unitTests.isReturnDefaultValues = true
         unitTests.all {
             it.useJUnitPlatform()
+            it.reports.html.outputLocation = file("${rootProject.projectDir}/build/reports/tests/${project.name}")
         }
     }
 }
