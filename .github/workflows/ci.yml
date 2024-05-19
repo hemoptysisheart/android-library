@@ -18,7 +18,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.gradle
+            ~/.gradle/caches
+            ~/.gradle/wrapper
             .gradle
             firebase/
             gradle
@@ -42,7 +43,7 @@ jobs:
         name: Publish test report.
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting
+          args: deploy --only hosting --message \"See https://github.com/hemoptysisheart/android-library/actions/runs/${{ github.run_id }}\"
         env:
           PROJECT_PATH: ./firebase
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
