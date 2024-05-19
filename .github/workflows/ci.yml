@@ -26,11 +26,9 @@ jobs:
         run: ./gradlew clean testDebugUnitTest --continue --rerun-tasks
       - name: Prepare report upload.
         run: |
-          tree ./build/reports
           cp -r ./.github/workflows/ci/* ./build/reports/publish/${{ github.run_number }}
           mkdir -p ./firebase/public/${{ github.run_number }}
           cp -r ./build/reports/publish/${{ github.run_number }} ./firebase/public/
-          tree ./firebase
       - if: success() || failure()
         name: Upload test report artifact.
         uses: actions/upload-artifact@v4
