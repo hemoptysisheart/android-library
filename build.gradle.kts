@@ -9,6 +9,10 @@ plugins {
 
 subprojects {
     afterEvaluate {
+        val reportId = System.getProperty("REPORT_ID")
+            ?: "local"
+        println("Report ID: $reportId")
+
         if (
             this.plugins.hasPlugin(libs.plugins.android.application.get().pluginId) ||
             this.plugins.hasPlugin(libs.plugins.android.library.get().pluginId)
@@ -18,7 +22,7 @@ subprojects {
                 .testOptions.unitTests.all {
                     it.useJUnitPlatform()
                     it.reports.html.outputLocation =
-                        file("${rootProject.projectDir}/build/reports/tests/${project.name}")
+                        file("${rootProject.projectDir}/build/reports/publish/$reportId/${project.name}")
                 }
         }
     }
