@@ -14,7 +14,7 @@ jobs:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v3
-      - name: Load CI cache
+      - name: Load CI cache.
         uses: actions/cache@v4
         with:
           path: |
@@ -23,22 +23,26 @@ jobs:
             firebase/
             gradle
           key: ci-cache-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-      - name: Run Unit Test
+      - name: Run unit test.
         run: |
           ./gradlew clean testDebugUnitTest --continue --rerun-tasks
+      - name: Prepare report upload.
+        run: |
           cp -r ./.github/workflows/ci/* ./build/reports/publish/${{ github.run_number }}
+          mkdir -p ./firebase/public/${{ github.run_number }}
+          cp -r ./build/reports/publish/${{ github.run_number }} ./firebase/public/${{ github.run_number }}
       - if: success() || failure()
-        name: Upload test report artifact
+        name: Upload test report artifact.
         uses: actions/upload-artifact@v4
         with:
           name: "reports_${{ github.run_number }}"
           path: ./build/reports/publish/${{ github.run_number }}
           if-no-files-found: warn
       - if: success() || failure()
-        name: Publish test report
+        name: Publish test report.
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
-          PROJECT_PATH: firebase
+          PROJECT_PATH: ./firebase
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
