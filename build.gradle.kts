@@ -9,7 +9,7 @@ plugins {
 
 subprojects {
     afterEvaluate {
-        val reportId = System.getProperty("REPORT_ID")
+        val reportId = System.getenv("GITHUB_RUN_NUMBER")
             ?: "local"
         println("Report ID: $reportId")
 
