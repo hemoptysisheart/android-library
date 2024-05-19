@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="author" content="justburrow"/>
+    <meta name="since" content="2024/04/21T15:49"/>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>H2 Android Library 단위테스트 보고서</title>
+    <link href="./asset/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+    <script src="asset/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function loadFrame(button) {
+            document.getElementById('frame-report').src = button.getAttribute('data-frame-src');
+        }
+    </script>
+</head>
+<body class="container-fluid">
+<div class="row h-100">
+    <nav class="col-2">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <button type="button" class="nav-link" data-frame-src="report_home.html" onclick="loadFrame(this);">
+                    <span>Home</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="nav-link" data-frame-src="app/index.html" onclick="loadFrame(this);">
+                    <code>:app</code>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="nav-link" data-frame-src="ui-state/index.html" onclick="loadFrame(this);">
+                    <code>:ui-state</code>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="nav-link" data-frame-src="ui-compose/index.html"
+                        onclick="loadFrame(this);">
+                    <code>:ui-compose</code></button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="nav-link" data-frame-src="state-pump/index.html"
+                        onclick="loadFrame(this);">
+                    <code>:state-pump</code></button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="nav-link" data-frame-src="viewmodel/index.html" onclick="loadFrame(this);">
+                    <code>:viewmodel</code></button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="nav-link" data-frame-src="ui-navigation/index.html"
+                        onclick="loadFrame(this);"><code>:ui-navigation</code>
+                </button>
+            </li>
+        </ul>
+    </nav>
+    <iframe id="frame-report" class="col" src="report_home.html"></iframe>
+</div>
+</body>
+</html>
