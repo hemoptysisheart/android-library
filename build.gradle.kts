@@ -11,7 +11,6 @@ subprojects {
     afterEvaluate {
         val reportId = System.getenv("GITHUB_RUN_NUMBER")
             ?: "local"
-        println("Report ID: $reportId")
 
         if (
             this.plugins.hasPlugin(libs.plugins.android.application.get().pluginId) ||
