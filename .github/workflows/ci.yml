@@ -18,20 +18,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            .gradle
+            ~/.gradle/**
+            .gradle/**
             firebase/
-            gradle
           key: ci-cache-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
       - name: Run unit test.
-        run: |
-          ./gradlew clean testDebugUnitTest --continue --rerun-tasks
+        run: ./gradlew clean testDebugUnitTest --continue --rerun-tasks --scan
       - name: Prepare report upload.
         run: |
           cp -r ./.github/workflows/ci/* ./build/reports/publish/${{ github.run_number }}
           mkdir -p ./firebase/public/${{ github.run_number }}
           cp -r ./build/reports/publish/${{ github.run_number }} ./firebase/public/${{ github.run_number }}
+          tree ./firebase
       - if: success() || failure()
         name: Upload test report artifact.
         uses: actions/upload-artifact@v4
