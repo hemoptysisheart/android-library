@@ -23,3 +23,7 @@ subprojects {
         }
     }
 }
+
+tasks.register<Delete>("clean") {
+    delete("${rootProject.projectDir}/build")
+}

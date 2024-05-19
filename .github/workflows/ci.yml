@@ -16,7 +16,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v3
       - name: Run Unit Test
         run: |
-          rm -rf ./build
           ./gradlew clean testDebugUnitTest --continue --rerun-tasks
       - if: success() || failure()
         uses: actions/upload-artifact@v4
