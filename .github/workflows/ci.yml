@@ -16,4 +16,12 @@ jobs:
       - uses: gradle/actions/setup-gradle@v3
       - name: Run Unit Test
         run: |
-          ./gradlew testDebugUnitTest --continue --rerun-tasks
+          rm -rf ./build
+          ./gradlew clean testDebugUnitTest --continue --rerun-tasks
+      - if: success() || failure()
+        uses: actions/upload-artifact@v4
+        name: Upload test report
+        with:
+          name: "reports_${{ github.run_id }}"
+          path: build/reports/tests
+          if-no-files-found: warn
