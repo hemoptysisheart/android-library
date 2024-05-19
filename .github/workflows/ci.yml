@@ -17,7 +17,7 @@ jobs:
       - name: Run Unit Test
         run: |
           ./gradlew clean testDebugUnitTest --continue --rerun-tasks
-          cp -r ./.github/workflows/ci/ ./build/reports/tests/
+          cp -r ./.github/workflows/ci/* ./build/reports/tests
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         name: Upload test report
