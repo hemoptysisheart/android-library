@@ -51,15 +51,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
-    @Suppress("UnstableApiUsage")
-    testOptions {
-        unitTests.isReturnDefaultValues = true
-        unitTests.all {
-            it.useJUnitPlatform()
-            it.reports.html.outputLocation = file("${rootProject.projectDir}/build/reports/tests/${project.name}")
-        }
-    }
 }
 
 dependencies {

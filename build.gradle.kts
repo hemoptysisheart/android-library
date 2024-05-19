@@ -7,18 +7,18 @@ plugins {
     alias(libs.plugins.ksp) apply false
 }
 
-//subprojects {
-//    afterEvaluate {
-//        if (this.plugins.hasPlugin("com.android.application") || this.plugins.hasPlugin("com.android.library")) {
-//            android {
-//                @Suppress("UnstableApiUsage")
-//                testOptions {
-//                    unitTests.isReturnDefaultValues = true
-//                    unitTests.all {
-//                        it.useJUnitPlatform()
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+subprojects {
+    afterEvaluate {
+        if (
+            this.plugins.hasPlugin(libs.plugins.android.application.get().pluginId) ||
+            this.plugins.hasPlugin(libs.plugins.android.library.get().pluginId)
+        ) {
+            extensions.getByType<com.android.build.gradle.BaseExtension>()
+                .testOptions.unitTests.all {
+                    it.useJUnitPlatform()
+                    it.reports.html.outputLocation =
+                        file("${rootProject.projectDir}/build/reports/tests/${project.name}")
+                }
+        }
+    }
+}
