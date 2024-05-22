@@ -3,6 +3,7 @@ package com.github.hemoptysisheart.sample.ui.molecule
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,16 +18,16 @@ fun ConstraintLayoutScope.Wall(
     constraint: ConstrainedLayoutReference,
     thickness: Int = WALL_THICKNESS,
     length: Int = WALL_LENGTH,
-    color: Color = Color.Black,
+    color: Color = MaterialTheme.colorScheme.onBackground,
     constraintBlock: ConstrainScope.() -> Unit
 ) {
     Box(
         Modifier
             .constrainAs(constraint, constraintBlock)
             .size(
-                (if (vertical) WALL_THICKNESS else WALL_LENGTH).dp,
-                (if (vertical) WALL_LENGTH else WALL_THICKNESS).dp
+                (if (vertical) thickness else length).dp,
+                (if (vertical) length else thickness).dp
             )
-            .background(Color.Black)
+            .background(color)
     )
 }
