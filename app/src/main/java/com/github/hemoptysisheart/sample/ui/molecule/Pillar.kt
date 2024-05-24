@@ -3,6 +3,7 @@ package com.github.hemoptysisheart.sample.ui.molecule
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,7 +16,7 @@ import androidx.constraintlayout.compose.ConstraintLayoutScope
 fun ConstraintLayoutScope.Pillar(
     constraint: ConstrainedLayoutReference,
     size: Int = PILLAR_SIZE,
-    color: Color = Color.Black,
+    color: Color = MaterialTheme.colorScheme.onBackground,
     constraintBlock: ConstrainScope.() -> Unit
 ) {
     Box(

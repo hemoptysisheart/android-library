@@ -111,7 +111,7 @@ class Maze(
                 _progress.removeAt(i)
             }
             return true
-        } else if (neighbors(target).contains(progress.last())) {
+        } else if (links(progress.last()).map { it.opposite(progress.last()) }.any { it == target }) {
             // 선택한 셀까지 이어지는 길을 찾음.
             _progress.add(target)
             return true

@@ -1,5 +1,6 @@
 package com.github.hemoptysisheart.sample.ui.page
 
+import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,6 +46,7 @@ private fun MazePageContent(
 
 @Composable
 @Preview(showSystemUi = true)
+@Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun MazeScreenPreview() {
     val maze = Maze(Maze.WIDTH_DEFAULT, Maze.HEIGHT_DEFAULT)
     AndroidLibraryTheme {
