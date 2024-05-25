@@ -9,9 +9,6 @@ plugins {
 
 subprojects {
     afterEvaluate {
-        val reportId = System.getenv("GITHUB_RUN_NUMBER")
-            ?: "local"
-
         if (
             this.plugins.hasPlugin(libs.plugins.android.application.get().pluginId) ||
             this.plugins.hasPlugin(libs.plugins.android.library.get().pluginId)
@@ -21,7 +18,7 @@ subprojects {
                 .testOptions.unitTests.all {
                     it.useJUnitPlatform()
                     it.reports.html.outputLocation =
-                        file("${rootProject.projectDir}/build/reports/$reportId/${project.name}")
+                        file("${rootProject.projectDir}/build/reports/${project.name}")
                 }
         }
     }
