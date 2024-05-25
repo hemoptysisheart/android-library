@@ -1,0 +1,42 @@
+name: CI
+on:
+  push:
+    branches-ignore:
+      - main
+jobs:
+  unit_test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v3
+      - name: Load CI cache.
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/**
+            .gradle/**
+          key: ci-cache-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      - name: Prepare unit test.
+        run: |
+          ./gradlew clean
+          mkdir -p ./build/reports
+          git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" | head -n 500 > ./build/reports/git-log.txt
+      - name: Run unit test.
+        run: |
+          ./gradlew testDebugUnitTest --continue --rerun-tasks
+          tree ./build > ./build/reports/tree.txt
+      - name: Prepare report upload.
+        run: |
+          cp -r ./.github/workflows/ci/hosting/* ./build/reports/
+      - if: success() || failure()
+        name: Upload test report artifact.
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-library_ci_report_${{ github.run_number }}
+          path: ./build/reports
+          if-no-files-found: warn

@@ -45,4 +45,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.javax.inject)
+
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.kotlin.logging)
+    testImplementation(libs.logback.classic)
+    testImplementation(libs.mockk)
 }
