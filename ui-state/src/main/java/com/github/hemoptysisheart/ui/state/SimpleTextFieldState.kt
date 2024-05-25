@@ -26,8 +26,8 @@ open class SimpleTextFieldState(
     override val keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     override val keyboardActions: KeyboardActions = KeyboardActions.Default,
     override val lines: TextLines = TextLines.Default,
-    protected val _onFocusChange: (FocusState) -> Unit = { },
-    protected val _onValueChange: (TextFieldValue) -> Unit
+    protected val _onFocusChange: (FocusState, callback: (() -> Unit)?) -> Unit = { _, _ -> },
+    protected val _onValueChange: (TextFieldValue, callback: (() -> Unit)?) -> Unit = { _, _ -> }
 ) : TextFieldState {
     constructor(
         text: String,
@@ -39,8 +39,8 @@ open class SimpleTextFieldState(
         keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
         keyboardActions: KeyboardActions = KeyboardActions.Default,
         lines: TextLines = TextLines.Default,
-        onFocusChange: (FocusState) -> Unit = { },
-        onValueChange: (TextFieldValue) -> Unit
+        onFocusChange: (FocusState, callback: (() -> Unit)?) -> Unit = { _, _ -> },
+        onValueChange: (TextFieldValue, callback: (() -> Unit)?) -> Unit = { _, _ -> }
     ) : this(
         TextFieldValue(text = text, selection = TextRange(text.length)),
         key,
@@ -55,13 +55,9 @@ open class SimpleTextFieldState(
         onValueChange
     )
 
-    override fun onFocusedChange(focusState: FocusState) {
-        _onFocusChange(focusState)
-    }
+    override fun onFocusedChange(focusState: FocusState, callback: (() -> Unit)?) = _onFocusChange(focusState, callback)
 
-    final override fun onValueChange(value: TextFieldValue) {
-        _onValueChange(value)
-    }
+    override fun onValueChange(value: TextFieldValue, callback: (() -> Unit)?) = _onValueChange(value, callback)
 
     override fun copy(
         value: TextFieldValue,

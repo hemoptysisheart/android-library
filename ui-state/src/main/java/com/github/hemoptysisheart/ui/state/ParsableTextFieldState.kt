@@ -23,8 +23,8 @@ open class ParsableTextFieldState<V>(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     lines: TextLines = TextLines.Default,
-    onFocusChange: (FocusState) -> Unit = { },
-    onValueChange: (TextFieldValue) -> Unit,
+    onFocusChange: (FocusState, callback: (() -> Unit)?) -> Unit = { _, _ -> },
+    onValueChange: (TextFieldValue, callback: (() -> Unit)?) -> Unit = { _, _ -> },
     protected val _parser: (String) -> V,
 ) : SimpleTextFieldState(
     value = value,
@@ -49,8 +49,8 @@ open class ParsableTextFieldState<V>(
         keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
         keyboardActions: KeyboardActions = KeyboardActions.Default,
         lines: TextLines = TextLines.Default,
-        onFocusChange: (FocusState) -> Unit = { },
-        onValueChange: (TextFieldValue) -> Unit,
+        onFocusChange: (FocusState, callback: (() -> Unit)?) -> Unit = { _, _ -> },
+        onValueChange: (TextFieldValue, callback: (() -> Unit)?) -> Unit = { _, _ -> },
         parser: (String) -> V
     ) : this(
         value = TextFieldValue("$value", TextRange("$value".length)),

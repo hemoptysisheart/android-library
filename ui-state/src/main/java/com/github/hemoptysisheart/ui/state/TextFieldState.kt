@@ -35,14 +35,18 @@ interface TextFieldState {
 
     val lines: TextLines
 
-    fun onFocusedChange(focusState: FocusState)
+    /**
+     * @param focusState 새 포커스 상태.
+     * @param
+     */
+    fun onFocusedChange(focusState: FocusState, callback: (() -> Unit)? = null)
 
     /**
      * 텍스트 필드의 값이 변경되었을 때 호출되는 콜백.
      *
      * @param value 변경된 값.
      */
-    fun onValueChange(value: TextFieldValue)
+    fun onValueChange(value: TextFieldValue, callback: (() -> Unit)? = null)
 
     /**
      * 텍스트 필드의 상태를 복사한 새로운 상태를 반환.
