@@ -20,7 +20,6 @@ jobs:
           path: |
             ~/.gradle/**
             .gradle/**
-            firebase/
           key: ci-cache-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
       - name: Run unit test.
         run: ./gradlew clean testDebugUnitTest --continue --rerun-tasks
@@ -29,14 +28,6 @@ jobs:
           pwd
           cp -r ./.github/workflows/ci/hosting/* ./build/reports/publish/${{ github.run_number }}
           tree ./build
-          
-          mkdir -p ./firebase/public/${{ github.run_number }}
-          cp -r ./build/reports/publish/${{ github.run_number }} ./firebase/public/${{ github.run_number }}
-          cp .github/workflows/ci/clean_report.sh ./firebase/public/
-          sh ./firebase/public/clean_report.sh
-          rm ./firebase/public/clean_report.sh
-          pwd
-          tree ./firebase/public
       - if: success() || failure()
         name: Upload test report artifact.
         uses: actions/upload-artifact@v4
@@ -44,11 +35,3 @@ jobs:
           name: "reports_${{ github.run_number }}"
           path: ./build/reports/publish/${{ github.run_number }}
           if-no-files-found: warn
-      - if: success() || failure()
-        name: Publish test report.
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting --message \"See https://github.com/hemoptysisheart/android-library/actions/runs/${{ github.run_id }}\"
-        env:
-          PROJECT_PATH: ./firebase
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
