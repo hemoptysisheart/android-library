@@ -1,10 +1,11 @@
 package com.github.hemoptysisheart.ui.state
 
 sealed class TextLines {
+    @Suppress("ConstPropertyName")
     data object Default : TextLines() {
-        val minLines: Int = 1
+        const val minLines: Int = 1
 
-        val maxLines: Int = Int.MAX_VALUE
+        const val maxLines: Int = Int.MAX_VALUE
     }
 }
 

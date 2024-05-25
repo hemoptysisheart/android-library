@@ -36,15 +36,18 @@ interface TextFieldState {
     val lines: TextLines
 
     /**
+     * 포커스 상태가 변경되었을 때 호출하는 이벤트 핸들러..
+     *
      * @param focusState 새 포커스 상태.
-     * @param
+     * @param callback 포커스 상태가 변경된 후 실행할 콜백. 이벤트 처리 중에서 `@Composable`에서 맡은 기능을 여기에 넣으면 된다.
      */
     fun onFocusedChange(focusState: FocusState, callback: (() -> Unit)? = null)
 
     /**
-     * 텍스트 필드의 값이 변경되었을 때 호출되는 콜백.
+     * 텍스트 필드의 값이 변경되었을 때 호출하는 이벤트 핸들러.
      *
      * @param value 변경된 값.
+     * @param callback 값이 변경된 후 실행할 콜백. 이벤트 처리 중에서 `@Composable`에서 맡은 기능을 여기에 넣으면 된다.
      */
     fun onValueChange(value: TextFieldValue, callback: (() -> Unit)? = null)
 

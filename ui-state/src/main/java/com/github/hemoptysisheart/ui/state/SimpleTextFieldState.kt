@@ -2,7 +2,7 @@ package com.github.hemoptysisheart.ui.state
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -15,7 +15,8 @@ import java.util.UUID
  * 상태를 추적하기 쉽게 하기 위해 주입한 콜백은 [copy]로 교체할 수 없다. 경우에 따라 서로 다른 콜백 로직이 필요하다면, 주입한 콜백 자체가 선택적으로
  * 로직을 실행할 수 있도록 해야 한다.
  */
-@Stable
+@Immutable
+@Suppress("PropertyName")
 open class SimpleTextFieldState(
     override val value: TextFieldValue,
     override val key: UUID = UUID.randomUUID(),

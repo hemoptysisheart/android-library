@@ -1,7 +1,7 @@
 package com.github.hemoptysisheart.ui.state
 
 import androidx.annotation.DrawableRes
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
@@ -11,7 +11,7 @@ import java.util.UUID
 /**
  * [androidx.compose.material3.Icon]의 상태 홀더.
  */
-@Stable
+@Immutable
 class IconState(
     @DrawableRes val resourceId: Int? = null,
     val imageVector: ImageVector? = null,
