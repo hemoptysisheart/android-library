@@ -21,7 +21,7 @@ subprojects {
                 .testOptions.unitTests.all {
                     it.useJUnitPlatform()
                     it.reports.html.outputLocation =
-                        file("${rootProject.projectDir}/build/reports/publish/$reportId/${project.name}")
+                        file("${rootProject.projectDir}/build/reports/$reportId/${project.name}")
                 }
         }
     }
