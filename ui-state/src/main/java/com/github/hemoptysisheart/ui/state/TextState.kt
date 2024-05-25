@@ -1,7 +1,7 @@
 package com.github.hemoptysisheart.ui.state
 
 import androidx.annotation.StringRes
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -16,7 +16,7 @@ import java.util.UUID
 /**
  * [androidx.compose.material3.Text]용 상태 홀더.
  */
-@Stable
+@Immutable
 class TextState(
     @StringRes val resourceId: Int? = null,
     val text: String? = null,

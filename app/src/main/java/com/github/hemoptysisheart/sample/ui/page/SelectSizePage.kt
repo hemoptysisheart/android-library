@@ -124,8 +124,14 @@ private fun SelectSizePageContentPreview() {
     AndroidLibraryTheme {
         SelectSizePageContent(
             navigator = SelectSizeNavigator(baseNavigator(PreviewActivity())),
-            width = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),
-            height = ParsableTextFieldState(value = TextFieldValue("10"), onValueChange = {}, _parser = { it.toInt() }),
+            width = ParsableTextFieldState(
+                value = TextFieldValue("10"),
+                onValueChange = { _, _ -> },
+                _parser = { it.toInt() }),
+            height = ParsableTextFieldState(
+                value = TextFieldValue("10"),
+                onValueChange = { _, _ -> },
+                _parser = { it.toInt() }),
             onClickGenerate = {},
             onClickDefault = {}
         )

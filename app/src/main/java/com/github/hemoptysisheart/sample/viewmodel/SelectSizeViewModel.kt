@@ -84,7 +84,7 @@ class SelectSizeViewModel @Inject constructor(
      * TODO 단위테스트 작성 후 `@Suppress("MemberVisibilityCanBePrivate")` 제거.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    fun onChangeWidth(value: TextFieldValue) {
+    fun onChangeWidth(value: TextFieldValue, callback: (() -> Unit)? = null) {
         Log.w(tag, "#onChangeWidth args : value=$value")
 
         launch {
@@ -97,7 +97,7 @@ class SelectSizeViewModel @Inject constructor(
      * TODO 단위테스트 작성 후 `@Suppress("MemberVisibilityCanBePrivate")` 제거.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    fun onChangeHeight(value: TextFieldValue) {
+    fun onChangeHeight(value: TextFieldValue, callback: (() -> Unit)? = null) {
         Log.w(tag, "#onChangeHeight args : value=$value")
 
         launch {

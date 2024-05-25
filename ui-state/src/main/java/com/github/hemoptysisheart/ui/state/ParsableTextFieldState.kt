@@ -2,7 +2,7 @@ package com.github.hemoptysisheart.ui.state
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -12,7 +12,7 @@ import java.util.UUID
 /**
  * @param value 초기값.
  */
-@Stable
+@Immutable
 open class ParsableTextFieldState<V>(
     value: TextFieldValue,
     key: UUID = UUID.randomUUID(),
@@ -23,8 +23,8 @@ open class ParsableTextFieldState<V>(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     lines: TextLines = TextLines.Default,
-    onFocusChange: (FocusState) -> Unit = { },
-    onValueChange: (TextFieldValue) -> Unit,
+    onFocusChange: (FocusState, callback: (() -> Unit)?) -> Unit = { _, _ -> },
+    onValueChange: (TextFieldValue, callback: (() -> Unit)?) -> Unit = { _, _ -> },
     protected val _parser: (String) -> V,
 ) : SimpleTextFieldState(
     value = value,
@@ -49,8 +49,8 @@ open class ParsableTextFieldState<V>(
         keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
         keyboardActions: KeyboardActions = KeyboardActions.Default,
         lines: TextLines = TextLines.Default,
-        onFocusChange: (FocusState) -> Unit = { },
-        onValueChange: (TextFieldValue) -> Unit,
+        onFocusChange: (FocusState, callback: (() -> Unit)?) -> Unit = { _, _ -> },
+        onValueChange: (TextFieldValue, callback: (() -> Unit)?) -> Unit = { _, _ -> },
         parser: (String) -> V
     ) : this(
         value = TextFieldValue("$value", TextRange("$value".length)),
