@@ -38,6 +38,8 @@ import com.github.hemoptysisheart.ui.state.TextLines
  * @param interactionSource 상호작용 소스.
  * @param shape 모양.
  * @param colors 색상.
+ * @param onValueChangeCallback 값 변경 콜백. 입력 처리 후, UI 반응을 위해 호출됨.
+ * @param onFocusChangeCallback 포커스 변경 콜백. 포커스 변경 처리 후, UI 반응을 위해 호출됨.
  */
 @Composable
 fun OutlinedTextField(
@@ -53,15 +55,21 @@ fun OutlinedTextField(
     supportingText: @Composable (() -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = OutlinedTextFieldDefaults.shape,
-    colors: TextFieldColors = OutlinedTextFieldDefaults.colors()
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    onValueChangeCallback: (() -> Unit)? = null,
+    onFocusChangeCallback: (() -> Unit)? = null
 ) {
     val lines = state.lines
     androidx.compose.material3.OutlinedTextField(
         value = state.value,
-        onValueChange = state::onValueChange,
+        onValueChange = { newValue ->
+            state.onValueChange(newValue, onValueChangeCallback)
+        },
         modifier = modifier
             .testTag("${state.key}")
-            .onFocusChanged { state.onFocusedChange(it) },
+            .onFocusChanged { newFocusState ->
+                state.onFocusChange(newFocusState, onFocusChangeCallback)
+            },
         enabled = state.enabled,
         readOnly = state.readOnly,
         textStyle = textStyle,

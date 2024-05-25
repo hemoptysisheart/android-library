@@ -56,9 +56,9 @@ open class SimpleTextFieldState(
         onValueChange
     )
 
-    override fun onFocusedChange(focusState: FocusState, callback: (() -> Unit)?) = _onFocusChange(focusState, callback)
+    override fun onFocusChange(newState: FocusState, callback: (() -> Unit)?) = _onFocusChange(newState, callback)
 
-    override fun onValueChange(value: TextFieldValue, callback: (() -> Unit)?) = _onValueChange(value, callback)
+    override fun onValueChange(newValue: TextFieldValue, callback: (() -> Unit)?) = _onValueChange(newValue, callback)
 
     override fun copy(
         value: TextFieldValue,
