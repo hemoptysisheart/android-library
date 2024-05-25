@@ -23,13 +23,15 @@ jobs:
           key: ci-cache-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
       - name: Prepare unit test.
         run: |
+          touch ./local.properties
           ./gradlew clean
+          ls -alh
           mkdir -p ./build/reports
-          git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" | head -n 500 > ./build/reports/git-log.txt
+          git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" > ./build/reports/git-log.txt
       - name: Run unit test.
         run: |
           ./gradlew testDebugUnitTest --continue --rerun-tasks
-          tree ./build > ./build/reports/tree.txt
+          tree > ./build/reports/tree.txt
       - name: Prepare report upload.
         run: |
           cp -r ./.github/workflows/ci/hosting/* ./build/reports/
