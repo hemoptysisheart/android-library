@@ -28,7 +28,7 @@ jobs:
           mkdir -p ./build/reports
       - name: Run unit test.
         run: |
-          ./gradlew testDebugUnitTest --continue --rerun-tasks
+          ./gradlew testDebugUnitTest -x :app:assembleDebug --continue --rerun-tasks
           tree > ./build/reports/tree.txt
       - name: Prepare report artifact.
         run: |
