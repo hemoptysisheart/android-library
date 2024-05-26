@@ -30,5 +30,4 @@ jobs:
         run: |
           git tag "build/${{ github.RUN_NUMBER }}"
           git push origin "build/${{ github.RUN_NUMBER }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh release create "build/${{ github.RUN_NUMBER }}" -t "Release Candidate #${{ github.RUN_NUMBER }}" ./**/*.aar
