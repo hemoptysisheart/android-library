@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+
+    `maven-publish`
 }
 
 android {
@@ -41,6 +43,31 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("Release") {
+            groupId = "com.github.hemoptysisheart.android"
+            artifactId = project.name
+            version = project.ext["version.name"] as String
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/hemoptysisheart/packages")
+            credentials {
+                username = project.ext["publish.user"] as String?
+                password = project.ext["publish.token"] as String?
+            }
         }
     }
 }
