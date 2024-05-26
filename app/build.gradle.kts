@@ -55,8 +55,8 @@ android {
 }
 
 dependencies {
-    implementation(libs.hemoptysisheart.ui.compose)
-    implementation(libs.hemoptysisheart.ui.navigation)
+    implementation(project(":ui-compose"))
+    implementation(project(":ui-navigation"))
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.core.ktx)
