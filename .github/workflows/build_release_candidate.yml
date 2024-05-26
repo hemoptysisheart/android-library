@@ -25,7 +25,7 @@ jobs:
       - name: Build Release Candidate.
         run: |
           touch ./local.properties
-          ./gradlew clean assembleDebug -x :app:assembleDebug --continue
+          ./gradlew clean assembleDebug -x :app:assembleDebug
       - name: Create Release Candidate.
         run: |
           git tag "build/${{ github.RUN_NUMBER }}"

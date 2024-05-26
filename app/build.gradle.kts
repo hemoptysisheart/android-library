@@ -14,7 +14,7 @@ android {
         minSdk = 31
         targetSdk = 34
         versionCode = 1
-        versionName = project.ext["version.name"] as String
+        versionName = project.ext["publish.version"] as String?
         versionCode = project.ext["build.number"] as Int
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -54,10 +54,9 @@ android {
     }
 }
 
-//noinspection UseTomlInstead
 dependencies {
-    implementation("com.github.hemoptysisheart.android:ui-compose:${project.ext["version.name"]}")
-    implementation(project(":ui-navigation"))
+    implementation(libs.hemoptysisheart.ui.compose)
+    implementation(libs.hemoptysisheart.ui.navigation)
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.core.ktx)

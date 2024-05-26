@@ -16,17 +16,8 @@ localProperties.load(rootProject.projectDir.resolve("local.properties").inputStr
 subprojects {
     apply(plugin = "maven-publish")
 
-    project.ext["version.major"] = (localProperties["version.major"] as String?)?.toInt()
-        ?: 0
-    project.ext["version.minor"] = (localProperties["version.minor"] as String?)?.toInt()
-        ?: 0
-    project.ext["version.patch"] = (localProperties["version.patch"] as String?)?.toInt()
-        ?: 0
-    project.ext["version.name"] = "${
-        project.ext["version.major"]
-    }.${project.ext["version.minor"]}.${
-        project.ext["version.patch"]
-    }"
+    project.ext["publish.version"] = localProperties["publish.version"]
+        ?: "0.0.1"
     project.ext["build.number"] = System.getenv("GITHUB_RUN_NUMBER")?.toInt()
         ?: Instant.now().epochSecond.toInt()
     project.ext["publish.user"] = localProperties["publish.user"]
@@ -54,7 +45,7 @@ subprojects {
                     create<MavenPublication>("GitHubPackages") {
                         groupId = "com.github.hemoptysisheart.android"
                         artifactId = project.name
-                        version = project.ext["version.name"] as String
+                        version = project.ext["publish.version"] as String
 
                         afterEvaluate {
                             from(components["release"])
