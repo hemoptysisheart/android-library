@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - 'issue/11-cd_*' # TODO 삭제.
 jobs:
   build:
     name: Build Release Candidate
