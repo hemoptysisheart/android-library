@@ -22,22 +22,6 @@ jobs:
             ~/.gradle/**
             .gradle/**
           key: ci-cache-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-      - name: Prepare build.
-        run: |
-          ./gradlew clean
-          mkdir -p ./build/reports
-          git log --graph --pretty="%h -%d %s (%ar) <%an>" > ./build/reports/git-log.txt
       - name: Build Release Candidate.
         run: |
-          ./gradlew assembleDebug --continue
-          tree ./build > ./build/reports/tree.txt
-      - name: Prepare report upload.
-        run: |
-          cp -r ./.github/workflows/ci/hosting/* ./build/reports/
-      - if: success() || failure()
-        name: Upload build artifact.
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-library_build_${{ github.run_number }}
-          path: ./build
-          if-no-files-found: warn
+          ./gradlew clean assembleDebug --continue

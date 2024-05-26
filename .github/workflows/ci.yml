@@ -25,14 +25,12 @@ jobs:
         run: |
           touch ./local.properties
           ./gradlew clean
-          ls -alh
           mkdir -p ./build/reports
-          git log --graph --pretty="%h -%d %s (%ar) <%an>" > ./build/reports/git-log.txt
       - name: Run unit test.
         run: |
           ./gradlew testDebugUnitTest --continue --rerun-tasks
           tree > ./build/reports/tree.txt
-      - name: Prepare report upload.
+      - name: Prepare report artifact.
         run: |
           cp -r ./.github/workflows/ci/hosting/* ./build/reports/
       - if: success() || failure()
