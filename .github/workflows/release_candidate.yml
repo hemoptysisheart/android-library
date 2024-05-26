@@ -31,3 +31,5 @@ jobs:
           git tag "build/${{ github.RUN_NUMBER }}"
           git push origin "build/${{ github.RUN_NUMBER }}"
           gh release create "build/${{ github.RUN_NUMBER }}" -t "Release Candidate #${{ github.RUN_NUMBER }}" ./**/*.aar
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
