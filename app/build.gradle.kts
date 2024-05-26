@@ -54,8 +54,9 @@ android {
     }
 }
 
+//noinspection UseTomlInstead
 dependencies {
-    implementation(project(":ui-compose"))
+    implementation("com.github.hemoptysisheart.android:ui-compose:${project.ext["version.name"]}")
     implementation(project(":ui-navigation"))
 
     implementation(libs.androidx.activity)
