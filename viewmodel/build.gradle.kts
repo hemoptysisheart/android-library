@@ -38,9 +38,13 @@ android {
 }
 
 dependencies {
-    api(project(":ui-state"))
-    api(project(":ui-compose"))
-    api(project(":state-pump"))
+    if (project.ext["publish.enable"] as Boolean) {
+        api(libs.hemoptysisheart.ui.compose)
+        api(libs.hemoptysisheart.state.pump)
+    } else {
+        api(project(":ui-compose"))
+        api(project(":state-pump"))
+    }
 
     implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.lifecycle.viewmodel)

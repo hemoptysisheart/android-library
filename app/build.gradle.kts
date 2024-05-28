@@ -55,8 +55,13 @@ android {
 }
 
 dependencies {
-    implementation(libs.hemoptysisheart.ui.compose)
-    implementation(libs.hemoptysisheart.ui.navigation)
+    if (project.ext["publish.enable"] as Boolean) {
+        implementation(libs.hemoptysisheart.ui.compose)
+        implementation(libs.hemoptysisheart.ui.navigation)
+    } else {
+        implementation(project(":ui-compose"))
+        implementation(project(":ui-navigation"))
+    }
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.core.ktx)

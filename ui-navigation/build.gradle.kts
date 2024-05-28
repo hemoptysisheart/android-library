@@ -47,7 +47,11 @@ android {
 }
 
 dependencies {
-    api(project(":viewmodel"))
+    if (project.ext["publish.enable"] as Boolean) {
+        api(libs.hemoptysisheart.viewmodel)
+    } else {
+        api(project(":viewmodel"))
+    }
     api(libs.androidx.hilt.navigation)
 
     implementation(libs.hilt)

@@ -46,7 +46,11 @@ android {
 }
 
 dependencies {
-    api(project(":ui-state"))
+    if (project.ext["publish.enable"] as Boolean) {
+        api(libs.hemoptysisheart.ui.state)
+    } else {
+        api(project(":ui-state"))
+    }
     api(platform(libs.androidx.compose.bom))
     api(libs.androidx.material.icons.extended)
     api(libs.androidx.material3)
