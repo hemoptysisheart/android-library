@@ -26,8 +26,11 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+hemoptysisheart-state-pump = { group = "com.github.hemoptysisheart.android", name = "state-pump", version.ref = "hemoptysisheart" }
 hemoptysisheart-ui-compose = { group = "com.github.hemoptysisheart.android", name = "ui-compose", version.ref = "hemoptysisheart" }
 hemoptysisheart-ui-navigation = { group = "com.github.hemoptysisheart.android", name = "ui-navigation", version.ref = "hemoptysisheart" }
+hemoptysisheart-ui-state = { group = "com.github.hemoptysisheart.android", name = "ui-state", version.ref = "hemoptysisheart" }
+hemoptysisheart-viewmodel = { group = "com.github.hemoptysisheart.android", name = "viewmodel", version.ref = "hemoptysisheart" }
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }

@@ -16,6 +16,8 @@ localProperties.load(rootProject.projectDir.resolve("local.properties").inputStr
 subprojects {
     apply(plugin = "maven-publish")
 
+    project.ext["publish.enable"] = (localProperties["publish.enable"] as String?)?.toBoolean()
+        ?: false
     project.ext["publish.version"] = localProperties["publish.version"]
         ?: "0.0.1"
     project.ext["build.number"] = System.getenv("GITHUB_RUN_NUMBER")?.toInt()

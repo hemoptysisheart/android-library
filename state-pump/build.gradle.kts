@@ -34,7 +34,11 @@ android {
 }
 
 dependencies {
-    api(project(":ui-state"))
+    if (project.ext["publish.enable"] as Boolean) {
+        api(libs.hemoptysisheart.ui.state)
+    } else {
+        api(project(":ui-state"))
+    }
 
     implementation(libs.androidx.core.ktx)
 }
