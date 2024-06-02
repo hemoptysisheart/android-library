@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.github.hemoptysisheart.sample"
-        minSdk = 31
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = project.ext["publish.version"] as String?
