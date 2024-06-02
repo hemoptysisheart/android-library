@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="android-library [clean testDebugUnitTest]" type="GradleRunConfiguration"
-        factoryName="Gradle">
+    <configuration name="android-library [clean testDebugUnitTest]" default="false" factoryName="Gradle"
+        type="GradleRunConfiguration">
         <ExternalSystemSettings>
             <option name="executionName" />
             <option name="externalProjectPath" value="$PROJECT_DIR$" />
