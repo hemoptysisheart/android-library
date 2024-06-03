@@ -1,6 +1,6 @@
 [versions]
 agp = "8.3.2"
-hemoptysisheart = "0.0.1"
+hemoptysisheart = "0.0.2"
 hilt = "2.51.1"
 kotlin = "1.9.23"
 lifecycle = "2.7.0"

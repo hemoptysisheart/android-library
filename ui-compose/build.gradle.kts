@@ -47,7 +47,7 @@ android {
 
 dependencies {
     if (project.ext["publish.enable"] as Boolean) {
-        api(libs.hemoptysisheart.ui.state)
+        api("com.github.hemoptysisheart.android:ui-state:${project.ext["publish.version"]}")
     } else {
         api(project(":ui-state"))
     }

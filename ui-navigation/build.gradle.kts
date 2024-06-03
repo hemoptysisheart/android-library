@@ -48,7 +48,7 @@ android {
 
 dependencies {
     if (project.ext["publish.enable"] as Boolean) {
-        api(libs.hemoptysisheart.viewmodel)
+        api("com.github.hemoptysisheart.android:viewmodel:${project.ext["publish.version"]}")
     } else {
         api(project(":viewmodel"))
     }
