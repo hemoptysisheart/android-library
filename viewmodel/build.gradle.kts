@@ -39,8 +39,8 @@ android {
 
 dependencies {
     if (project.ext["publish.enable"] as Boolean) {
-        api(libs.hemoptysisheart.ui.compose)
-        api(libs.hemoptysisheart.state.pump)
+        api("com.github.hemoptysisheart.android:ui-compose:${project.ext["publish.version"]}")
+        api("com.github.hemoptysisheart.android:state-pump:${project.ext["publish.version"]}")
     } else {
         api(project(":ui-compose"))
         api(project(":state-pump"))
