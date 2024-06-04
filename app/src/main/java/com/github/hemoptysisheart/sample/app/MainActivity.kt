@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 LocalLifecycleOwner provides androidx.compose.ui.platform.LocalLifecycleOwner.current
             ) {
                 AndroidLibraryTheme {
-                    RootLayout(baseNavigator(this, SplashNavigator))
+                    RootLayout(baseNavigator(SplashNavigator))
                 }
             }
         }

@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -129,7 +128,7 @@ private fun SelectSizePageContent(
 private fun SelectSizePageContentPreview() {
     AndroidLibraryTheme {
         SelectSizePageContent(
-            navigator = SelectSizeNavigator(baseNavigator(PreviewActivity())),
+            navigator = SelectSizeNavigator(baseNavigator()),
             width = ParsableTextFieldState(
                 value = TextFieldValue("10"),
                 onValueChange = { _, _ -> },

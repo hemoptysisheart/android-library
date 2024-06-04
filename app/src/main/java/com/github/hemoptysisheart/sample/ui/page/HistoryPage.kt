@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -68,7 +67,7 @@ private fun HistoryPageContent(
 private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
         HistoryPageContent(
-            navigator = HistoryNavigator(baseNavigator(PreviewActivity()))
+            navigator = HistoryNavigator(baseNavigator())
         )
     }
 }
