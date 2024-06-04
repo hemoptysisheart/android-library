@@ -12,7 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.PreviewActivity
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
@@ -58,7 +61,10 @@ private fun HistoryPageContent(
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@PreviewDynamicColors
+@PreviewFontScale
+@PreviewLightDark
+@PreviewScreenSizes
 private fun HistoryPageContentPreview() {
     AndroidLibraryTheme {
         HistoryPageContent(

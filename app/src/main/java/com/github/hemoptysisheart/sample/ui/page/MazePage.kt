@@ -1,11 +1,13 @@
 package com.github.hemoptysisheart.sample.ui.page
 
-import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.PreviewActivity
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.domain.Maze
 import com.github.hemoptysisheart.sample.ui.navigation.MazeNavigator
@@ -45,8 +47,10 @@ private fun MazePageContent(
 }
 
 @Composable
-@Preview(showSystemUi = true)
-@Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewDynamicColors
+@PreviewFontScale
+@PreviewLightDark
+@PreviewScreenSizes
 private fun MazeScreenPreview() {
     val maze = Maze(Maze.WIDTH_DEFAULT, Maze.HEIGHT_DEFAULT)
     AndroidLibraryTheme {

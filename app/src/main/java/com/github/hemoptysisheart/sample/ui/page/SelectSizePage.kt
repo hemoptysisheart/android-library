@@ -21,7 +21,10 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.PreviewActivity
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
@@ -119,7 +122,10 @@ private fun SelectSizePageContent(
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@PreviewDynamicColors
+@PreviewFontScale
+@PreviewLightDark
+@PreviewScreenSizes
 private fun SelectSizePageContentPreview() {
     AndroidLibraryTheme {
         SelectSizePageContent(

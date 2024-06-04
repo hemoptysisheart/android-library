@@ -1,6 +1,5 @@
 package com.github.hemoptysisheart.sample.ui.organism
 
-import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
@@ -13,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -159,8 +160,9 @@ private class CellProvider : PreviewParameterProvider<CellState> {
 }
 
 @Composable
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewDynamicColors
+@PreviewFontScale
+@PreviewLightDark
 private fun CellPreview(@PreviewParameter(CellProvider::class) cell: CellState) {
     AndroidLibraryTheme {
         Cell(cell)
