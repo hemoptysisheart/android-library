@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.github.hemoptysisheart.sample.ui.RootLayout
 import com.github.hemoptysisheart.sample.ui.navigation.SplashNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
@@ -25,8 +27,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AndroidLibraryTheme {
-                RootLayout(baseNavigator(this, SplashNavigator))
+            CompositionLocalProvider(
+                LocalLifecycleOwner provides androidx.compose.ui.platform.LocalLifecycleOwner.current
+            ) {
+                AndroidLibraryTheme {
+                    RootLayout(baseNavigator(this, SplashNavigator))
+                }
             }
         }
     }
