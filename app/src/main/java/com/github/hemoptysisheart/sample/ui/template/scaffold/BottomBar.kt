@@ -9,7 +9,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.PreviewActivity
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.hemoptysisheart.sample.R
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
@@ -53,6 +52,6 @@ fun BottomBar(navigator: Navigator) {
 @Preview(showBackground = true)
 private fun BottomBarPreview() {
     AndroidLibraryTheme {
-        BottomBar(SelectSizeNavigator(baseNavigator(PreviewActivity())))
+        BottomBar(SelectSizeNavigator(baseNavigator()))
     }
 }

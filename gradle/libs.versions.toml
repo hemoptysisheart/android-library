@@ -1,14 +1,14 @@
 [versions]
-agp = "8.3.2"
-hemoptysisheart = "0.0.2"
+agp = "8.4.1"
+hemoptysisheart = "0.0.3"
 hilt = "2.51.1"
-kotlin = "1.9.23"
-lifecycle = "2.7.0"
+kotlin = "1.9.24"
+lifecycle = "2.8.1"
 
 [libraries]
 androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.9.0" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.13.0" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.04.01" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.13.1" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.05.00" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation-android" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
 androidx-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version = "1.2.0" }
@@ -46,4 +46,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version = "1.9.23-1.0.20" }
+ksp = { id = "com.google.devtools.ksp", version = "1.9.24-1.0.20" }

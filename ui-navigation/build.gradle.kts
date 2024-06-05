@@ -36,7 +36,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.12"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     packaging {
@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.hilt)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.navigation)
+    implementation(libs.androidx.ui.tooling)
 
     ksp(libs.hilt.compiler)
 }
