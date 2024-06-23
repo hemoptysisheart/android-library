@@ -9,12 +9,12 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.github.hemoptysisheart.sample.R
 import com.github.hemoptysisheart.sample.ui.navigation.HistoryNavigator
 import com.github.hemoptysisheart.sample.ui.navigation.SelectSizeNavigator
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
 import com.github.hemoptysisheart.ui.compose.Icon
+import com.github.hemoptysisheart.ui.compose.preview.PreviewComponent
 import com.github.hemoptysisheart.ui.navigation.compose.baseNavigator
 import com.github.hemoptysisheart.ui.navigation.destination.Navigator
 import com.github.hemoptysisheart.ui.state.IconState
@@ -49,7 +49,7 @@ fun BottomBar(navigator: Navigator) {
 }
 
 @Composable
-@Preview(showBackground = true)
+@PreviewComponent
 private fun BottomBarPreview() {
     AndroidLibraryTheme {
         BottomBar(SelectSizeNavigator(baseNavigator()))
