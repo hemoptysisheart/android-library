@@ -1,6 +1,7 @@
 package com.github.hemoptysisheart.sample.ui.organism
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -8,13 +9,11 @@ import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Start
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.PreviewDynamicColors
-import androidx.compose.ui.tooling.preview.PreviewFontScale
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -28,6 +27,7 @@ import com.github.hemoptysisheart.sample.ui.molecule.Pillar
 import com.github.hemoptysisheart.sample.ui.molecule.Wall
 import com.github.hemoptysisheart.sample.ui.state.CellState
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
+import com.github.hemoptysisheart.ui.compose.preview.PreviewComponentNoText
 
 @Composable
 fun Cell(cell: CellState, onClick: (CellState) -> Unit = {}) {
@@ -36,6 +36,7 @@ fun Cell(cell: CellState, onClick: (CellState) -> Unit = {}) {
     val openWalls = remember(cell) { cell.openWalls }
     ConstraintLayout(modifier = Modifier
         .size(CELL_SIZE.dp)
+        .background(MaterialTheme.colorScheme.background)
         .clickable { onClick(cell) }) {
         val (westNorth, northEast, eastSouth, southWest, westWall, northWall, eastWall, southWall, center) = createRefs()
 
@@ -127,42 +128,44 @@ fun Cell(cell: CellState, onClick: (CellState) -> Unit = {}) {
 
 private class CellProvider : PreviewParameterProvider<CellState> {
     override val values: Sequence<CellState> = sequenceOf(
-        CellState(1, 1, start = true),
-        CellState(1, 1, end = true),
-        CellState(1, 1, progress = true),
+        CellState(x = 1, y = 1, start = true),
+        CellState(x = 1, y = 1, end = true),
+        CellState(x = 1, y = 1, progress = true),
+
+        CellState(x = 1, y = 1, openWalls = Direction.entries.toList(), start = true),
+        CellState(x = 1, y = 1, openWalls = Direction.entries.toList(), end = true),
+        CellState(x = 1, y = 1, openWalls = Direction.entries.toList(), progress = true),
 
         // 0
-        CellState(1, 1),
+        CellState(x = 1, y = 1),
 
         // 1
-        CellState(1, 1, listOf(WEST)),
-        CellState(1, 1, listOf(NORTH)),
-        CellState(1, 1, listOf(EAST)),
-        CellState(1, 1, listOf(SOUTH)),
+        CellState(x = 1, y = 1, openWalls = listOf(WEST)),
+        CellState(x = 1, y = 1, openWalls = listOf(NORTH)),
+        CellState(x = 1, y = 1, openWalls = listOf(EAST)),
+        CellState(x = 1, y = 1, openWalls = listOf(SOUTH)),
 
         // 2
-        CellState(1, 1, listOf(WEST, NORTH)),
-        CellState(1, 1, listOf(WEST, EAST)),
-        CellState(1, 1, listOf(WEST, SOUTH)),
-        CellState(1, 1, listOf(NORTH, EAST)),
-        CellState(1, 1, listOf(NORTH, SOUTH)),
-        CellState(1, 1, listOf(EAST, SOUTH)),
+        CellState(x = 1, y = 1, openWalls = listOf(WEST, NORTH)),
+        CellState(x = 1, y = 1, openWalls = listOf(WEST, EAST)),
+        CellState(x = 1, y = 1, openWalls = listOf(WEST, SOUTH)),
+        CellState(x = 1, y = 1, openWalls = listOf(NORTH, EAST)),
+        CellState(x = 1, y = 1, openWalls = listOf(NORTH, SOUTH)),
+        CellState(x = 1, y = 1, openWalls = listOf(EAST, SOUTH)),
 
         // 3
-        CellState(1, 1, listOf(WEST, NORTH, EAST)),
-        CellState(1, 1, listOf(NORTH, EAST, SOUTH)),
-        CellState(1, 1, listOf(EAST, SOUTH, WEST)),
-        CellState(1, 1, listOf(SOUTH, WEST, NORTH)),
+        CellState(x = 1, y = 1, openWalls = listOf(WEST, NORTH, EAST)),
+        CellState(x = 1, y = 1, openWalls = listOf(NORTH, EAST, SOUTH)),
+        CellState(x = 1, y = 1, openWalls = listOf(EAST, SOUTH, WEST)),
+        CellState(x = 1, y = 1, openWalls = listOf(SOUTH, WEST, NORTH)),
 
         // 4
-        CellState(1, 1, Direction.entries.toList())
+        CellState(x = 1, y = 1, openWalls = Direction.entries.toList())
     )
 }
 
 @Composable
-@PreviewDynamicColors
-@PreviewFontScale
-@PreviewLightDark
+@PreviewComponentNoText
 private fun CellPreview(@PreviewParameter(CellProvider::class) cell: CellState) {
     AndroidLibraryTheme {
         Cell(cell)

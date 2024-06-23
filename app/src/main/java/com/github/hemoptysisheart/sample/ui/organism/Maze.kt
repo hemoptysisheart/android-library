@@ -6,16 +6,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.PreviewDynamicColors
-import androidx.compose.ui.tooling.preview.PreviewFontScale
-import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.github.hemoptysisheart.sample.domain.Maze
 import com.github.hemoptysisheart.sample.domain.Maze.Companion.HEIGHT_DEFAULT
 import com.github.hemoptysisheart.sample.domain.Maze.Companion.WIDTH_DEFAULT
 import com.github.hemoptysisheart.sample.ui.state.CellState
 import com.github.hemoptysisheart.sample.ui.state.MazeState
 import com.github.hemoptysisheart.sample.ui.theme.AndroidLibraryTheme
+import com.github.hemoptysisheart.ui.compose.preview.PreviewComponentNoText
 
 @Composable
 fun Maze(maze: MazeState, modifier: Modifier = Modifier, onClickCell: (CellState) -> Unit = {}) {
@@ -32,10 +29,7 @@ fun Maze(maze: MazeState, modifier: Modifier = Modifier, onClickCell: (CellState
 }
 
 @Composable
-@PreviewDynamicColors
-@PreviewFontScale
-@PreviewLightDark
-@PreviewScreenSizes
+@PreviewComponentNoText
 fun MazePreview() {
     val maze = Maze(WIDTH_DEFAULT, HEIGHT_DEFAULT)
     AndroidLibraryTheme {
